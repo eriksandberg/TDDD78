@@ -1,0 +1,61 @@
+package fuckyou;//package Labb2;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: Admin
+ * Date: 2013-09-30
+ * Time: 17:59
+ * To change this template use File | Settings | File Templates.
+ */
+public class Poly {
+
+    private SquareType[][] shape;
+    private final int width;
+    private final int height;
+
+    public Poly(SquareType[][] shape, int width, int height) {
+        super();
+        this.shape = shape;
+        this.width = width;
+        this.height = height;
+    }
+
+    public int getWidth(){
+        return width;
+    }
+
+    public int getHeight(){
+        return height;
+    }
+
+    public SquareType[][] getShape(){
+        return shape;
+    }
+
+    public void rotateRight(){
+        if(height == 4 || width == 4){
+            SquareType rotatedShape[][] = {
+                    {this.shape[0][3], this.shape[1][3], this.shape[2][3], this.shape[3][3]},
+                    {this.shape[0][2], this.shape[1][2], this.shape[2][2], this.shape[3][2]},
+                    {this.shape[0][1], this.shape[1][1], this.shape[2][1], this.shape[3][1]},
+                    {this.shape[0][0], this.shape[1][0], this.shape[2][0], this.shape[3][0]}};
+            this.shape = rotatedShape;
+        }else if(height == 3 || width == 3){
+            SquareType rotatedShape[][] = {
+                    {this.shape[0][2], this.shape[1][2], this.shape[2][2]},
+                    {this.shape[0][1], this.shape[1][1], this.shape[2][1]},
+                    {this.shape[0][0], this.shape[1][0], this.shape[2][0]}};
+            this.shape = rotatedShape;
+        }
+    }
+
+    public void rotate(Boolean B){
+        if(B){
+            rotateRight();
+        }else{
+            rotateRight();
+            rotateRight();
+            rotateRight();
+        }
+    }
+}
