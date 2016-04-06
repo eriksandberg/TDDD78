@@ -7,20 +7,22 @@ package Game;
  * The highest class in the object hirarchy.
  * All characters and objects featuring in a room inherit from this class.
  */
+
 public class GameObject {
 
     private int xcoord = 0;
     private int ycoord = 0;
 
     /*
-    * Getters & Setters
-    */
+     * Getters & Setters
+     */
     public int getXcoord() {
         return xcoord;
     }
 
     public void setXcoord(int xcoord) {
         this.xcoord = xcoord;
+        //TODO: Kontrollerar vi så att man sätter ett korrekt värde här eller i en annan klass?
     }
 
     public int getYcoord() {

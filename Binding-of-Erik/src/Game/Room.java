@@ -3,14 +3,46 @@ package Game;
 /**
  * Created by wassing on 2016-04-04.
  */
-public class Room
-{
+
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+
+public class Room extends JPanel {
+
+    //////////////////////////////////////////////
+    // Jag fattar inte Swing än...
+    //////////////////////////////////////////////
+
+    /*private Image testImg;
+
+    public Room () {
+
+        initRoom();
+    }
+
+    private void initRoom() {
+
+        ImageIcon image = new ImageIcon("img1.jpg");
+        testImg = image.getImage();
+
+        int w = testImg.getWidth(this);
+        int h = testImg.getHeight(this);
+        setPreferredSize(new Dimension(w, h));
+    }*/
+
+    //////////////////////////////////////////////
+    // Slut
+    //////////////////////////////////////////////
+
     private static final int PIXEL_WIDTH = 1000; //sample, think pixels
     private static final int PIXEL_HEIGHT = 1000;
 
     private TileType[][] board;
-    private final int height;
-    private final int width;
+    private int height = 0;
+    private int width = 0;
 
     /*public Room(TileType[][] board, int width, int height){
         super();
