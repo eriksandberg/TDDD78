@@ -10,5 +10,5 @@ public class Player extends Char{
     private static final int default_playerWidth = 10;
 
 
-    }
+    
 }
