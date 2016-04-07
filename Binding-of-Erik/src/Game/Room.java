@@ -48,7 +48,7 @@ public class Room {
     private int height = 0;
     private int width = 0;
     public boolean gameOver = false;
-    public TileHandler thisTile = null;
+    public TileHandler currentTile = null;
 
     private final List<BoardListener> boardListenerArray = new ArrayList<BoardListener>();
 
@@ -66,7 +66,7 @@ public class Room {
 	return height;
     }
 
-    public TileHandler getTileType(){return thisTile;}
+    public TileHandler getTileType(){return currentTile;}
 
     public TileType getSquare(int x, int y){
 
