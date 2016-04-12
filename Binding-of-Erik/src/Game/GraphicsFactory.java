@@ -3,17 +3,20 @@ package Game;
 /**
  * Created by wassing on 2016-04-12.
  */
+
 public class GraphicsFactory
 {
     //graphics abbreviations
     private static final TileType T = TileType.TRANSPARENT;
     private static final TileType R = TileType.R;
     private static final TileType B = TileType.B;
-    private Room room;
     //add more as we continue to define different things
 
-    private int pixelWidth = room.getPixelsPerWidth();
-    private int pixelHeight = room.getPixelsPerHeight();
+    //private final Room room;
+    //room = thisRoom;
+
+    private int pixelWidth = 40; //room.getPixelsPerWidth();
+    private int pixelHeight = 40; //room.getPixelsPerHeight();
 
     //an entity is one square, but consists of "subsquares" inside the big square. Always an int, not a float.
     private final int ENTITYWIDTH = pixelWidth / 10;
@@ -23,9 +26,9 @@ public class GraphicsFactory
     public int getEntityHeight(){return ENTITYHEIGHT;}
 
     //player is right now a ring of blue pixels. transparent blocks will be detected so they don't overwrite ground.
-    private final TileType Player[][] = {{T,T,T,B,B,B,T,T,T},{T,T,B,T,T,T,T,B,T,T},{T,B,T,T,T,T,T,T,B,T},
-	    {B,T,T,T,T,T,T,T,T,B},{B,T,T,T,T,T,T,T,T,B},{B,T,T,T,T,T,T,T,T,B},{B,T,T,T,T,T,T,T,T,B}, {T,B,T,T,T,T,T,T,B,T},
-	    {T,T,B,T,T,T,T,B,T,T},{T,T,T,B,B,B,B,T,T,T}
+    private final TileType Player[][] = {{T,T,T,B,B,B,B,T,T,T},{T,T,B,T,T,T,T,B,T,T},{T,B,T,T,T,T,T,T,B,T},
+	    {B,T,T,T,T,T,T,T,T,B},{B,T,T,T,T,T,T,T,T,B},{B,T,T,T,T,T,T,T,T,B},{B,T,T,T,T,T,T,T,T,B},
+	    {T,B,T,T,T,T,T,T,B,T},{T,T,B,T,T,T,T,B,T,T},{T,T,T,B,B,B,B,T,T,T}
     };
 
     public TileHandler getPlayer(){return new TileHandler(Player, ENTITYWIDTH, ENTITYHEIGHT);}

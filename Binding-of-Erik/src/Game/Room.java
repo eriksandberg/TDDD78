@@ -41,12 +41,12 @@ public class Room {
     // Slut
     //////////////////////////////////////////////
 
-    private static final int PIXELS_PER_WIDTH = 50; //sample, think pixels, might not be needed here but that's for later
-    private static final int PIXELS_PER_HEIGHT = 50; //this would give us a 20x20 square.
+    private static final int PIXELS_PER_WIDTH = 40; //sample, think pixels, might not be needed here but that's for later
+    private static final int PIXELS_PER_HEIGHT = 40; //this would give us a 20x20 square.
 
     private TileType[][] board;
-    private int playerXCoord;
-    private int playerYCoord;
+    private int playerXCoord = 0;
+    private int playerYCoord = 0;
     private int height;
     private int width;
     public boolean gameOver = false;
@@ -54,18 +54,18 @@ public class Room {
 
     private final List<BoardListener> boardListenerArray = new ArrayList<BoardListener>();
 
-    public int getPixelsPerWidth() {return PIXELS_PER_WIDTH;}
+    public int getPixelsPerWidth() {return PIXELS_PER_WIDTH;} //use later maybe
 
-    public int getPixelsPerHeight() {return PIXELS_PER_HEIGHT;}
+    public int getPixelsPerHeight() {return PIXELS_PER_HEIGHT;} //use later
 
     public TileType[][] getBoard() {return board;}
 
     public int getColumns(){
-	return width;
+	return PIXELS_PER_WIDTH;
     }
 
     public int getRows(){
-	return height;
+	return PIXELS_PER_HEIGHT;
     }
 
     public TileHandler getTileType(){return currentTile;}
@@ -108,14 +108,14 @@ public class Room {
 	    	board[tileX][tileY] = TileType.G; //grass
 	    }
 	}
-	spawnPlayer();
+	spawnPlayer(playerXCoord, playerYCoord);
     }
 
-    public void spawnPlayer(){ //should only have to be called ONCE per room.
+    public void spawnPlayer(int x, int y){ //should only have to be called ONCE per room. x,y, modifiers are needed.
 	GraphicsFactory player = new GraphicsFactory();
 	this.currentTile = player.getPlayer();
-	this.playerXCoord = 0;
-	this.playerYCoord = 0;
+	this.playerXCoord = x;
+	this.playerYCoord = y;
 	notifyListeners();
     }
 
@@ -140,20 +140,19 @@ public class Room {
         }
         switch (direction){
             case "up": //go up
-		if (canWeMove(direction)){
-		    this.playerYCoord += 1; //whatever direction we move in, still have to test things.
-		}
+		this.playerYCoord += 1;
                 break;
             case "down": //go down
                 break;
             case "right": //go right
-		if (canWeMove(direction)){
-		    this.playerXCoord += 1;
-		}
+		this.playerXCoord += 1;
                 break;
             case "left": //go left
                 break;
         }
+	if (!canWeMove(direction)){
+	    //reset us if we went out of bounds.
+	}
         notifyListeners();
     }
 }

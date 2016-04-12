@@ -12,10 +12,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 
+
 public class GameWindow extends JFrame {
 
-    private static final int FRAMEWIDTH = 1000; //pixels, also our entire coordinates system.
-    private static final int FRAMEHEIGHT = 1000;
+    private static final int FRAMEWIDTH = 800; //pixels, also our entire coordinates system.
+    private static final int FRAMEHEIGHT = 800;
 
     public GameWindow() {
         windowInit();

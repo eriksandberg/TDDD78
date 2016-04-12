@@ -74,10 +74,10 @@ public class EventHandler extends JComponent implements BoardListener {
 	final Graphics2D g2 = (Graphics2D) g;
 	TileType square;
 	for (int i = 0; i < room.getColumns(); i++){
-	    for (int j = 2; j < room.getRows(); j++){
+	    for (int j = 0; j < room.getRows(); j++){
 		square = room.getSquare(i, j);
 		g2.setColor(map.get(square));
-		g2.fillRect(i*30, j*30, 30, 30);
+		g2.fillRect(i*5, j*5, 5, 5);
 	    }
 	}
     }
