@@ -12,8 +12,7 @@ public class GraphicsFactory
     private static final TileType B = TileType.B;
     //add more as we continue to define different things
 
-    //private final Room room;
-    //room = thisRoom;
+    //private final Room room; //this needs to be instantiated so that getters work.
 
     private int pixelWidth = 40; //room.getPixelsPerWidth();
     private int pixelHeight = 40; //room.getPixelsPerHeight();
