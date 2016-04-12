@@ -21,6 +21,8 @@ public class Char extends GameObject {
         return health;
     }
 
+    public int getDamage() {return damage;}
+
     // Used to set a characters hp to a specific value
     public void setHealth(int health) {
         this.health = health;

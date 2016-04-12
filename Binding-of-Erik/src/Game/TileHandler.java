@@ -25,6 +25,7 @@ public class TileHandler //instanciates the enums and lets us work with them as 
         }
 
     public TileType[][] getShape(){
-            return shape;
-        } //needed if we create entities that are non-square.
+        return shape;
+    } //needed if we create entities that are non-square. See tetris poly class for block demo.
+    //Will be used to make "slightly" funnier graphics than simple squares.
 }

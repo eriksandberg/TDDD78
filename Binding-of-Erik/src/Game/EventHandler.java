@@ -10,7 +10,7 @@ import java.util.EnumMap;
  */
 public class EventHandler extends JComponent implements BoardListener {
 
-    private static final int squareWidth = 1000;
+    private static final int squareWidth = 1000; //graphical size of the actual GameFrame
     private static final int squareHeight = 1000;
     private final Room room;
     private final EnumMap<TileType, Color> map = TileType.eMap();

@@ -41,10 +41,12 @@ public class Room {
     // Slut
     //////////////////////////////////////////////
 
-    private static final int PIXEL_WIDTH = 1000; //sample, think pixels, might not be needed here but that's for later
-    private static final int PIXEL_HEIGHT = 1000;
+    private static final int PIXELS_PER_WIDTH = 100; //sample, think pixels, might not be needed here but that's for later
+    private static final int PIXELS_PER_HEIGHT = 100;
 
     private TileType[][] board;
+    private int playerXCoord;
+    private int playerYCoord;
     private int height = 0;
     private int width = 0;
     public boolean gameOver = false;
@@ -99,11 +101,20 @@ public class Room {
 	this.height = height;
 	this.width = width;
 	board = new TileType[width][height];
-	for (int tileY = 0; tileY < PIXEL_HEIGHT; tileY += height){ //for every y...
-	    for (int tileX = 0; tileX < PIXEL_WIDTH; tileX += width){ //for every x in y... (currently gives y,x representation)
+	for (int tileY = 0; tileY < PIXELS_PER_HEIGHT; tileY += height){ //for every y...
+	    for (int tileX = 0; tileX < PIXELS_PER_WIDTH; tileX += width){ //for every x in y... (currently gives y,x representation)
 		board[tileY][tileX] = TileType.EMPTY;
 	    }
 	}
+	spawnPlayer();
+    }
+
+    public void spawnPlayer(){ //should only have to be called ONCE per room.
+	GraphicsFactory player = new GraphicsFactory();
+	this.currentTile = player.getPlayer();
+	this.playerXCoord = 0;
+	this.playerYCoord = 0;
+	notifyListeners();
     }
 
     public void addBoardListener(BoardListener bl){
@@ -116,12 +127,19 @@ public class Room {
         }
     }
 
+    private boolean canWeMove(){
+	return true;
+    }
+
     public void moveAnywhere(String direction){
         if (gameOver){
-            return;
+            return; //can't move if we lost, prevents us from doing stupid things.
         }
         switch (direction){
             case "up": //go up
+		if (canWeMove()){
+		    playerYCoord += 1; //whatever direction we move in, still have to test things.
+		}
                 break;
             case "down": //go down
                 break;
