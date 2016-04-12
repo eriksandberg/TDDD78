@@ -21,11 +21,13 @@ public class GraphicsFactory
 	    {T,T,B,T,T,T,T,B,T,T},{T,T,T,B,B,B,B,T,T,T}
     };
 
-    public TileHandler getPlayer(){return new Player(Player, ENTITYWIDTH, ENTITYHEIGHT);}
+    public TileHandler getPlayer(){return new TileHandler(Player, ENTITYWIDTH, ENTITYHEIGHT);}
 
     //enemy is right now a ring of red pixels. transparent blocks will be detected so they don't overwrite ground.
     private final TileType Enemy[][] = {{T,T,T,R,R,R,R,T,T,T},{T,T,R,T,T,T,T,R,T,T},{T,R,T,T,T,T,T,T,R,T},
 	    {R,T,T,T,T,T,T,T,T,R},{R,T,T,T,T,T,T,T,T,R},{R,T,T,T,T,T,T,T,T,R},{R,T,T,T,T,T,T,T,T,R},
 	    {T,R,T,T,T,T,T,T,R,T},{T,T,R,T,T,T,T,R,T,T},{T,T,T,R,R,R,R,T,T,T}
     };
+
+    public TileHandler getEnemy(){return new TileHandler(Enemy, ENTITYWIDTH, ENTITYHEIGHT);}
 }

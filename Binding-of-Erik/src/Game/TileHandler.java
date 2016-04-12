@@ -6,8 +6,8 @@ package Game;
 public class TileHandler //instanciates the enums and lets us work with them as we please.
 {
     private TileType[][] shape;
-        private final int width;
-        private final int height;
+    private final int width;
+    private final int height;
 
     public TileHandler(TileType[][] shape, int width, int height) {
 	super();
