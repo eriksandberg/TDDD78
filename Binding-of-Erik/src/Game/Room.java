@@ -41,14 +41,14 @@ public class Room {
     // Slut
     //////////////////////////////////////////////
 
-    private static final int PIXELS_PER_WIDTH = 100; //sample, think pixels, might not be needed here but that's for later
-    private static final int PIXELS_PER_HEIGHT = 100;
+    private static final int PIXELS_PER_WIDTH = 50; //sample, think pixels, might not be needed here but that's for later
+    private static final int PIXELS_PER_HEIGHT = 50; //this would give us a 20x20 square.
 
     private TileType[][] board;
     private int playerXCoord;
     private int playerYCoord;
-    private int height = 0;
-    private int width = 0;
+    private int height;
+    private int width;
     public boolean gameOver = false;
     public TileHandler currentTile = null;
 
@@ -97,13 +97,13 @@ public class Room {
     }
 
     //custom constructor for a room, may not be used at all later. Depends how we implement.
-    public Room(int height, int width){
+    public Room(int width, int height){
 	this.height = height;
 	this.width = width;
 	board = new TileType[width][height];
-	for (int tileY = 0; tileY < PIXELS_PER_HEIGHT; tileY += height){ //for every y...
-	    for (int tileX = 0; tileX < PIXELS_PER_WIDTH; tileX += width){ //for every x in y... (currently gives y,x representation)
-		board[tileY][tileX] = TileType.EMPTY;
+	for (int tileX = 0; tileX < (width/PIXELS_PER_WIDTH); tileX++){ //will loop for every "square" and assign a tile to it.
+	    for (int tileY = 0; tileY < (height/PIXELS_PER_HEIGHT); tileY++){
+	    	board[tileX][tileY] = TileType.G; //grass
 	    }
 	}
 	spawnPlayer();
@@ -127,7 +127,8 @@ public class Room {
         }
     }
 
-    private boolean canWeMove(){
+    private boolean canWeMove(String direction){
+	//need to bordercheck. LATER.
 	return true;
     }
 
@@ -137,13 +138,16 @@ public class Room {
         }
         switch (direction){
             case "up": //go up
-		if (canWeMove()){
-		    playerYCoord += 1; //whatever direction we move in, still have to test things.
+		if (canWeMove(direction)){
+		    this.playerYCoord += 1; //whatever direction we move in, still have to test things.
 		}
                 break;
             case "down": //go down
                 break;
             case "right": //go right
+		if (canWeMove(direction)){
+		    this.playerXCoord += 1;
+		}
                 break;
             case "left": //go left
                 break;

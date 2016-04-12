@@ -12,7 +12,7 @@ public class GraphicsFactory
     private static final TileType B = TileType.B;
     //add more as we continue to define different things
 
-    public int getEntityHeight() {return ENTITYHEIGHT;}
+    public int getEntityHeight(){return ENTITYHEIGHT;}
     public int getEntityWidth(){return ENTITYWIDTH;}
 
     //player is right now a ring of blue pixels. transparent blocks will be detected so they don't overwrite ground.
