@@ -8,7 +8,7 @@ import java.awt.Color;
 public enum TileType { //right now a copypaste from tetris, but easy to modify depending on our needs.
     EMPTY, CYAN, B, L, Y, G, P, R, OUTSIDE, TRANSPARENT;
 
-    private static Color transparent = new Color(0,0,0,0); //placeholder, will probably be used as an identifyer.
+    private static Color transparent = new Color(0,0,0,0); // will probably be used as an identifyer to ensure "smooth" graphics
 
     static EnumMap eMap(){
 	EnumMap<TileType, Color> map = new EnumMap<TileType, Color>(TileType.class);

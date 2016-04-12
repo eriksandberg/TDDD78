@@ -5,15 +5,22 @@ package Game;
  */
 public class GraphicsFactory
 {
-    private final int ENTITYHEIGHT = 10; //all entities fit in one "board square", but they can move around somewhat freely.
-    private final int ENTITYWIDTH = 10;
+    //graphics abbreviations
     private static final TileType T = TileType.TRANSPARENT;
     private static final TileType R = TileType.R;
     private static final TileType B = TileType.B;
+    private Room room;
     //add more as we continue to define different things
 
-    public int getEntityHeight(){return ENTITYHEIGHT;}
+    private int pixelWidth = room.getPixelsPerWidth();
+    private int pixelHeight = room.getPixelsPerHeight();
+
+    //an entity is one square, but consists of "subsquares" inside the big square. Always an int, not a float.
+    private final int ENTITYWIDTH = pixelWidth / 10;
+    private final int ENTITYHEIGHT = pixelHeight / 10;
+
     public int getEntityWidth(){return ENTITYWIDTH;}
+    public int getEntityHeight(){return ENTITYHEIGHT;}
 
     //player is right now a ring of blue pixels. transparent blocks will be detected so they don't overwrite ground.
     private final TileType Player[][] = {{T,T,T,B,B,B,T,T,T},{T,T,B,T,T,T,T,B,T,T},{T,B,T,T,T,T,T,T,B,T},

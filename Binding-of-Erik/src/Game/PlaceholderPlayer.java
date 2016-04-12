@@ -4,11 +4,11 @@ package Game;
  * Created by wassing on 2016-04-04.
  */
 
-public class Player extends Char{
+public class PlaceholderPlayer extends Char{
 
-    // Player constructor, currently identical with the constructor of generic enemies
+    // PlaceholderPlayer constructor, currently identical with the constructor of generic enemies
     // Move to Char unless changed later
-    public Player (int xcoord, int ycoord, int health) {
+    public PlaceholderPlayer(int xcoord, int ycoord, int health) {
 
         setXcoord(xcoord);
         setYcoord(ycoord);

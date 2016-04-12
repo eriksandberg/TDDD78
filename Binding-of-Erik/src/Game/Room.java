@@ -54,9 +54,9 @@ public class Room {
 
     private final List<BoardListener> boardListenerArray = new ArrayList<BoardListener>();
 
-    public int getHeight() {return height;}
+    public int getPixelsPerWidth() {return PIXELS_PER_WIDTH;}
 
-    public int getWidth() {return width;}
+    public int getPixelsPerHeight() {return PIXELS_PER_HEIGHT;}
 
     public TileType[][] getBoard() {return board;}
 
@@ -90,6 +90,8 @@ public class Room {
 
     public void tick(){
         //always called by the clock, does all the "machine" work, will call functions which in turn call the paint-components.
+    	//more to be implemented here.
+	notifyListeners();
     }
 
     public void randomizeRoom(){
@@ -102,7 +104,7 @@ public class Room {
 	this.width = width;
 	board = new TileType[width][height];
 	for (int tileX = 0; tileX < (width/PIXELS_PER_WIDTH); tileX++){ //will loop for every "square" and assign a tile to it.
-	    for (int tileY = 0; tileY < (height/PIXELS_PER_HEIGHT); tileY++){
+	    for (int tileY = (height/PIXELS_PER_HEIGHT); tileY > 0; tileY--){ //starts at max Y, this gives proper (x,y)
 	    	board[tileX][tileY] = TileType.G; //grass
 	    }
 	}
@@ -118,8 +120,8 @@ public class Room {
     }
 
     public void addBoardListener(BoardListener bl){
-            boardListenerArray.add(bl);
-        }
+	boardListenerArray.add(bl);
+    }
 
     private void notifyListeners(){
         for (BoardListener boardListener : boardListenerArray) {
