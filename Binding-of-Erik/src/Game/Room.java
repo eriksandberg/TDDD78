@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 //public class Room extends JPanel {} //if we do jpanels in jframes, but wait with this.
 public class Room {
@@ -47,6 +48,8 @@ public class Room {
     private TileType[][] board;
     private int playerXCoord = 0;
     private int playerYCoord = 0;
+    private int enemyXCoord = 0; //might have to be array
+    private int enemyYCoord = 0;
     private int height;
     private int width;
     public boolean gameOver = false;
@@ -99,12 +102,15 @@ public class Room {
     }
 
     //custom constructor for a room, may not be used at all later. Depends how we implement.
+    //BREAKPOINT HERE: WHY IS NOT THE WHOLE BOARD BEING COLORED? SEE EVENTHANDLER CLASS.
     public Room(int width, int height){
-	this.height = height;
 	this.width = width;
+	this.height = height;
+	System.out.println("Width: " + width);
+	System.out.println("Height: " + height);
 	board = new TileType[width][height];
-	for (int tileX = 0; tileX < (width/PIXELS_PER_WIDTH); tileX++){ //will loop for every "square" and assign a tile to it.
-	    for (int tileY = (height/PIXELS_PER_HEIGHT); tileY > 0; tileY--){ //starts at max Y, this gives proper (x,y)
+	for (int tileX = 0; tileX < width; tileX++){ //will loop for every "square" and assign a tile to it.
+	    for (int tileY = 0; tileY < height; tileY++){ //starts at max Y, this gives proper (x,y)
 	    	board[tileX][tileY] = TileType.G; //grass
 	    }
 	}
@@ -113,9 +119,18 @@ public class Room {
 
     public void spawnPlayer(int x, int y){ //should only have to be called ONCE per room. x,y, modifiers are needed.
 	GraphicsFactory player = new GraphicsFactory();
-	this.currentTile = player.getPlayer();
+	this.currentTile = player.getPlayer(); //could also be char
 	this.playerXCoord = x;
 	this.playerYCoord = y;
+	notifyListeners();
+    }
+
+    public void spawnEnemy(){ //should be used to spawn several enemy objects, store in an array?
+        Random generator = new Random();
+        GraphicsFactory enemy = new GraphicsFactory();
+	this.currentTile = enemy.getEnemy(); //could also be char
+	this.enemyXCoord = generator.nextInt(20); //random up to 20
+	this.enemyYCoord = generator.nextInt(20); //random up to 20
 	notifyListeners();
     }
 

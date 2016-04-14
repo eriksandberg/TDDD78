@@ -10,8 +10,8 @@ import java.util.EnumMap;
  */
 public class EventHandler extends JComponent implements BoardListener {
 
-    private static final int squareWidth = 1000; //graphical size of the actual GameFrame
-    private static final int squareHeight = 1000;
+    private static final int squareWidth = 800; //graphical size of the actual GameFrame
+    private static final int squareHeight = 800;
     private final Room room;
     private final EnumMap<TileType, Color> map = TileType.eMap();
     public EventHandler(Room thisRoom) {
@@ -77,6 +77,9 @@ public class EventHandler extends JComponent implements BoardListener {
 	    for (int j = 0; j < room.getRows(); j++){
 		square = room.getSquare(i, j);
 		g2.setColor(map.get(square));
+		/*here we would need to compare if we find the "player" and then do a specific paint for that.
+		OR restructure the whole painting system. Probably the best idea and then have entities be of "shapes"
+		within the system. We have the code to make this happen already. */
 		g2.fillRect(i*5, j*5, 5, 5);
 	    }
 	}

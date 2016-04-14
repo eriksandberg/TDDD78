@@ -21,7 +21,8 @@ public enum TileType { //right now a copypaste from tetris, but easy to modify d
 	map.put(TileType.P, Color.magenta); //purple
 	map.put(TileType.R, Color.red);
 	map.put(TileType.OUTSIDE, Color.gray);
-	map.put(TileType.TRANSPARENT, transparent);
+	map.put(TileType.TRANSPARENT, transparent); //instead of using transparent we should use a getter or similar
+	//using a getter helps us not overwrite what currently exists on the specified pixel.
 	return map;
     }
 }

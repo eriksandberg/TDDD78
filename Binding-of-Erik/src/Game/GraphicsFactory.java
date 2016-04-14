@@ -18,25 +18,27 @@ public class GraphicsFactory
     private int pixelHeight = 40; //room.getPixelsPerHeight();
 
     //an entity is one square, but consists of "subsquares" inside the big square. Always an int, not a float.
-    private final int ENTITYWIDTH = pixelWidth / 10;
-    private final int ENTITYHEIGHT = pixelHeight / 10;
+    private final int ENTITY_WIDTH = pixelWidth / 10;
+    private final int ENTITY_HEIGHT = pixelHeight / 10;
 
-    public int getEntityWidth(){return ENTITYWIDTH;}
-    public int getEntityHeight(){return ENTITYHEIGHT;}
+    public int getEntityWidth(){return ENTITY_WIDTH;}
+    public int getEntityHeight(){return ENTITY_HEIGHT;}
 
     //player is right now a ring of blue pixels. transparent blocks will be detected so they don't overwrite ground.
-    private final TileType Player[][] = {{T,T,T,B,B,B,B,T,T,T},{T,T,B,T,T,T,T,B,T,T},{T,B,T,T,T,T,T,T,B,T},
+    private final TileType[][] player = {{T,T,T,B,B,B,B,T,T,T},{T,T,B,T,T,T,T,B,T,T},{T,B,T,T,T,T,T,T,B,T},
 	    {B,T,T,T,T,T,T,T,T,B},{B,T,T,T,T,T,T,T,T,B},{B,T,T,T,T,T,T,T,T,B},{B,T,T,T,T,T,T,T,T,B},
 	    {T,B,T,T,T,T,T,T,B,T},{T,T,B,T,T,T,T,B,T,T},{T,T,T,B,B,B,B,T,T,T}
     };
 
-    public TileHandler getPlayer(){return new TileHandler(Player, ENTITYWIDTH, ENTITYHEIGHT);}
+    public TileHandler getPlayer(){return new TileHandler(player, ENTITY_WIDTH, ENTITY_HEIGHT);}
 
     //enemy is right now a ring of red pixels. transparent blocks will be detected so they don't overwrite ground.
-    private final TileType Enemy[][] = {{T,T,T,R,R,R,R,T,T,T},{T,T,R,T,T,T,T,R,T,T},{T,R,T,T,T,T,T,T,R,T},
+    private final TileType[][] enemy = {{T,T,T,R,R,R,R,T,T,T},{T,T,R,T,T,T,T,R,T,T},{T,R,T,T,T,T,T,T,R,T},
 	    {R,T,T,T,T,T,T,T,T,R},{R,T,T,T,T,T,T,T,T,R},{R,T,T,T,T,T,T,T,T,R},{R,T,T,T,T,T,T,T,T,R},
 	    {T,R,T,T,T,T,T,T,R,T},{T,T,R,T,T,T,T,R,T,T},{T,T,T,R,R,R,R,T,T,T}
     };
 
-    public TileHandler getEnemy(){return new TileHandler(Enemy, ENTITYWIDTH, ENTITYHEIGHT);}
+    public TileHandler getEnemy(){return new TileHandler(enemy, ENTITY_WIDTH, ENTITY_HEIGHT);}
+
+
 }
