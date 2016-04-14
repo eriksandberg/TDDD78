@@ -4,11 +4,6 @@ package Game;
  * Created by wassing on 2016-04-04.
  */
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,14 +37,14 @@ public class Room {
     // Slut
     //////////////////////////////////////////////
 
-    private static final int PIXELS_PER_WIDTH = 40; //sample, think pixels, might not be needed here but that's for later
-    private static final int PIXELS_PER_HEIGHT = 40; //this would give us a 20x20 square.
+    private static final int PIXELWIDTH_PER_TILE = 40; //sample, think pixels, might not be needed here but that's for later
+    private static final int PIXELHEIGHT_PER_TILE = 40; //this would give us a 20x20 square.
 
     private TileType[][] board;
     private int playerXCoord = 0;
     private int playerYCoord = 0;
-    private int enemyXCoord = 0; //might have to be array
-    private int enemyYCoord = 0;
+    private int enemyXCoord; //might have to be array
+    private int enemyYCoord;
     private int height;
     private int width;
     public boolean gameOver = false;
@@ -57,19 +52,21 @@ public class Room {
 
     private final List<BoardListener> boardListenerArray = new ArrayList<BoardListener>();
 
-    public int getPixelsPerWidth() {return PIXELS_PER_WIDTH;} //use later maybe
+    public int getPixelWidthPerTile() {return PIXELWIDTH_PER_TILE;} //use later maybe
 
-    public int getPixelsPerHeight() {return PIXELS_PER_HEIGHT;} //use later
+    public int getPixelHeightPerTile() {return PIXELHEIGHT_PER_TILE;} //use later
+
+    public int getWidth(){return width;}
+
+    public int getHeight(){return height;}
 
     public TileType[][] getBoard() {return board;}
 
     public int getColumns(){
-	return PIXELS_PER_WIDTH;
-    }
+	return (width/ PIXELWIDTH_PER_TILE);
+    } //20
 
-    public int getRows(){
-	return PIXELS_PER_HEIGHT;
-    }
+    public int getRows(){return (height/ PIXELHEIGHT_PER_TILE);} //20
 
     public TileHandler getTileType(){return currentTile;}
 
@@ -93,7 +90,7 @@ public class Room {
 
     public void tick(){
         //always called by the clock, does all the "machine" work, will call functions which in turn call the paint-components.
-    	//more to be implemented here.
+    	spawnEnemy();
 	notifyListeners();
     }
 
@@ -106,31 +103,35 @@ public class Room {
     public Room(int width, int height){
 	this.width = width;
 	this.height = height;
-	System.out.println("Width: " + width);
-	System.out.println("Height: " + height);
+	System.out.println("Width: " + this.width);
+	System.out.println("Height: " + this.height);
 	board = new TileType[width][height];
 	for (int tileX = 0; tileX < width; tileX++){ //will loop for every "square" and assign a tile to it.
 	    for (int tileY = 0; tileY < height; tileY++){ //starts at max Y, this gives proper (x,y)
-	    	board[tileX][tileY] = TileType.G; //grass
+	    	board[tileX][tileY] = TileType.G; //grass, green
 	    }
 	}
-	spawnPlayer(playerXCoord, playerYCoord);
+	spawnPlayer();
     }
 
-    public void spawnPlayer(int x, int y){ //should only have to be called ONCE per room. x,y, modifiers are needed.
+    public void insertEntity(){
+	//object spawner for ALL objects. Be it player, enemies or shots on the screen.
+    }
+
+    public void spawnPlayer(){ //should only have to be called ONCE per room. x,y, modifiers are needed.
 	GraphicsFactory player = new GraphicsFactory();
-	this.currentTile = player.getPlayer(); //could also be char
-	this.playerXCoord = x;
-	this.playerYCoord = y;
+	this.currentTile = player.getPlayer(); //could also be character
+	this.playerXCoord = 0;
+	this.playerYCoord = 0;
 	notifyListeners();
     }
 
     public void spawnEnemy(){ //should be used to spawn several enemy objects, store in an array?
         Random generator = new Random();
         GraphicsFactory enemy = new GraphicsFactory();
-	this.currentTile = enemy.getEnemy(); //could also be char
-	this.enemyXCoord = generator.nextInt(20); //random up to 20
-	this.enemyYCoord = generator.nextInt(20); //random up to 20
+	this.currentTile = enemy.getEnemy(); //could also be character
+	this.enemyXCoord = 10; //generator.nextInt(20); //random up to 20
+	this.enemyYCoord = 10; //generator.nextInt(20); //random up to 20
 	notifyListeners();
     }
 

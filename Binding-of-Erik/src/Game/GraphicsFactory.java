@@ -14,8 +14,8 @@ public class GraphicsFactory
 
     //private final Room room; //this needs to be instantiated so that getters work.
 
-    private int pixelWidth = 40; //room.getPixelsPerWidth();
-    private int pixelHeight = 40; //room.getPixelsPerHeight();
+    private int pixelWidth = 40; //use getter
+    private int pixelHeight = 40; //use getter
 
     //an entity is one square, but consists of "subsquares" inside the big square. Always an int, not a float.
     private final int ENTITY_WIDTH = pixelWidth / 10;

@@ -73,14 +73,16 @@ public class EventHandler extends JComponent implements BoardListener {
 	super.paintComponent(g);
 	final Graphics2D g2 = (Graphics2D) g;
 	TileType square;
-	for (int i = 0; i < room.getColumns(); i++){
-	    for (int j = 0; j < room.getRows(); j++){
+	for (int i = 0; i < room.getWidth(); i++){
+	    for (int j = 0; j < room.getHeight(); j++){
 		square = room.getSquare(i, j);
-		g2.setColor(map.get(square));
-		/*here we would need to compare if we find the "player" and then do a specific paint for that.
-		OR restructure the whole painting system. Probably the best idea and then have entities be of "shapes"
-		within the system. We have the code to make this happen already. */
-		g2.fillRect(i*5, j*5, 5, 5);
+		if (square != TileType.TRANSPARENT) {
+		    g2.setColor(map.get(square));
+		}else{
+		    g2.setColor(Color.green); //need a general solution for this to look good.
+		}
+		g2.fillRect(i * room.getPixelWidthPerTile() / 10, j * room.getPixelHeightPerTile() / 10,
+			    room.getPixelWidthPerTile() / 10, room.getPixelHeightPerTile() / 10);
 	    }
 	}
     }
