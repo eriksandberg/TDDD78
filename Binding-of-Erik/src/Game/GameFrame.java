@@ -23,7 +23,7 @@ public class GameFrame extends JFrame{ //this class does all the actual frame up
 	this.add(paintArea, BorderLayout.CENTER);
 	//this.createMenu(); extra for later, options for file etc.
 
-	Timer clockTimer = new Timer(1000, doOneStep); //4 ticks per second atm, will increase framerate to about 30 later on.
+	Timer clockTimer = new Timer(250, doOneStep); //4 ticks per second atm, will increase framerate to about 30 later on.
 	clockTimer.setCoalesce(true);
 	clockTimer.start();
     }
@@ -31,8 +31,6 @@ public class GameFrame extends JFrame{ //this class does all the actual frame up
     private final Action doOneStep = new AbstractAction(){
 	public void actionPerformed(ActionEvent e){
 	    room.tick();
-	    //board.randomizeBoard(); lulz, could be fun for absolute chaos
 	}
-
     };
 }

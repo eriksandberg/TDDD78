@@ -79,15 +79,19 @@ public class EventHandler extends JComponent implements BoardListener {
 		if (square != TileType.TRANSPARENT) {
 		    g2.setColor(map.get(square));
 		}else{
-		    g2.setColor(Color.green); //need a general solution for this to look good.
+		    g2.setColor(Color.green); //need a general solution for this to look good. Use TEMP
 		}
-		g2.fillRect(i * room.getPixelWidthPerTile() / 10, j * room.getPixelHeightPerTile() / 10,
-			    room.getPixelWidthPerTile() / 10, room.getPixelHeightPerTile() / 10);
+		g2.fillRect(i * room.getPixelWidthPerTile(), j * room.getPixelHeightPerTile(),
+			    room.getPixelWidthPerTile(), room.getPixelHeightPerTile());
+		/*Need a change in how many tiles we have in the room. Base tile needs to be all possible moves.
+		Meaning: room is made up of 20x20 blocks. Every block contains 10 tiles. Need to define pixelsize of tile.
+		Make sure to draw every tile with this function. When working out rooms etc, use an oversized pattern.
+		*/
 	    }
 	}
     }
 
     public void BoardChanged(){
-            repaint();
-        }
+	repaint();
+    }
 }
