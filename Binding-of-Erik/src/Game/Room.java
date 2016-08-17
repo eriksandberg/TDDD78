@@ -6,7 +6,6 @@ package Game;
 
 import java.lang.String;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -26,14 +25,15 @@ public class Room {
     private int width;
     public boolean gameOver = false;
     private Entity playerEntity = null;
+    private final static int SHOTSPEED = 1; //configurable
     private List<Entity> entitiesInRoom = new ArrayList<Entity>();
     private List<Entity> shotsInRoom = new ArrayList<Entity>();
 
     private final List<BoardListener> boardListenerArray = new ArrayList<BoardListener>();
 
-    public int getPixelWidthPerTile() {return PIXELWIDTH_PER_TILE;} //use later maybe
+    public int getPixelWidthPerTile() {return PIXELWIDTH_PER_TILE;} //used by painter
 
-    public int getPixelHeightPerTile() {return PIXELHEIGHT_PER_TILE;} //use later
+    public int getPixelHeightPerTile() {return PIXELHEIGHT_PER_TILE;}
 
     public int getWidth(){return width;}
 
@@ -82,20 +82,24 @@ public class Room {
         }
         else { //major game logic goes here
             for (Entity oneEntity : entitiesInRoom){
-                if (oneEntity.isEnemy) { //only do the following if the looped entity is an actual enemy
-                    moveEntity(oneEntity); //move them all!
-                    spawnEnemyShot(oneEntity.entityXCoord-4, oneEntity.entityYCoord-4); //can be spawned on top of the entity that spawned it.
+                //only do the following if the looped entity is an actual enemy
+                //moveEntity(oneEntity); //move the enemies!
+                if (oneEntity.shotsFired < 1){ //can be used as debugger.
+                    spawnNormalEnemyShot(oneEntity.entityXCoord - 4, oneEntity.entityYCoord - 4); //can be spawned on top of the entity that spawned it.
                 }
-                else{ //entity is a shot, try to hit the player. Best way is to keep a "trajectory" as a tag in the Entity
-                    oneEntity.entityXCoord += 5; //getTrajectory(entity)
-                    //do same with Y coord
-                }
+            }
+            for (Entity oneShot : shotsInRoom){
+                oneShot.entityXCoordFloat += oneShot.shotXTrajectory; //is a float.
+                oneShot.entityXCoord += Math.round(oneShot.entityXCoordFloat);
+                oneShot.entityYCoordFloat += oneShot.shotYTrajectory; //is a float.
+                oneShot.entityYCoord += Math.round(oneShot.entityYCoordFloat);
+                System.out.println("Shot is at coordinates " + oneShot.entityXCoord + "," + oneShot.entityYCoord); //debug
             }
             //add all shots to the entity list. Remove all the shots afterwards.
-            for (int i = shotsInRoom.size()-1; i >= 0; i--){
+            /*for (int i = shotsInRoom.size()-1; i >= 0; i--){
                 entitiesInRoom.add(shotsInRoom.get(i));
                 shotsInRoom.remove(i);
-            }
+            }*/
         }
 	notifyListeners();
     }
@@ -116,7 +120,7 @@ public class Room {
 	}
         spawnPlayer();
         spawnEnemy();
-        spawnEnemy();
+        //spawnEnemy();
     }
 
     public void moveEntity(Entity entity){ //moves entities at random. Smarter moving algorithm later.
@@ -150,21 +154,37 @@ public class Room {
     public void spawnEnemy(){ //should be used to spawn several enemy objects, must be stored in an array
         Random rand = new Random(); //if we want to get random enemies later.
 	final Entity newEntity = GraphicsFactory.getInstance().getEnemy(); //right now just gets one default enemy.
-        newEntity.entityXCoord = rand.nextInt(200);
-        newEntity.entityYCoord = rand.nextInt(200);
+        newEntity.entityXCoord = 100; //rand.nextInt(200);
+        newEntity.entityYCoord = 100; //rand.nextInt(200);
         newEntity.isEnemy = true;
+        newEntity.shotsFired = 0;
         entitiesInRoom.add(newEntity); //append the enemy to all enemies in room.
 	notifyListeners();
     }
 
-    public void spawnEnemyShot(int x, int y){
-        final Entity newEntity = GraphicsFactory.getInstance().getLightShot();
-        newEntity.entityXCoord = x;
-        newEntity.entityYCoord = y;
-        newEntity.isEnemy = false;
-        shotsInRoom.add(newEntity);
+    public void spawnNormalEnemyShot(int x, int y){
+        final Entity newShot = GraphicsFactory.getInstance().getLightShot();
+        newShot.entityXCoord = x;
+        newShot.entityYCoord = y;
+        newShot.isEnemy = false; //it is not an enemey, it is a shot
+        newShot.shotXTrajectory = createShotXTrajectory(x);
+        newShot.shotYTrajectory = createShotYTrajectory(y);
+        System.out.println("Created new shot at " + x + "," + y); //debug
+        shotsInRoom.add(newShot);
         notifyListeners();
     }
+
+    //math to calculate trajectory is based on the configured shot speed.
+    private float createShotXTrajectory(int spawnPosX){
+        float xTrajectory = (playerEntity.entityXCoord + 4 - spawnPosX)/SHOTSPEED;
+        return xTrajectory;
+    }
+
+    private float createShotYTrajectory(int spawnPosY){
+        float yTrajectory = (playerEntity.entityYCoord + 4 - spawnPosY)/SHOTSPEED;
+        return yTrajectory;
+    }
+
     public void addBoardListener(BoardListener bl){
 	boardListenerArray.add(bl);
     }

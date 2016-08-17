@@ -9,10 +9,13 @@ public class Entity //instanciates the enums and lets us work with them as we pl
     private final int width;
     private final int height;
     protected int entityXCoord; //protected variable, can be changed by inherited class and inside package
+    protected float entityXCoordFloat;
     protected int entityYCoord; //protected variable, can be changed by inherited class and inside package
+    protected float entityYCoordFloat;
     protected boolean isEnemy;
-    protected int entityXTrajectory;
-    protected int entityYTrajectory;
+    protected int shotsFired;
+    protected float shotXTrajectory;
+    protected float shotYTrajectory;
 
     public Entity(TileType[][] shape, int width, int height) {
 	super();
