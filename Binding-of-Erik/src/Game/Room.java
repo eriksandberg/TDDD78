@@ -6,6 +6,7 @@ package Game;
 
 import java.lang.String;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -25,7 +26,7 @@ public class Room {
     private int width;
     public boolean gameOver = false;
     private Entity playerEntity = null;
-    private final static int SHOTSPEED = 1; //configurable
+    private final static int SHOTSPEED = 5; //configurable
     private List<Entity> entitiesInRoom = new ArrayList<Entity>();
     private List<Entity> shotsInRoom = new ArrayList<Entity>();
 
@@ -74,78 +75,99 @@ public class Room {
         if (playerEntity == null){ //just an extra check
             if(!gameOver){
                 System.out.println("HEY I SPAWNED BECAUSE APPARENTLY I DIDNT EXIST");
-                spawnPlayer();
+                spawnPlayer(0,0);
             }
             else{
                 //do nothing. Game is over. Maybe add an exit statement here or repaint screen.
             }
         }
         else { //major game logic goes here
-            for (Entity oneEntity : entitiesInRoom){
-                //only do the following if the looped entity is an actual enemy
+            Iterator<Entity> i = entitiesInRoom.iterator();
+            while (i.hasNext()){
+                Entity oneEntity = i.next();
                 //moveEntity(oneEntity); //move the enemies!
-                if (oneEntity.shotsFired < 5 && oneEntity.isEnemy){ //entity is enemy. Shots fired is a helper.
-                    oneEntity.shotsFired++;
+                if (oneEntity.shotCooldown == 0 && oneEntity.isEnemy) { //entity is enemy. Shots fired is a helper
                     spawnNormalEnemyShot(oneEntity.entityXCoord - 4, oneEntity.entityYCoord - 4); //can be spawned on top of the entity that spawned it.
+                    oneEntity.shotCooldown = 5; //spawn one shot every 5 ticks
+                } else if (oneEntity.shotCooldown > 0){
+                    oneEntity.shotCooldown--;
                 } else if (!oneEntity.isEnemy){ //entity is a shot
-                    //boundscheck shots here. Need to solve for removal in arraylist.
-                    oneEntity.entityXCoordFloat += oneEntity.shotXTrajectory; //is a float.
+                    if (outOfBounds(oneEntity)){
+                        i.remove(); //test this better
+                    }
+                    oneEntity.entityXCoordFloat += SHOTSPEED * oneEntity.xAngle;
+                    //System.out.println("Moving speed X: " + SHOTSPEED * oneEntity.xAngle);
                     oneEntity.entityXCoord = Math.round(oneEntity.entityXCoordFloat); //round the float to nearest real square
-                    oneEntity.entityYCoordFloat += oneEntity.shotYTrajectory; //is a float.
+
+                    oneEntity.entityYCoordFloat += SHOTSPEED * oneEntity.yAngle;
+                    //System.out.println("Moving speed Y: " + SHOTSPEED * oneEntity.yAngle);
                     oneEntity.entityYCoord = Math.round(oneEntity.entityYCoordFloat); //round the float to nearest real square
                     //System.out.println("Shot is at coordinates " + oneEntity.entityXCoord + "," + oneEntity.entityYCoord); //debug
                 }
             }
-            for (int i = shotsInRoom.size()-1; i >= 0; i--){ //this extra forloop serves to avoid loop bounds error
-                entitiesInRoom.add(shotsInRoom.get(i));
-                shotsInRoom.remove(i);
+            for (int j = shotsInRoom.size()-1; j >= 0; j--){ //this extra forloop serves to avoid inf loops
+                entitiesInRoom.add(shotsInRoom.get(j));
+                shotsInRoom.remove(j);
             }
+            //System.out.println("Entities on field: " + entitiesInRoom.size()); //debug
         }
         notifyListeners();
     }
 
-    private boolean boundschecker(Entity oneEntity){
+    /**
+     * Only used for shots. Pretty self explanatory. Helps free up memory.
+     */
+    private boolean outOfBounds(Entity oneEntity){
+        if (oneEntity.entityXCoord < -10 || oneEntity.entityYCoord < -10 ||
+            oneEntity.entityXCoord > 210 || oneEntity.entityYCoord > 210) {
+            return true;
+        }
         return false;
     }
 
-    //custom constructor for a room, may not be used at all later. Depends how we implement.
+    /**
+     * Custom constructor for a room. May not be used at all later, depends how we implement.
+     */
     public Room(int width, int height){
 	this.width = width; //800
 	this.height = height; //800
 	board = new TileType[width][height];
 	for (int tileX = 0; tileX < width; tileX++){ //will loop for every "square" and assign a tile to it.
 	    for (int tileY = 0; tileY < height; tileY++){
-	    	board[tileX][tileY] = TileType.R; //grass, green
+                board[tileX][tileY] = TileType.R; //grass, green
 	    }
 	}
-        spawnPlayer();
-        spawnEnemy(70,120);
-        spawnEnemy(150,150);
+        spawnPlayer(30,30);
+        spawnNormalEnemy(70, 120);
+        spawnNormalEnemy(100, 100);
     }
 
     public void pickRandomRoom(){
         //pick from a pre-defined set of rooms, to be used way later in the project when we got that far.
     }
 
-    public void spawnPlayer(){ //should only have to be called ONCE per room. x,y, modifiers are needed.
+    /**
+     * Fairly straightforward. Is called once per room. Possible to modify x,y depending on needs.
+     */
+    public void spawnPlayer(int x, int y){ //should only have to be called ONCE per room. x,y, modifiers are needed.
         this.playerEntity = GraphicsFactory.getInstance().getPlayer(); //could also be character
-        this.playerEntity.entityXCoord = 0;
-	this.playerEntity.entityYCoord = 0;
+        this.playerEntity.entityXCoord = x;
+	this.playerEntity.entityYCoord = y;
 	notifyListeners();
     }
 
-    public void spawnEnemy(int x, int y){ //should be used to spawn several enemy objects, must be stored in an array
-        Random rand = new Random(); //if we want to get random enemies later.
+    public void spawnNormalEnemy(int x, int y){ //Currently only spawns regular enemy.
+        Random rand = new Random(); //Randoms coordinates for spawn.
 	final Entity newEntity = GraphicsFactory.getInstance().getEnemy(); //right now just gets one default enemy.
-        if (x == 0 && y == 0){
+        if (x == 0 && y == 0){ //hardcoded params to get a random number.
             newEntity.entityXCoord = rand.nextInt(200);
             newEntity.entityYCoord = rand.nextInt(200);
-        } else {
+        } else { //use provided numbers
             newEntity.entityXCoord = x;
             newEntity.entityYCoord = y;
         }
         newEntity.isEnemy = true;
-        newEntity.shotsFired = 0;
+        newEntity.shotCooldown = 0;
         entitiesInRoom.add(newEntity); //append the enemy to all enemies in room.
 	notifyListeners();
     }
@@ -157,25 +179,25 @@ public class Room {
         newShot.entityXCoordFloat = x;
         newShot.entityYCoordFloat = y;
         newShot.isEnemy = false; //it is not an enemey, it is a shot
-        newShot.shotXTrajectory = createShotXTrajectory(x);
-        newShot.shotYTrajectory = createShotYTrajectory(y);
-        //System.out.println("Created new shot at " + x + "," + y); //debug
-        //System.out.println("Shot has trajectory: " + newShot.shotXTrajectory + "," + newShot.shotYTrajectory); //debug
+        newShot.deltaXFloat = createShotXTrajectory(x);
+        newShot.deltaYFloat = createShotYTrajectory(y);
+        final float startHypotenuse = (float)Math.sqrt(newShot.deltaXFloat * newShot.deltaXFloat +
+                                                       newShot.deltaYFloat * newShot.deltaYFloat);
+        //inbuilt java math packages handle all 4 quadrants. Magic 100 is to reduce the number that is later used for speed
+        newShot.xAngle = (float)Math.toDegrees(Math.asin((newShot.deltaXFloat/startHypotenuse)))/100;
+        newShot.yAngle = (float)Math.toDegrees(Math.asin((newShot.deltaYFloat/startHypotenuse)))/100;
         shotsInRoom.add(newShot); //append the shot to all shots in the room.
         notifyListeners();
     }
 
-    //math to calculate trajectory is based on the configured shot speed.
     private float createShotXTrajectory(int spawnPosX){
-        float xTrajectory = (playerEntity.entityXCoord + 4 - spawnPosX); //generate a number, negative or positive
-        float xSpeed = (xTrajectory/(SHOTSPEED*20)); //THIS IS CURRENTLY WRONG
-        return xSpeed;
+        float deltaX = (playerEntity.entityXCoord - 4 - spawnPosX); //generate a number, negative or positive
+        return deltaX;
     }
 
     private float createShotYTrajectory(int spawnPosY){
-        float yTrajectory = (playerEntity.entityYCoord + 4 - spawnPosY);
-        float ySpeed = (yTrajectory/(SHOTSPEED*20));
-        return ySpeed;
+        float deltaY = (playerEntity.entityYCoord - 4 - spawnPosY);
+        return deltaY;
     }
 
     public void moveAnywhere(String direction){
@@ -208,36 +230,25 @@ public class Room {
     }
 
     public void moveEntity(Entity entity){ //moves entities at random. Smarter moving algorithm later.
-            Random ran = new Random();
-            int x = ran.nextInt(5);
-            switch (x){
-                case 0:
-                    entity.entityXCoord += 1;
-                    break;
-                case 1:
-                    entity.entityXCoord -= 1;
-                    break;
-                case 2:
-                    entity.entityYCoord += 1;
-                    break;
-                case 3:
-                    entity.entityYCoord -= 1;
-                    break;
-                case 4: //remain in position
-                    break;
-            }
+        Random ran = new Random();
+        int x = ran.nextInt(5);
+        switch (x){
+            case 0:
+                entity.entityXCoord += 1;
+                break;
+            case 1:
+                entity.entityXCoord -= 1;
+                break;
+            case 2:
+                entity.entityYCoord += 1;
+                break;
+            case 3:
+                entity.entityYCoord -= 1;
+                break;
+            case 4: //remain in position
+                break;
         }
-
-    /*public void insertEntity(Entity entity){
-            for (int i = 0; i < entity.getWidth(); i++){
-                for (int j = 0; j < entity.getHeight(); j++){
-                    TileType type = entity.getShape()[i][j]; //looping through every "square" that a player or monster has
-                    if (type != TileType.EMPTY){ //make sure that there are no empty squares. We don't store those.
-                        //board[i+entityXCoord][j+entityYCoord] = type; //store the actual square.
-                    }
-                }
-            }
-        }*/
+    }
 
     private void notifyListeners(){
         for (BoardListener boardListener : boardListenerArray) {

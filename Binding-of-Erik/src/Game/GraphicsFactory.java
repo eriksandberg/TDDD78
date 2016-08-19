@@ -70,4 +70,6 @@ public class GraphicsFactory
 	    { { P, P}, { P, P} };
 
     public Entity getLightShot() {return new Entity(lightShot, ENTITY_WIDTH, ENTITY_HEIGHT);}
+
+    //add more graphic "blocks" here.
 }

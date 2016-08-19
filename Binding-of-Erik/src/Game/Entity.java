@@ -14,8 +14,11 @@ public class Entity //instanciates the enums and lets us work with them as we pl
     protected float entityYCoordFloat;
     protected boolean isEnemy;
     protected int shotsFired;
-    protected float shotXTrajectory;
-    protected float shotYTrajectory;
+    protected int shotCooldown;
+    protected float deltaXFloat;
+    protected float deltaYFloat;
+    protected float xAngle;
+    protected float yAngle;
 
     public Entity(TileType[][] shape, int width, int height) {
 	super();
