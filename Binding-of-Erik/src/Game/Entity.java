@@ -21,7 +21,7 @@ public class Entity //instanciates the enums and lets us work with them as we pl
     protected float yAngle;
 
     public Entity(TileType[][] shape, int width, int height) {
-	super();
+	//super();
 	this.shape = shape;
 	this.width = width;
 	this.height = height;

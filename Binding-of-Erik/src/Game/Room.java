@@ -4,7 +4,6 @@ package Game;
  * Created by wassing on 2016-04-04.
  */
 
-import java.lang.String;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,9 +31,11 @@ public class Room {
 
     private final List<BoardListener> boardListenerArray = new ArrayList<BoardListener>();
 
-    public int getPixelWidthPerTile() {return PIXELWIDTH_PER_TILE;} //used by painter
+    @SuppressWarnings("SuspiciousGetterSetter")
+	public int getPixelWidthPerTile() {return PIXELWIDTH_PER_TILE;} //used by painter
 
-    public int getPixelHeightPerTile() {return PIXELHEIGHT_PER_TILE;}
+    @SuppressWarnings("SuspiciousGetterSetter")
+	public int getPixelHeightPerTile() {return PIXELHEIGHT_PER_TILE;}  //maybe change name instead of supressing warning
 
     public int getWidth(){return width;}
 
@@ -55,7 +56,7 @@ public class Room {
     public TileType getSquare(int x, int y) {
 
         TileType square;
-        if (this.getPlayerEntity() != null) {
+		if (playerEntity != null) {
             if (playerEntity.getTile(x, y) != null) {
                 return playerEntity.getTile(x, y);
             } else {
@@ -88,7 +89,7 @@ public class Room {
                 //moveEntity(oneEntity); //move the enemies!
                 if (oneEntity.shotCooldown == 0 && oneEntity.isEnemy) { //entity is enemy. Shots fired is a helper
                     spawnNormalEnemyShot(oneEntity.entityXCoord - 4, oneEntity.entityYCoord - 4); //can be spawned on top of the entity that spawned it.
-                    oneEntity.shotCooldown = 5; //spawn one shot every 5 ticks
+                    oneEntity.shotCooldown = 5; //spawn one shot every 5 ticks, move this logic to enemy class
                 } else if (oneEntity.shotCooldown > 0){
                     oneEntity.shotCooldown--;
                 } else if (!oneEntity.isEnemy){ //entity is a shot
@@ -119,7 +120,7 @@ public class Room {
      */
     private boolean outOfBounds(Entity oneEntity){
         if (oneEntity.entityXCoord < -10 || oneEntity.entityYCoord < -10 ||
-            oneEntity.entityXCoord > 210 || oneEntity.entityYCoord > 210) {
+            oneEntity.entityXCoord > 210 || oneEntity.entityYCoord > 210) {  // Where does this come from? Fix.
             return true;
         }
         return false;
@@ -128,7 +129,7 @@ public class Room {
     /**
      * Custom constructor for a room. May not be used at all later, depends how we implement.
      */
-    public Room(int width, int height){
+	public Room(int width, int height){
 	this.width = width; //800
 	this.height = height; //800
 	board = new TileType[width][height];
@@ -137,7 +138,10 @@ public class Room {
                 board[tileX][tileY] = TileType.R; //grass, green
 	    }
 	}
-        spawnPlayer(30,30);
+		// Spawn player and enemies at positions x,y. I guess this is temporary but wanted to test how to supress warnings
+		//noinspection MagicNumber
+		spawnPlayer(30,30);
+		//noinspection MagicNumber
         spawnNormalEnemy(70, 120);
         spawnNormalEnemy(100, 100);
     }
@@ -252,7 +256,7 @@ public class Room {
 
     private void notifyListeners(){
         for (BoardListener boardListener : boardListenerArray) {
-            boardListener.BoardChanged();
+            boardListener.boardChanged();
         }
     }
 
