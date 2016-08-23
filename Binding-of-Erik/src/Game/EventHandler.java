@@ -72,11 +72,10 @@ public class EventHandler extends JComponent implements BoardListener {
     public void paintComponent(Graphics g){
 	super.paintComponent(g);
 	final Graphics2D g2 = (Graphics2D) g;
-	TileType square;
-	for (int i = 0; i < room.getWidth(); i++){
+		for (int i = 0; i < room.getWidth(); i++){
 	    for (int j = 0; j < room.getHeight(); j++){
-		square = room.getSquare(i, j);
-		if (square != TileType.TRANSPARENT) {
+			TileType square = room.getSquare(i, j);
+			if (square != TileType.TRANSPARENT) {
 		    g2.setColor(map.get(square));
 		}else{
 		    g2.setColor(Color.green); //need a general solution for this to look good. Use TEMP
@@ -91,7 +90,7 @@ public class EventHandler extends JComponent implements BoardListener {
 	}
     }
 
-    public void BoardChanged(){
+    public void boardChanged(){
 	repaint();
     }
 }

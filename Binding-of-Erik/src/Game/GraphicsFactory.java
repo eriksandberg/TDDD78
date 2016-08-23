@@ -4,13 +4,14 @@ package Game;
  * Created by wassing on 2016-04-12.
  */
 
-public class GraphicsFactory
+public final class GraphicsFactory
 {
     //graphics abbreviations
+	// Better names for constants
     private static final TileType T = TileType.TRANSPARENT;
-    private static final TileType R = TileType.R;
-    private static final TileType B = TileType.B;
-    private static final TileType P = TileType.P;
+    private static final TileType R = TileType.R; // Red
+    private static final TileType B = TileType.B; // Blue
+    private static final TileType P = TileType.P; // Pink
     //add more as we continue to define different things
 
     private int squareWidth = 4; //could perhaps use a getter
@@ -50,19 +51,32 @@ public class GraphicsFactory
 
     //player is right now a ring of blue pixels.
     private final TileType[][] player =
-	    { { T, T, T, B, B, B, B, T, T, T }, { T, T, B, T, T, T, T, B, T, T }, { T, B, T, T, T, T, T, T, B, T },
-		    { B, T, T, T, T, T, T, T, T, B }, { B, T, T, T, T, T, T, T, T, B }, { B, T, T, T, T, T, T, T, T, B },
-		    { B, T, T, T, T, T, T, T, T, B }, { T, B, T, T, T, T, T, T, B, T }, { T, T, B, T, T, T, T, B, T, T },
-		    { T, T, T, B, B, B, B, T, T, T } };
+	    { 		{ T, T, T, B, B, B, B, T, T, T },
+				{ T, T, B, T, T, T, T, B, T, T },
+				{ T, B, T, T, T, T, T, T, B, T },
+		    	{ B, T, T, T, T, T, T, T, T, B },
+				{ B, T, T, T, T, T, T, T, T, B },
+				{ B, T, T, T, T, T, T, T, T, B },
+		    	{ B, T, T, T, T, T, T, T, T, B },
+				{ T, B, T, T, T, T, T, T, B, T },
+				{ T, T, B, T, T, T, T, B, T, T },
+				{ T, T, T, B, B, B, B, T, T, T }};
 
     public Entity getPlayer() {return new Entity(player, ENTITY_WIDTH, ENTITY_HEIGHT);}
 
-    //normalEnemy is a ring of red pixels.
+
+    //enemy is right now a ring of red pixels. transparent blocks will be detected so they don't overwrite ground.
     private final TileType[][] normalEnemy =
-	    { { T, T, T, R, R, R, R, T, T, T }, { T, T, R, T, T, T, T, R, T, T }, { T, R, T, T, T, T, T, T, R, T },
-		    { R, T, T, T, T, T, T, T, T, R }, { R, T, T, T, T, T, T, T, T, R }, { R, T, T, T, T, T, T, T, T, R },
-		    { R, T, T, T, T, T, T, T, T, R }, { T, R, T, T, T, T, T, T, R, T }, { T, T, R, T, T, T, T, R, T, T },
-		    { T, T, T, R, R, R, R, T, T, T } };
+	    { 		{ T, T, T, R, R, R, R, T, T, T },
+				{ T, T, R, T, T, T, T, R, T, T },
+				{ T, R, T, T, T, T, T, T, R, T },
+		    	{ R, T, T, T, T, T, T, T, T, R },
+				{ R, T, T, T, T, T, T, T, T, R },
+				{ R, T, T, T, T, T, T, T, T, R },
+				{ R, T, T, T, T, T, T, T, T, R },
+				{ T, R, T, T, T, T, T, T, R, T },
+				{ T, T, R, T, T, T, T, R, T, T },
+				{ T, T, T, R, R, R, R, T, T, T } };
 
     public Entity getNormalEnemy() {return new Entity(normalEnemy, ENTITY_WIDTH, ENTITY_HEIGHT);}
 
