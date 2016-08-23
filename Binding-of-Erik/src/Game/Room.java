@@ -93,16 +93,14 @@ public class Room {
                     oneEntity.shotCooldown--;
                 } else if (!oneEntity.isEnemy){ //entity is a shot
                     if (outOfBounds(oneEntity)){
-                        i.remove(); //test this better
+                        i.remove(); //garbage collector
                     }
+                    //need to rework shots later so they move differently depending on what enemy shoots them, think OO.
                     oneEntity.entityXCoordFloat += SHOTSPEED * oneEntity.xAngle;
-                    //System.out.println("Moving speed X: " + SHOTSPEED * oneEntity.xAngle);
                     oneEntity.entityXCoord = Math.round(oneEntity.entityXCoordFloat); //round the float to nearest real square
 
                     oneEntity.entityYCoordFloat += SHOTSPEED * oneEntity.yAngle;
-                    //System.out.println("Moving speed Y: " + SHOTSPEED * oneEntity.yAngle);
                     oneEntity.entityYCoord = Math.round(oneEntity.entityYCoordFloat); //round the float to nearest real square
-                    //System.out.println("Shot is at coordinates " + oneEntity.entityXCoord + "," + oneEntity.entityYCoord); //debug
                 }
             }
             for (int j = shotsInRoom.size()-1; j >= 0; j--){ //this extra forloop serves to avoid inf loops
@@ -158,7 +156,7 @@ public class Room {
 
     public void spawnNormalEnemy(int x, int y){ //Currently only spawns regular enemy.
         Random rand = new Random(); //Randoms coordinates for spawn.
-	final Entity newEntity = GraphicsFactory.getInstance().getEnemy(); //right now just gets one default enemy.
+	final Entity newEntity = GraphicsFactory.getInstance().getNormalEnemy(); //right now just gets one default enemy.
         if (x == 0 && y == 0){ //hardcoded params to get a random number.
             newEntity.entityXCoord = rand.nextInt(200);
             newEntity.entityYCoord = rand.nextInt(200);
