@@ -49,7 +49,7 @@ public final class GraphicsFactory
 	return SingletonHolder.INSTANCE;
     }
 
-    //player is right now a ring of blue pixels. transparent blocks will be detected so they don't overwrite ground.
+    //player is right now a ring of blue pixels.
     private final TileType[][] player =
 	    { 		{ T, T, T, B, B, B, B, T, T, T },
 				{ T, T, B, T, T, T, T, B, T, T },
@@ -64,8 +64,9 @@ public final class GraphicsFactory
 
     public Entity getPlayer() {return new Entity(player, ENTITY_WIDTH, ENTITY_HEIGHT);}
 
+
     //enemy is right now a ring of red pixels. transparent blocks will be detected so they don't overwrite ground.
-    private final TileType[][] enemy =
+    private final TileType[][] normalEnemy =
 	    { 		{ T, T, T, R, R, R, R, T, T, T },
 				{ T, T, R, T, T, T, T, R, T, T },
 				{ T, R, T, T, T, T, T, T, R, T },
@@ -77,7 +78,16 @@ public final class GraphicsFactory
 				{ T, T, R, T, T, T, T, R, T, T },
 				{ T, T, T, R, R, R, R, T, T, T } };
 
-    public Entity getEnemy() {return new Entity(enemy, ENTITY_WIDTH, ENTITY_HEIGHT);}
+    public Entity getNormalEnemy() {return new Entity(normalEnemy, ENTITY_WIDTH, ENTITY_HEIGHT);}
+
+    //clusterEnemy is a cross of red pixels. Will be shooting 3 projectiles at a time. See logic in <Class>
+    private final TileType[][] clusterEnemy =
+	    { { R, T, T, T, T, T, T, T, T, R }, { T, R, T, T, T, T, T, T, R, T }, { T, T, R, T, T, T, T, R, T, T },
+	    		    { T, T, T, R, T, T, R, T, T, T }, { T, T, T, T, R, R, T, T, T, R }, { T, T, T, T, R, R, T, T, T, T },
+	    		    { T, T, T, R, T, T, R, T, T, T }, { T, T, R, T, T, T, T, R, T, T }, { T, R, T, T, T, T, T, T, R, T },
+	    		    { R, T, T, T, T, T, T, T, T, R } };
+
+    public Entity getClusterEnemy() {return new Entity(clusterEnemy, ENTITY_WIDTH, ENTITY_HEIGHT);}
 
     private final TileType[][] lightShot =
 	    { { P, P}, { P, P} };
