@@ -26,7 +26,7 @@ public class EventHandler extends JComponent implements BoardListener {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
                     room.tick();
-                }
+		}
 	});
 
 	getInputMap().put(KeyStroke.getKeyStroke("UP"),
@@ -61,7 +61,16 @@ public class EventHandler extends JComponent implements BoardListener {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
                     room.moveAnywhere("left");
-                }
+		}
+	});
+	getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"),
+			"pressedEscape");
+	getActionMap().put("pressedEscape", new AbstractAction() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+					//GameFrame.close();
+					System.exit(0);
+		}
 	});
     }
 

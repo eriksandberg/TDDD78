@@ -29,8 +29,12 @@ public class GameFrame extends JFrame{ //this class does all the actual frame up
     }
 
     private final Action doOneStep = new AbstractAction(){
-	public void actionPerformed(ActionEvent e){
-	    room.tick();
+	public void actionPerformed(ActionEvent e) {
+		room.tick();
+	}};
+
+	public final void close(){
+		this.setVisible(false);
+		this.dispose();
 	}
-    };
 }

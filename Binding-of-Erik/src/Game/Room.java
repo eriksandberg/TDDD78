@@ -141,7 +141,7 @@ public class Room {
 		spawnPlayer(30,30);
 		//noinspection MagicNumber
         spawnNormalEnemy(70, 120);
-        spawnNormalEnemy(100, 100);
+        spawnInvaderEnemy(100, 100);
     }
 
     public void pickRandomRoom(){
@@ -158,6 +158,7 @@ public class Room {
 	notifyListeners();
     }
 
+	// Make these into one in the future
     public void spawnNormalEnemy(int x, int y){ //Currently only spawns regular enemy.
         Random rand = new Random(); //Randoms coordinates for spawn.
 	final Entity newEntity = GraphicsFactory.getInstance().getNormalEnemy(); //right now just gets one default enemy.
@@ -173,6 +174,22 @@ public class Room {
         entitiesInRoom.add(newEntity); //append the enemy to all enemies in room.
 	notifyListeners();
     }
+
+	public void spawnInvaderEnemy(int x, int y){
+		Random rand = new Random(); //Randoms coordinates for spawn.
+		final Entity newEntity = GraphicsFactory.getInstance().getInvaderEnemy(); //right now just gets one default enemy.
+		if (x == 0 && y == 0){ //hardcoded params to get a random number.
+			newEntity.entityXCoord = rand.nextInt(200);
+			newEntity.entityYCoord = rand.nextInt(200);
+		} else { //use provided numbers
+			newEntity.entityXCoord = x;
+			newEntity.entityYCoord = y;
+		}
+		newEntity.isEnemy = true;
+		newEntity.shotCooldown = 0;
+		entitiesInRoom.add(newEntity); //append the enemy to all enemies in room.
+		notifyListeners();
+	}
 
     public void spawnNormalEnemyShot(int x, int y){
         final Entity newShot = GraphicsFactory.getInstance().getLightShot();
