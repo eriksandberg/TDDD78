@@ -11,7 +11,11 @@ package Game;
 
 public class Char extends GameObject {
 
-    // Default values for all characters
+	public Char(TileType[][] shape, int width, int height) {
+		super(shape, width, height);
+	}
+
+    /*// Default values for all characters
     private String name = "J Doe";
 
     private int health = 1;
@@ -41,5 +45,5 @@ public class Char extends GameObject {
     public boolean isDead() {
         if (health <= 0) return true;
         return false;
-    }
+    }*/
 }

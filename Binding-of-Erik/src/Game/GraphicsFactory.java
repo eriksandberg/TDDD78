@@ -62,7 +62,7 @@ public final class GraphicsFactory
 				{ T, T, B, T, T, T, T, B, T, T },
 				{ T, T, T, B, B, B, B, T, T, T }};
 
-    public Entity getPlayer() {return new Entity(player, ENTITY_WIDTH, ENTITY_HEIGHT);}
+    public Player getPlayer() {return new Player(player, ENTITY_WIDTH, ENTITY_HEIGHT);}
 
 
     //enemy is right now a ring of red pixels. transparent blocks will be detected so they don't overwrite ground.
@@ -114,9 +114,7 @@ public final class GraphicsFactory
 		{		{ P, P},
 				{ P, P} };
 
-    public Entity getLightShot() {return new Entity(lightShot, ENTITY_WIDTH, ENTITY_HEIGHT);}
-
-	public Shot getLightShot2() {return new Shot(lightShot, ENTITY_WIDTH, ENTITY_HEIGHT);}
+	public Shot getLightShot() {return new Shot(lightShot, ENTITY_WIDTH, ENTITY_HEIGHT);}
 
     //add more graphic "blocks" here.
 }

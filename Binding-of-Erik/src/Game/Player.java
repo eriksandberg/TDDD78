@@ -6,13 +6,8 @@ package Game;
 
 public class Player extends Char{
 
-    // Player constructor, currently identical with the constructor of generic enemies
-    // Move to Char unless changed later
-    public Player(int xcoord, int ycoord, int health) {
-
-        //setXcoord(xcoord);
-        //setYcoord(ycoord);
-        setHealth(health);
+    public Player(TileType[][] shape, int width, int height) {
+		super(shape, width, height);
     }
 
     //private static final int default_health = 100;

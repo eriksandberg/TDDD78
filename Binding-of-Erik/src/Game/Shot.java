@@ -44,6 +44,7 @@ public class Shot extends GameObject{
 	// Return false if the shot have left the board
 	private boolean outOfBounds() {
 
+		// TODO: Fix or explain magic numbers
 		if (xCoord < -10 || yCoord < -10 || xCoord > 210 || yCoord > 210) return false;
 		return true;
 	}

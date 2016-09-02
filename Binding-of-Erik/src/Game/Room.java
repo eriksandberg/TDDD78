@@ -23,10 +23,12 @@ public class Room {
     private TileType[][] board;
     private int height;
     private int width;
-	public boolean gameOver = false;
-    private Entity playerEntity = null;
+
+    private Player player = null;
     private List<Entity> entitiesInRoom = new ArrayList<Entity>();
 	private List<Shot> shotsInRoom = new ArrayList<>();
+
+	public boolean gameOver = false;
 
     private final List<BoardListener> boardListenerArray = new ArrayList<BoardListener>();
 
@@ -46,7 +48,7 @@ public class Room {
 
     public int getRows(){return (height/ PIXELHEIGHT_PER_TILE);} //200
 
-    public Entity getPlayerEntity(){return playerEntity;}
+    public Player getPlayer(){return player;}
 
     /**
      * This function is used by the paint component to find all objects on each specific square on the board.
@@ -55,39 +57,43 @@ public class Room {
     public TileType getSquare(int x, int y) {
 
         TileType square;
-		if (playerEntity != null) {
-            if (playerEntity.getTile(x, y) != null) {
-                return playerEntity.getTile(x, y);
-            } else {
-                for(Entity enemy : entitiesInRoom){
-                    if(enemy.getTile(x,y)!=null){
-                        return enemy.getTile(x,y);
-                    }
-                }
-            }
 
-			// Get shots
-			for (Shot shot : shotsInRoom){
-				if (shot.getTile(x, y) != null) {
-					return shot.getTile(x, y);
-				}
+		// Get player
+		if (player != null) {
+			if (player.getTile(x, y) != null) {
+				return player.getTile(x, y);
 			}
-        }
+		}
+		// Get enemies
+		for(Entity enemy : entitiesInRoom){
+			if(enemy.getTile(x,y)!=null){
+				return enemy.getTile(x,y);
+			}
+		}
+		// Get shots
+		for (Shot shot : shotsInRoom){
+			if (shot.getTile(x, y) != null) {
+				return shot.getTile(x, y);
+			}
+		}
+
         square = board[x][y];
         return square;
     }
 
     public void tick(){
+
         //always called by the clock, does all the "machine" work, will call functions which in turn call the paint-components
-        if (playerEntity == null){ //just an extra check
+        if (player == null){ //just an extra check
             if(!gameOver){
                 System.out.println("HEY I SPAWNED BECAUSE APPARENTLY I DIDNT EXIST");
                 spawnPlayer(0,0);
             }
             else{
-                //do nothing. Game is over. Maybe add an exit statement here or repaint screen.
-            }
+				System.out.println("Game Over!");
+			}
         }
+
         else { //major game logic goes here
             Iterator<Entity> i = entitiesInRoom.iterator();
             while (i.hasNext()){
@@ -139,9 +145,9 @@ public class Room {
      * Fairly straightforward. Is called once per room. Possible to modify x,y depending on needs.
      */
     public void spawnPlayer(int x, int y){ //should only have to be called ONCE per room. x,y, modifiers are needed.
-        this.playerEntity = GraphicsFactory.getInstance().getPlayer(); //could also be character
-        this.playerEntity.entityXCoord = x;
-	this.playerEntity.entityYCoord = y;
+        this.player = GraphicsFactory.getInstance().getPlayer(); //could also be character
+        this.player.xCoord = x;
+		this.player.yCoord = y;
 	notifyListeners();
     }
 
@@ -179,13 +185,12 @@ public class Room {
 	}
 
 	public void spawnShot(int x, int y) {
-		System.out.println("Shot spawned!");
-		final Shot newShot = GraphicsFactory.getInstance().getLightShot2();
+		final Shot newShot = GraphicsFactory.getInstance().getLightShot();
 		newShot.xCoordFloat = newShot.xCoord = x;
 		newShot.yCoordFloat = newShot.yCoord = y;
 
 		// Calculate the trajectory of the shot
-		newShot.calcAngle(playerEntity.entityXCoord, playerEntity.entityYCoord);
+		newShot.calcAngle(player.xCoord, player.yCoord);
 
 		// Add the shot to the room and ???
 		shotsInRoom.add(newShot);
@@ -198,16 +203,16 @@ public class Room {
         }
         switch (direction){
             case "up": //go up
-		playerEntity.entityYCoord -= 1;
+		player.yCoord -= 1;
                 break;
             case "down": //go down
-                playerEntity.entityYCoord += 1;
+                player.yCoord += 1;
                 break;
             case "right": //go right
-		playerEntity.entityXCoord += 1;
+		player.xCoord += 1;
                 break;
             case "left": //go left
-                playerEntity.entityXCoord -= 1;
+                player.xCoord -= 1;
                 break;
         }
 	if (!canWeMove(direction)){
