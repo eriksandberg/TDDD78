@@ -25,7 +25,7 @@ public class Room {
     private int width;
 
     private Player player = null;
-    private List<Entity> entitiesInRoom = new ArrayList<Entity>();
+    private List<Enemy> enemiesInRoom = new ArrayList<>();
 	private List<Shot> shotsInRoom = new ArrayList<>();
 
 	public boolean gameOver = false;
@@ -48,14 +48,11 @@ public class Room {
 
     public int getRows(){return (height/ PIXELHEIGHT_PER_TILE);} //200
 
-    public Player getPlayer(){return player;}
-
     /**
      * This function is used by the paint component to find all objects on each specific square on the board.
      * It first checks the player, then enemies and last shots.
      */
     public TileType getSquare(int x, int y) {
-
         TileType square;
 
 		// Get player
@@ -65,7 +62,7 @@ public class Room {
 			}
 		}
 		// Get enemies
-		for(Entity enemy : entitiesInRoom){
+		for(Enemy enemy : enemiesInRoom){
 			if(enemy.getTile(x,y)!=null){
 				return enemy.getTile(x,y);
 			}
@@ -82,7 +79,6 @@ public class Room {
     }
 
     public void tick(){
-
         //always called by the clock, does all the "machine" work, will call functions which in turn call the paint-components
         if (player == null){ //just an extra check
             if(!gameOver){
@@ -94,17 +90,15 @@ public class Room {
 			}
         }
 
-        else { //major game logic goes here
-            Iterator<Entity> i = entitiesInRoom.iterator();
-            while (i.hasNext()){
-                Entity oneEntity = i.next();
-                //moveEntity(oneEntity); //move the enemies!
-                if (oneEntity.shotCooldown == 0 && oneEntity.isEnemy) {
-                    spawnShot(oneEntity.entityXCoord -4, oneEntity.entityYCoord - 4);
-					oneEntity.shotCooldown = 10; //spawn one shot every 10 ticks, move this logic to enemy class
-                } else if (oneEntity.shotCooldown > 0){
-                    oneEntity.shotCooldown--;
+        else {
+			// Handle enemies
+            Iterator<Enemy> e = enemiesInRoom.iterator();
+            while (e.hasNext()){
+                Enemy enemy = e.next();
+                if (enemy.readyToShoot()) {
+                    spawnShot(enemy.xCoord -4, enemy.yCoord - 4);
                 }
+				//moveEntity(enemy); //move the enemies!
             }
 
 			// Handle shots
@@ -143,44 +137,43 @@ public class Room {
 
     /**
      * Fairly straightforward. Is called once per room. Possible to modify x,y depending on needs.
+	 * This need to be changed once we start with multiple Rooms, a new player should not be created for each Room
      */
     public void spawnPlayer(int x, int y){ //should only have to be called ONCE per room. x,y, modifiers are needed.
-        this.player = GraphicsFactory.getInstance().getPlayer(); //could also be character
+        this.player = GraphicsFactory.getInstance().getPlayer();
         this.player.xCoord = x;
 		this.player.yCoord = y;
 	notifyListeners();
     }
 
 	// Make these into one in the future
-    public void spawnNormalEnemy(int x, int y){ //Currently only spawns regular enemy.
+    public void spawnNormalEnemy(int x, int y){
         Random rand = new Random(); //Randoms coordinates for spawn.
-	final Entity newEntity = GraphicsFactory.getInstance().getNormalEnemy(); //right now just gets one default enemy.
+	final Enemy newEnemy = GraphicsFactory.getInstance().getNormalEnemy(); //right now just gets one default enemy.
         if (x == 0 && y == 0){ //hardcoded params to get a random number.
-            newEntity.entityXCoord = rand.nextInt(200);
-            newEntity.entityYCoord = rand.nextInt(200);
+			newEnemy.xCoord = rand.nextInt(200);
+			newEnemy.yCoord = rand.nextInt(200);
         } else { //use provided numbers
-            newEntity.entityXCoord = x;
-            newEntity.entityYCoord = y;
+			newEnemy.xCoord = x;
+			newEnemy.yCoord = y;
         }
-        newEntity.isEnemy = true;
-        newEntity.shotCooldown = 0;
-        entitiesInRoom.add(newEntity); //append the enemy to all enemies in room.
-	notifyListeners();
+
+		enemiesInRoom.add(newEnemy); //append the enemy to all enemies in room.
+		notifyListeners();
 	}
 
 	public void spawnInvaderEnemy(int x, int y){
 		Random rand = new Random(); //Randoms coordinates for spawn.
-		final Entity newEntity = GraphicsFactory.getInstance().getInvaderEnemy(); //right now just gets one default enemy.
+		final Enemy newEnemy = GraphicsFactory.getInstance().getInvaderEnemy(); //right now just gets one default enemy.
 		if (x == 0 && y == 0){ //hardcoded params to get a random number.
-			newEntity.entityXCoord = rand.nextInt(200);
-			newEntity.entityYCoord = rand.nextInt(200);
+			newEnemy.xCoord = rand.nextInt(200);
+			newEnemy.yCoord = rand.nextInt(200);
 		} else { //use provided numbers
-			newEntity.entityXCoord = x;
-			newEntity.entityYCoord = y;
+			newEnemy.xCoord = x;
+			newEnemy.yCoord = y;
 		}
-		newEntity.isEnemy = true;
-		newEntity.shotCooldown = 0;
-		entitiesInRoom.add(newEntity); //append the enemy to all enemies in room.
+
+		enemiesInRoom.add(newEnemy); //append the enemy to all enemies in room.
 		notifyListeners();
 	}
 

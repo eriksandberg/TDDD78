@@ -11,8 +11,24 @@ package Game;
 
 public class Char extends GameObject {
 
+	protected int shotCooldown = 10;   // This should not stay hardcoded forever
+
 	public Char(TileType[][] shape, int width, int height) {
 		super(shape, width, height);
+	}
+
+	public boolean readyToShoot() {
+		if (shotCooldown == 0) {
+			shotCooldown = 10;   // This should not stay hardcoded forever
+			return true;
+		} else {
+			shotCooldown--;
+			return false;
+		}
+	}
+
+	public boolean isEnemy() {
+		return false;
 	}
 
     /*// Default values for all characters

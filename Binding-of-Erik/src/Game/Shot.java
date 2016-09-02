@@ -17,7 +17,6 @@ public class Shot extends GameObject{
 
 	// Where x, y is the position the shot is traveling towards
 	public void calcAngle(int x, int y) {
-
 		// The shots spawning position in relation to the room
 		// Magic number 4 is because of the size of the char fireing the shot
 		int deltaX = (x - 4 - xCoord);
@@ -31,7 +30,6 @@ public class Shot extends GameObject{
 
 	// Move the shot according to position, angle and speed, return false if the shot have left the board
 	public boolean move() {
-
 		xCoordFloat += shotspeed * xAngle;
 		xCoord = Math.round(xCoordFloat);
 
@@ -43,7 +41,6 @@ public class Shot extends GameObject{
 
 	// Return false if the shot have left the board
 	private boolean outOfBounds() {
-
 		// TODO: Fix or explain magic numbers
 		if (xCoord < -10 || yCoord < -10 || xCoord > 210 || yCoord > 210) return false;
 		return true;

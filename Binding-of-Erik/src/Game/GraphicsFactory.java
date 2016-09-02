@@ -78,6 +78,8 @@ public final class GraphicsFactory
 				{ T, T, R, T, T, T, T, R, T, T },
 				{ T, T, T, R, R, R, R, T, T, T } };
 
+	public Enemy getNormalEnemy() {return new Enemy(normalEnemy, ENTITY_WIDTH, ENTITY_HEIGHT);}
+
 	// Looks like a space invader but spawn sideways, lmao
 	private final TileType[][] invaderEnemy =
 		{ 		{ T, T, T, T, T, T, T, T, T, T },
@@ -90,6 +92,8 @@ public final class GraphicsFactory
 				{ R, T, R, T, T, T, T, R, T, R },
 				{ T, T, T, R, T, T, R, T, T, T },
 				{ T, T, T, T, T, T, T, T, T, T } };
+
+	public Enemy getInvaderEnemy() {return new Enemy(invaderEnemy, ENTITY_WIDTH, ENTITY_HEIGHT);}
 
     //clusterEnemy is a cross of red pixels. Will be shooting 3 projectiles at a time. See logic in <Class>
     private final TileType[][] clusterEnemy =
@@ -104,11 +108,7 @@ public final class GraphicsFactory
 				{ T, R, T, T, T, T, T, T, R, T },
 				{ R, T, T, T, T, T, T, T, T, R } };
 
-	public Entity getNormalEnemy() {return new Entity(normalEnemy, ENTITY_WIDTH, ENTITY_HEIGHT);}
-
-	public Entity getInvaderEnemy() {return new Entity(invaderEnemy, ENTITY_WIDTH, ENTITY_HEIGHT);}
-
-    public Entity getClusterEnemy() {return new Entity(clusterEnemy, ENTITY_WIDTH, ENTITY_HEIGHT);}
+    public Enemy getClusterEnemy() {return new Enemy(clusterEnemy, ENTITY_WIDTH, ENTITY_HEIGHT);}
 
     private final TileType[][] lightShot =
 		{		{ P, P},
