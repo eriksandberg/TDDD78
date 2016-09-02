@@ -33,6 +33,7 @@ public class GameObject {
 		this.height = height;
 	}
 
+	// Return the shape for the paint component to draw
 	public TileType getTile(int x, int y) {
 		try {
 			return shape[xCoord - x + 9][yCoord - y + 9];

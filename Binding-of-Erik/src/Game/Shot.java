@@ -15,7 +15,7 @@ public class Shot extends GameObject{
 		super(shape, width, height);
 	}
 
-	// Takes the position of the target
+	// Where x, y is the position the shot is traveling towards
 	public void calcAngle(int x, int y) {
 
 		// The shots spawning position in relation to the room
@@ -29,6 +29,7 @@ public class Shot extends GameObject{
 		yAngle = (float)Math.toDegrees(Math.asin(deltaY/hypotenuse)/100);
 	}
 
+	// Move the shot according to position, angle and speed, return false if the shot have left the board
 	public boolean move() {
 
 		xCoordFloat += shotspeed * xAngle;

@@ -25,7 +25,6 @@ public class Room {
     private int width;
 	public boolean gameOver = false;
     private Entity playerEntity = null;
-    private final static int SHOTSPEED = 5; //configurable
     private List<Entity> entitiesInRoom = new ArrayList<Entity>();
 	private List<Shot> shotsInRoom = new ArrayList<>();
 
@@ -50,9 +49,8 @@ public class Room {
     public Entity getPlayerEntity(){return playerEntity;}
 
     /**
-     * This function is used by the paint component. It finds all objects on the board when asked for.
-     * For a specific square it will determine what's on it. It first checks the player, then all possible enemies
-	 * and last all shots
+     * This function is used by the paint component to find all objects on each specific square on the board.
+     * It first checks the player, then enemies and last shots.
      */
     public TileType getSquare(int x, int y) {
 
@@ -74,7 +72,6 @@ public class Room {
 					return shot.getTile(x, y);
 				}
 			}
-
         }
         square = board[x][y];
         return square;
@@ -96,9 +93,9 @@ public class Room {
             while (i.hasNext()){
                 Entity oneEntity = i.next();
                 //moveEntity(oneEntity); //move the enemies!
-                if (oneEntity.shotCooldown == 0 && oneEntity.isEnemy) { //entity is enemy. Shots fired is a helper
+                if (oneEntity.shotCooldown == 0 && oneEntity.isEnemy) {
                     spawnShot(oneEntity.entityXCoord -4, oneEntity.entityYCoord - 4);
-					oneEntity.shotCooldown = 10; //spawn one shot every 5 ticks, move this logic to enemy class
+					oneEntity.shotCooldown = 10; //spawn one shot every 10 ticks, move this logic to enemy class
                 } else if (oneEntity.shotCooldown > 0){
                     oneEntity.shotCooldown--;
                 }
