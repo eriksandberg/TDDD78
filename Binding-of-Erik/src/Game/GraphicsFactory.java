@@ -111,9 +111,12 @@ public final class GraphicsFactory
     public Entity getClusterEnemy() {return new Entity(clusterEnemy, ENTITY_WIDTH, ENTITY_HEIGHT);}
 
     private final TileType[][] lightShot =
-	    { { P, P}, { P, P} };
+		{		{ P, P},
+				{ P, P} };
 
     public Entity getLightShot() {return new Entity(lightShot, ENTITY_WIDTH, ENTITY_HEIGHT);}
+
+	public Shot getLightShot2() {return new Shot(lightShot, ENTITY_WIDTH, ENTITY_HEIGHT);}
 
     //add more graphic "blocks" here.
 }

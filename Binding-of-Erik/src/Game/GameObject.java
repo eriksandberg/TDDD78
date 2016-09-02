@@ -10,26 +10,34 @@ package Game;
 
 public class GameObject {
 
-    private int xcoord = 0;
-    private int ycoord = 0;
+	private TileType[][] shape;
+	private final int width;
+	private final int height;
 
-    /*
-     * Getters & Setters
-     */
-    public int getXcoord() {
-        return xcoord;
-    }
+	protected int xCoord;
+	protected int yCoord;
+	protected float xCoordFloat;
+	protected float yCoordFloat;
 
-    public void setXcoord(int xcoord) {
-        this.xcoord = xcoord;
-        //TODO: Kontrollerar vi så att man sätter ett korrekt värde här eller i en annan klass?
-    }
+	private int size;
 
-    public int getYcoord() {
-        return ycoord;
-    }
+	// Default constructor
+	public GameObject() {
+		this.width = 0;
+		this.height = 0;
+	}
 
-    public void setYcoord(int ycoord) {
-        this.ycoord = ycoord;
-    }
+	public GameObject(TileType[][] shape, int width, int height) {
+		this.shape = shape;
+		this.width = width;
+		this.height = height;
+	}
+
+	public TileType getTile(int x, int y) {
+		try {
+			return shape[xCoord - x + 9][yCoord - y + 9];
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }

@@ -13,8 +13,8 @@ public class PlaceholderEnemy extends Char {
     // Constructor spawning an enemy in a specified position and with a specific amount of hp
     public PlaceholderEnemy(int xcoord, int ycoord, int health) {
 
-        setXcoord(xcoord);
-        setYcoord(ycoord);
+        //setXcoord(xcoord);
+        //setYcoord(ycoord);
 
         setHealth(health);
     }
