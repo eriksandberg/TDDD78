@@ -18,11 +18,12 @@ public class GameWindow extends JFrame {
 
     // Main
     public static void main(String[] args) {
+		Player player = GraphicsFactory.getInstance().getPlayer();
+		Room startingRoom = new Room(player, FRAMEWIDTH, FRAMEHEIGHT);
 
 		// Set frame name to 'Binding of Erik', set size of frame,
 		// set default to close the application when the window is closed,
 		// center the frame on the screen and make the window visiable
-		Room startingRoom = new Room(FRAMEWIDTH, FRAMEHEIGHT);
 		GameFrame window = new GameFrame(startingRoom, "Binding of Erik");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.pack();

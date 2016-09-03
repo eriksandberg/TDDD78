@@ -48,6 +48,28 @@ public class Room {
 
     public int getRows(){return (height/ PIXELHEIGHT_PER_TILE);} //200
 
+	/**
+	 * Custom constructor for a room. May not be used at all later, depends how we implement.
+	 */
+	public Room(Player player, int width, int height){
+		this.player = player;
+
+		this.width = width; //800
+		this.height = height; //800
+
+		board = new TileType[width][height];
+		for (int tileX = 0; tileX < width; tileX++){ //will loop for every "square" and assign a tile to it.
+			for (int tileY = 0; tileY < height; tileY++){
+				board[tileX][tileY] = TileType.R; //grass, green
+			}
+		}
+		// Spawn player and enemies at positions x,y. I guess this is temporary but wanted to test how to supress warnings
+		//noinspection MagicNumber
+		spawnPlayer(30,30);
+		//noinspection MagicNumber
+		spawnNormalEnemy(70, 120);
+	}
+
     /**
      * This function is used by the paint component to find all objects on each specific square on the board.
      * It first checks the player, then enemies and last shots.
@@ -111,39 +133,16 @@ public class Room {
         notifyListeners();
     }
 
-    /**
-     * Custom constructor for a room. May not be used at all later, depends how we implement.
-     */
-	public Room(int width, int height){
-	this.width = width; //800
-	this.height = height; //800
-	board = new TileType[width][height];
-	for (int tileX = 0; tileX < width; tileX++){ //will loop for every "square" and assign a tile to it.
-	    for (int tileY = 0; tileY < height; tileY++){
-                board[tileX][tileY] = TileType.R; //grass, green
-	    }
-	}
-		// Spawn player and enemies at positions x,y. I guess this is temporary but wanted to test how to supress warnings
-		//noinspection MagicNumber
-		spawnPlayer(30,30);
-		//noinspection MagicNumber
-        spawnNormalEnemy(70, 120);
-    }
-
     public void pickRandomRoom(){
         //pick from a pre-defined set of rooms, to be used way later in the project when we got that far.
 		// Or better, generate a random room according to difficulty
     }
 
-    /**
-     * Fairly straightforward. Is called once per room. Possible to modify x,y depending on needs.
-	 * This need to be changed once we start with multiple Rooms, a new player should not be created for each Room
-     */
-    public void spawnPlayer(int x, int y){ //should only have to be called ONCE per room. x,y, modifiers are needed.
-        this.player = GraphicsFactory.getInstance().getPlayer();
+	// Called to spawn the player at pos x, y when "entering" a new room
+    public void spawnPlayer(int x, int y){
         this.player.xCoord = x;
 		this.player.yCoord = y;
-	notifyListeners();
+		notifyListeners();
     }
 
 	// Make these into one in the future
