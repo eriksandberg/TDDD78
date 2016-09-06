@@ -31,8 +31,6 @@ public class Room {
     private List<Enemy> enemiesInRoom = new ArrayList<>();
 	private List<Shot> shotsInRoom = new ArrayList<>();
 
-	public boolean gameOver = false;
-
     private final List<BoardListener> boardListenerArray = new ArrayList<BoardListener>();
 
     @SuppressWarnings("SuspiciousGetterSetter")
@@ -65,7 +63,7 @@ public class Room {
 		board = new TileType[width][height];
 		for (int tileX = 0; tileX < width; tileX++){ //will loop for every "square" and assign a tile to it.
 			for (int tileY = 0; tileY < height; tileY++){
-				board[tileX][tileY] = TileType.R; //grass, green
+				board[tileX][tileY] = TileType.BLACK; // Space yo
 			}
 		}
 
@@ -85,6 +83,13 @@ public class Room {
 		player.resetSkill();
 		enemiesInRoom.clear();
 		newRoom();
+	}
+
+	private void gameOver() {
+		//player = null; // Remove player?
+		enemiesInRoom.clear();
+		shotsInRoom.clear();
+		System.out.println("Game Over!");
 	}
 
     /**
@@ -118,16 +123,10 @@ public class Room {
     }
 
     public void tick(){
-        //always called by the clock, does all the "machine" work, will call functions which in turn call the paint-components
-        if (player == null){ //just an extra check
-            if(!gameOver){
-                System.out.println("HEY I SPAWNED BECAUSE APPARENTLY I DIDNT EXIST");
-                spawnPlayer(0,0);
-            }
-            else{
-				System.out.println("Game Over!");
-			}
-        } else if (!enemiesInRoom.isEmpty()) {
+        // Always called by the clock, handles enemies, shots and some game mechanics
+        if (player.isDead()){
+			gameOver();
+		} else if (!enemiesInRoom.isEmpty()) {
 			// Handle enemies (if there are enemies, otherwise spawn a new room)
 			for (Enemy enemy : enemiesInRoom) {
 				// move enemies
@@ -206,7 +205,7 @@ public class Room {
 	}
 
     public void moveAnywhere(String direction){
-        if (gameOver){
+        if (player.isDead()){
             return; //can't move if we lost, prevents us from doing stupid things.
         }
         switch (direction){

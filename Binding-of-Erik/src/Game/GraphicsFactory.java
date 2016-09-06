@@ -9,9 +9,9 @@ public final class GraphicsFactory
     //graphics abbreviations
 	// Better names for constants
     private static final TileType T = TileType.TRANSPARENT;
-    private static final TileType R = TileType.R; // Red
-    private static final TileType B = TileType.B; // Blue
-    private static final TileType P = TileType.P; // Pink
+    private static final TileType R = TileType.RED; // Red
+    private static final TileType B = TileType.BLUE; // Blue
+    private static final TileType P = TileType.MAGENTA; // Pink
     //add more as we continue to define different things
 
     private int squareWidth = 4; //could perhaps use a getter
