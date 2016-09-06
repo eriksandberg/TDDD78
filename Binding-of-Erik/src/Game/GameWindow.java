@@ -27,6 +27,7 @@ public class GameWindow extends JFrame {
 		//noinspection MagicConstant, IDEA recommend using EXIT_ON_CLOSE
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.pack();
+		window.setResizable(false);
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 		System.out.println("Binding of Erik: Running!");

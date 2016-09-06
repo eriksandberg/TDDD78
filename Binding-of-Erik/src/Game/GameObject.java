@@ -42,7 +42,7 @@ public class GameObject {
 	// Return false if the shot have left the board
 	protected boolean outOfBounds() {
 		if ((xCoord - size < Room.getAdjEdge()) || (yCoord - size < Room.getAdjEdge()) ||
-			(xCoord + size > Room.getFarEdge()) || (yCoord + size > Room.getFarEdge())) {
+			(xCoord + 2 * size > Room.getFarEdge()) || (yCoord + 2 * size > Room.getFarEdge())) {
 			return true;
 		}
 		return false;
