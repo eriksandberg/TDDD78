@@ -6,15 +6,17 @@ package Game;
  *
  * A generic character inheriting from GameObject.
  * Provide some values and functions shared by all characters, both enemies and friends
- * Most characters will use their own constructors so no custom is provided for this class
  */
 
 public class Char extends GameObject {
 
 	protected int shotCooldown = 10;   // This should not stay hardcoded forever
+	protected int hp;
 
 	public Char(TileType[][] shape, int width, int height) {
 		super(shape, width, height);
+		//noinspection AssignmentToSuperclassField
+		this.size = 10;
 	}
 
 	public boolean readyToShoot() {

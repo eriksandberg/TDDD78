@@ -17,8 +17,11 @@ public class Room {
     //TODO: Fix transparent squares(tiles).
     //TODO: Fix some game logic. Life, different enemies, etc. What happens when it's gameover? Simple menu would be good.
 
+	// 800 pixels, room 200 squares wide
     private static final int PIXELWIDTH_PER_TILE = 4;
-    private static final int PIXELHEIGHT_PER_TILE = 4; //this would give us a room with 200x200 squares..
+    private static final int PIXELHEIGHT_PER_TILE = 4;
+	private static final int FAR_EDGE = 210;
+	private static final int ADJ_EDGE = -10;
 
     private TileType[][] board;
     private int height;
@@ -42,11 +45,13 @@ public class Room {
 
     public int getHeight(){return height;}
 
-    public TileType[][] getBoard() {return board;}
+	public static int getFarEdge() {
+		return FAR_EDGE;
+	}
 
-    public int getColumns(){return (width/ PIXELWIDTH_PER_TILE);} //200
-
-    public int getRows(){return (height/ PIXELHEIGHT_PER_TILE);} //200
+	public static int getAdjEdge() {
+		return ADJ_EDGE;
+	}
 
 	/**
 	 * Custom constructor for a room. May not be used at all later, depends how we implement.
@@ -69,7 +74,8 @@ public class Room {
 
 	// Public because EventHandler must be able to spawn a new room due to testing
 	public void newRoom() {
-		spawnPlayer(30, 30);
+		//noinspection MagicNumber, let the player spawn in the middle of the room
+		spawnPlayer(90, 90);
 		spawnEnemies();
 		// Should probably pause for a couple of seconds, don't want to confuse the player
 	}
@@ -122,18 +128,26 @@ public class Room {
 				System.out.println("Game Over!");
 			}
         } else if (!enemiesInRoom.isEmpty()) {
-			// Handle enemies (if there are enemies, otherwise spawn a new room
+			// Handle enemies (if there are enemies, otherwise spawn a new room)
 			for (Enemy enemy : enemiesInRoom) {
+				// move enemies
+				if (enemy.collision(player)) {
+					player.hp--;  // Currently doesn't really do anything
+				}
 				if (enemy.readyToShoot()) {
 					spawnShot(enemy.xCoord - 4, enemy.yCoord - 4);
 				}
-				//moveEntity(enemy); //move the enemies!
 			}
-			// Handle shots
+			// Handle shots, for each is shorter than iterator but breaks .remove()...
 			Iterator<Shot> s = shotsInRoom.iterator();
 			while (s.hasNext()) {
-				Shot oneShot = s.next();
-				if (!oneShot.move()) {s.remove();}  // move() return false if the shot is moving out of the map
+				Shot shot = s.next();
+				// Remove shots that hit the player
+				if (shot.collision(player)) {
+					s.remove();
+					player.hp--;  // Currently doesn't really do anything
+				}
+				if (shot.move()) {s.remove();}  // move() return true if the shot is moving out of the map
 			}
         } else {
 			// Room is empty, increment player skill and spawn a new room
@@ -177,6 +191,7 @@ public class Room {
 	}
 
 	// Spawn a shot aimed at the player
+	@SuppressWarnings("NestedAssignment") // 2 lines is better than 4
 	public void spawnShot(int x, int y) {
 		final Shot newShot = GraphicsFactory.getInstance().getLightShot();
 		newShot.xCoordFloat = newShot.xCoord = x;

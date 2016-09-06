@@ -19,18 +19,24 @@ public class GameObject {
 	protected float xCoordFloat;
 	protected float yCoordFloat;
 
-	private int size;
-
-	// Default constructor
-	public GameObject() {
-		this.width = 0;
-		this.height = 0;
-	}
+	protected int size;
 
 	public GameObject(TileType[][] shape, int width, int height) {
 		this.shape = shape;
 		this.width = width;
 		this.height = height;
+	}
+
+	// Check if another object collide with this.
+	// An object could move fast enough to "jump" over another object,
+	// avoid by not having them move to many pixels each tick
+	public boolean collision(GameObject other) {
+		if ((Math.abs(other.xCoord - this.xCoord) * 2) < (other.size + this.size) &&
+				(Math.abs(other.yCoord - this.yCoord) * 2) < (other.size + this.size)) {
+			System.out.println("Collision!");
+			return true;
+		}
+		return false;
 	}
 
 	// Return the shape for the paint component to draw

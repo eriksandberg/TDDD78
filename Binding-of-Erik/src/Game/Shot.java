@@ -13,6 +13,8 @@ public class Shot extends GameObject{
 
 	public Shot(TileType[][] shape, int width, int height) {
 		super(shape, width, height);
+		//noinspection AssignmentToSuperclassField
+		this.size = 2;
 	}
 
 	// Where x, y is the position the shot is traveling towards
@@ -41,11 +43,12 @@ public class Shot extends GameObject{
 
 	// Return false if the shot have left the board
 	private boolean outOfBounds() {
-		// TODO: Fix or explain magic numbers
-		if (xCoord < -10 || yCoord < -10 || xCoord > 210 || yCoord > 210) return false;
-		return true;
+		if (xCoord < Room.getAdjEdge() || yCoord < Room.getAdjEdge() ||
+			xCoord > Room.getFarEdge() || yCoord > Room.getFarEdge()) return true;
+		return false;
 	}
 
 
 	// Currently all shots are hazardous to everyone, enemy and friend alike
+	// Or rather, not hazardous at all
 }
