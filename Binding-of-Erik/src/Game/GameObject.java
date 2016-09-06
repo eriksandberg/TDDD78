@@ -39,6 +39,15 @@ public class GameObject {
 		return false;
 	}
 
+	// Return false if the shot have left the board
+	protected boolean outOfBounds() {
+		if ((xCoord - size < Room.getAdjEdge()) || (yCoord - size < Room.getAdjEdge()) ||
+			(xCoord + size > Room.getFarEdge()) || (yCoord + size > Room.getFarEdge())) {
+			return true;
+		}
+		return false;
+	}
+
 	// Return the shape for the paint component to draw
 	public TileType getTile(int x, int y) {
 		try {

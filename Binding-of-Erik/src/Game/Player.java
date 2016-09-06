@@ -24,4 +24,8 @@ public class Player extends Char{
 	public void resetSkill() {
 		this.skill = 1;
 	}
+
+	public void resetHP() {
+		this.hp = 10;
+	}
 }

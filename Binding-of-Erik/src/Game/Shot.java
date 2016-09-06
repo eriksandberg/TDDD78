@@ -41,12 +41,12 @@ public class Shot extends GameObject{
 		return outOfBounds();
 	}
 
-	// Return false if the shot have left the board
+/*	// Return false if the shot have left the board
 	private boolean outOfBounds() {
 		if (xCoord < Room.getAdjEdge() || yCoord < Room.getAdjEdge() ||
 			xCoord > Room.getFarEdge() || yCoord > Room.getFarEdge()) return true;
 		return false;
-	}
+	}*/
 
 
 	// Currently all shots are hazardous to everyone, enemy and friend alike

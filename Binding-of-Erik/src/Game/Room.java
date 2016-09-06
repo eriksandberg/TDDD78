@@ -81,6 +81,7 @@ public class Room {
 	// Basically a restart, public for the same reason as newRoom is
 	public void resetRoom() {
 		player.resetSkill();
+		player.resetHP();
 		enemiesInRoom.clear();
 		newRoom();
 	}
@@ -204,9 +205,10 @@ public class Room {
 		notifyListeners();
 	}
 
+	// Move this to player
     public void moveAnywhere(String direction){
-        if (player.isDead()){
-            return; //can't move if we lost, prevents us from doing stupid things.
+        if (player.isDead() || player.outOfBounds()){	// Can't move if we're dead or can't move
+            return;
         }
         switch (direction){
             case "up": //go up
@@ -222,32 +224,24 @@ public class Room {
                 player.xCoord -= 1;
                 break;
         }
-	if (!canWeMove(direction)){
-	    //reset us if we went out of bounds. Checks after we try the new position
-	}
         notifyListeners();
     }
 
-    private boolean canWeMove(String direction){
-    	//need to bordercheck. LATER. Look up tetris boundchecking.
-    	return false;
-    }
-
-    public void moveEntity(Entity entity){ //moves entities at random. Smarter moving algorithm later.
+    public void moveEnemy(Enemy enemy){ //moves entities at random. Smarter moving algorithm later.
         Random ran = new Random();
         int x = ran.nextInt(5);
         switch (x){
             case 0:
-                entity.entityXCoord += 1;
+                enemy.xCoord += 1;
                 break;
             case 1:
-                entity.entityXCoord -= 1;
+                enemy.xCoord -= 1;
                 break;
             case 2:
-                entity.entityYCoord += 1;
+                enemy.yCoord += 1;
                 break;
             case 3:
-                entity.entityYCoord -= 1;
+                enemy.yCoord -= 1;
                 break;
             case 4: //remain in position
                 break;
