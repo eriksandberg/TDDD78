@@ -2,15 +2,13 @@ package Game;
 
 /**
  * Created by erik on 05/04/16.
- *
- *  Main file including initiatons of game loop and swing graphics
  */
 
-import javax.swing.*;
-
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 
+/**
+ * Start the game and open the game window
+ */
 public class GameWindow extends JFrame {
 
     private static final int FRAMEWIDTH = 800; //pixels, also our entire coordinates system.
@@ -18,6 +16,7 @@ public class GameWindow extends JFrame {
 
     // Main
     public static void main(String[] args) {
+		// Create player and the first room
 		Player player = GraphicsFactory.getInstance().getPlayer();
 		Room startingRoom = new Room(player, FRAMEWIDTH, FRAMEHEIGHT);
 
@@ -25,13 +24,11 @@ public class GameWindow extends JFrame {
 		// set default to close the application when the window is closed,
 		// center the frame on the screen and make the window visiable
 		GameFrame window = new GameFrame(startingRoom, "Binding of Erik");
+		//noinspection MagicConstant, IDEA recommend using EXIT_ON_CLOSE
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.pack();
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 		System.out.println("Binding of Erik: Running!");
-
-		//window.setVisible(false);
-		//window.dispose();
     }
 }

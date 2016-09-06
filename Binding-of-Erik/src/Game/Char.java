@@ -27,6 +27,10 @@ public class Char extends GameObject {
 		}
 	}
 
+	public void setShotCooldown(int shotCooldown) {
+		this.shotCooldown = shotCooldown;
+	}
+
 	public boolean isEnemy() {
 		return false;
 	}

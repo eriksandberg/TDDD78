@@ -66,8 +66,7 @@ public class Room {
 		// Spawn player and enemies at positions x,y. I guess this is temporary but wanted to test how to supress warnings
 		//noinspection MagicNumber
 		spawnPlayer(30,30);
-		//noinspection MagicNumber
-		spawnNormalEnemy(70, 120);
+		spawnEnemies();
 	}
 
     /**
@@ -85,8 +84,8 @@ public class Room {
 		}
 		// Get enemies
 		for(Enemy enemy : enemiesInRoom){
-			if(enemy.getTile(x,y)!=null){
-				return enemy.getTile(x,y);
+			if(enemy.getTile(x, y)!=null){
+				return enemy.getTile(x, y);
 			}
 		}
 		// Get shots
@@ -111,7 +110,6 @@ public class Room {
 				System.out.println("Game Over!");
 			}
         }
-
         else {
 			// Handle enemies
             Iterator<Enemy> e = enemiesInRoom.iterator();
@@ -127,7 +125,7 @@ public class Room {
 			Iterator<Shot> s = shotsInRoom.iterator();
 			while (s.hasNext()) {
 				Shot oneShot = s.next();
-				if (!oneShot.move()) {s.remove();}  // move() return false if the shot is moving out of the map (not yet implemented)
+				if (!oneShot.move()) {s.remove();}  // move() return false if the shot is moving out of the map
 			}
         }
         notifyListeners();
@@ -139,43 +137,37 @@ public class Room {
     }
 
 	// Called to spawn the player at pos x, y when "entering" a new room
-    public void spawnPlayer(int x, int y){
+    public void spawnPlayer(int x, int y) {
         this.player.xCoord = x;
 		this.player.yCoord = y;
 		notifyListeners();
     }
 
-	// Make these into one in the future
-    public void spawnNormalEnemy(int x, int y){
-        Random rand = new Random(); //Randoms coordinates for spawn.
-	final Enemy newEnemy = GraphicsFactory.getInstance().getNormalEnemy(); //right now just gets one default enemy.
-        if (x == 0 && y == 0){ //hardcoded params to get a random number.
-			newEnemy.xCoord = rand.nextInt(200);
-			newEnemy.yCoord = rand.nextInt(200);
-        } else { //use provided numbers
-			newEnemy.xCoord = x;
-			newEnemy.yCoord = y;
-        }
+	// Randomize a number of enemies based on the players current skill level
+	public void spawnEnemies() {
+		Random rand = new Random();
 
-		enemiesInRoom.add(newEnemy); //append the enemy to all enemies in room.
-		notifyListeners();
-	}
-
-	public void spawnInvaderEnemy(int x, int y){
-		Random rand = new Random(); //Randoms coordinates for spawn.
-		final Enemy newEnemy = GraphicsFactory.getInstance().getInvaderEnemy(); //right now just gets one default enemy.
-		if (x == 0 && y == 0){ //hardcoded params to get a random number.
-			newEnemy.xCoord = rand.nextInt(200);
-			newEnemy.yCoord = rand.nextInt(200);
-		} else { //use provided numbers
-			newEnemy.xCoord = x;
-			newEnemy.yCoord = y;
+		int i = player.getSkill();
+		while (i > 0) {
+			enemiesInRoom.add(spawnEnemy(rand.nextInt(i)));
+			i--;
 		}
-
-		enemiesInRoom.add(newEnemy); //append the enemy to all enemies in room.
 		notifyListeners();
 	}
 
+	// Spawn an enemy of power level power
+	public Enemy spawnEnemy(int power) {
+		Enemy newEnemy = GraphicsFactory.getInstance().getNormalEnemy();
+		newEnemy.setShotCooldown(10 - power);
+
+		// add random spawn based on boundaries and the players position
+		newEnemy.xCoord = 100;
+		newEnemy.yCoord = 100;
+
+		return newEnemy;
+	}
+
+	// Spawn a shot aimed at the player
 	public void spawnShot(int x, int y) {
 		final Shot newShot = GraphicsFactory.getInstance().getLightShot();
 		newShot.xCoordFloat = newShot.xCoord = x;

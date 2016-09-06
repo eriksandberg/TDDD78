@@ -6,12 +6,18 @@ package Game;
 
 public class Player extends Char{
 
+	private int skill;	// Used to determine how hard a new room will be
+
     public Player(TileType[][] shape, int width, int height) {
 		super(shape, width, height);
+		this.skill = 1;
     }
 
-    //private static final int default_health = 100;
-    //private static final int default_playerHeight = 10;
-    //private static final int default_playerWidth = 10;
+	public void incSkill() {
+		this.skill =+ 1;
+	}
 
+	public int getSkill() {
+		return skill;
+	}
 }
