@@ -98,7 +98,7 @@ public class EventHandler extends JComponent implements BoardListener {
 			}
 		}
 	});
-	getInputMap().put(KeyStroke.getKeyStroke("RED"),
+	getInputMap().put(KeyStroke.getKeyStroke("R"),
 			"pressedR");
 	getActionMap().put("pressedR", new AbstractAction() {
 		@Override
