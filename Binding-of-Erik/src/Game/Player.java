@@ -20,4 +20,8 @@ public class Player extends Char{
 	public int getSkill() {
 		return skill;
 	}
+
+	public void resetSkill() {
+		this.skill = 1;
+	}
 }

@@ -10,8 +10,10 @@ import java.util.EnumMap;
  */
 public class EventHandler extends JComponent implements BoardListener {
 
-    private static final int squareWidth = 800; //graphical size of the actual GameFrame
-    private static final int squareHeight = 800;
+	private boolean testing = false;
+
+    private static final int SQUARE_WIDTH = 800; //graphical size of the actual GameFrame
+    private static final int SQUARE_HEIGHT = 800;
     private final Room room;
     private final EnumMap<TileType, Color> map = TileType.eMap();
     public EventHandler(Room thisRoom) {
@@ -72,10 +74,45 @@ public class EventHandler extends JComponent implements BoardListener {
 					System.exit(0);
 		}
 	});
+	getInputMap().put(KeyStroke.getKeyStroke("T"),
+			"pressedT");
+	getActionMap().put("pressedT", new AbstractAction() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			testing = !testing;
+			if (testing) {
+				System.out.println("Testing enabled.");}
+			else {
+				System.out.println("Testing disabled.");
+			}
+		}
+	});
+	getInputMap().put(KeyStroke.getKeyStroke("ENTER"),
+			"pressedEnter");
+	getActionMap().put("pressedEnter", new AbstractAction() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (testing) {
+				room.newRoom();
+				System.out.println("New room spawned.");
+			}
+		}
+	});
+	getInputMap().put(KeyStroke.getKeyStroke("R"),
+			"pressedR");
+	getActionMap().put("pressedR", new AbstractAction() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (testing) {
+				System.out.println("Room reset.");
+				room.resetRoom();
+			}
+		}
+	});
     }
 
     public Dimension getPreferredSize(){
-            return new Dimension(squareWidth, squareHeight);
+            return new Dimension(SQUARE_WIDTH, SQUARE_HEIGHT);
         }
 
     public void paintComponent(Graphics g){

@@ -63,10 +63,22 @@ public class Room {
 				board[tileX][tileY] = TileType.R; //grass, green
 			}
 		}
-		// Spawn player and enemies at positions x,y. I guess this is temporary but wanted to test how to supress warnings
-		//noinspection MagicNumber
-		spawnPlayer(30,30);
+
+		newRoom();
+	}
+
+	// Public because EventHandler must be able to spawn a new room due to testing
+	public void newRoom() {
+		spawnPlayer(30, 30);
 		spawnEnemies();
+		// Should probably pause for a couple of seconds, don't want to confuse the player
+	}
+
+	// Basically a restart, public for the same reason as newRoom is
+	public void resetRoom() {
+		player.resetSkill();
+		enemiesInRoom.clear();
+		newRoom();
 	}
 
     /**
@@ -109,31 +121,26 @@ public class Room {
             else{
 				System.out.println("Game Over!");
 			}
-        }
-        else {
-			// Handle enemies
-            Iterator<Enemy> e = enemiesInRoom.iterator();
-            while (e.hasNext()){
-                Enemy enemy = e.next();
-                if (enemy.readyToShoot()) {
-                    spawnShot(enemy.xCoord -4, enemy.yCoord - 4);
-                }
+        } else if (!enemiesInRoom.isEmpty()) {
+			// Handle enemies (if there are enemies, otherwise spawn a new room
+			for (Enemy enemy : enemiesInRoom) {
+				if (enemy.readyToShoot()) {
+					spawnShot(enemy.xCoord - 4, enemy.yCoord - 4);
+				}
 				//moveEntity(enemy); //move the enemies!
-            }
-
+			}
 			// Handle shots
 			Iterator<Shot> s = shotsInRoom.iterator();
 			while (s.hasNext()) {
 				Shot oneShot = s.next();
 				if (!oneShot.move()) {s.remove();}  // move() return false if the shot is moving out of the map
 			}
-        }
+        } else {
+			// Room is empty, increment player skill and spawn a new room
+			player.incSkill();
+			newRoom();
+		}
         notifyListeners();
-    }
-
-    public void pickRandomRoom(){
-        //pick from a pre-defined set of rooms, to be used way later in the project when we got that far.
-		// Or better, generate a random room according to difficulty
     }
 
 	// Called to spawn the player at pos x, y when "entering" a new room
@@ -147,10 +154,12 @@ public class Room {
 	public void spawnEnemies() {
 		Random rand = new Random();
 
+		//
 		int i = player.getSkill();
 		while (i > 0) {
-			enemiesInRoom.add(spawnEnemy(rand.nextInt(i)));
-			i--;
+			int e = rand.nextInt(i);
+			enemiesInRoom.add(spawnEnemy(e));
+			i =- e;
 		}
 		notifyListeners();
 	}
