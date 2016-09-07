@@ -11,20 +11,17 @@ package Game;
 public class GameObject {
 
 	private TileType[][] shape;
-	private final int width;
-	private final int height;
+	protected int size;
+	//private final int width;
+	//private final int height;	// In case we want to make non square objects
 
 	protected int xCoord;
 	protected int yCoord;
-	protected float xCoordFloat;
-	protected float yCoordFloat;
-
-	protected int size;
 
 	public GameObject(TileType[][] shape, int width, int height) {
 		this.shape = shape;
-		this.width = width;
-		this.height = height;
+		//this.width = width;
+		//this.height = height;
 	}
 
 	// Check if another object collide with this.
@@ -52,7 +49,7 @@ public class GameObject {
 	public TileType getTile(int x, int y) {
 		try {
 			return shape[xCoord - x + 9][yCoord - y + 9];
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			return null;
 		}
 	}

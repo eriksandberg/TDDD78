@@ -16,99 +16,99 @@ public class EventHandler extends JComponent implements BoardListener {
     private static final int SQUARE_HEIGHT = 800;
     private final Room room;
     private final EnumMap<TileType, Color> map = TileType.eMap();
-    public EventHandler(Room thisRoom) {
 
-	room = thisRoom;
-	this.setPreferredSize(getPreferredSize());
-	thisRoom.addBoardListener(this);
+	public EventHandler(Room room) {
+		this.room = room;
+		this.setPreferredSize(getPreferredSize());
+		room.addBoardListener(this);
 
-	getInputMap().put(KeyStroke.getKeyStroke("SPACE"),
-                    "pressedSpace");
-	getActionMap().put("pressedSpace", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-                    room.tick();
-		}
-	});
-
-	getInputMap().put(KeyStroke.getKeyStroke("UP"),
-                    "pressedUp");
-	getActionMap().put("pressedUp", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-                    room.moveAnywhere("up");
-                }
-	});
-
-	getInputMap().put(KeyStroke.getKeyStroke("DOWN"),
-                    "pressedDown");
-	getActionMap().put("pressedDown", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-                    room.moveAnywhere("down");
-                }
-	});
-
-	getInputMap().put(KeyStroke.getKeyStroke("RIGHT"),
-                "pressedRight");
-	getActionMap().put("pressedRight", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {room.moveAnywhere("right");
-                }
-	});
-
-	getInputMap().put(KeyStroke.getKeyStroke("LEFT"),
-                    "pressedLeft");
-	getActionMap().put("pressedLeft", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-                    room.moveAnywhere("left");
-		}
-	});
-	getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"),
-			"pressedEscape");
-	getActionMap().put("pressedEscape", new AbstractAction() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-					//GameFrame.close();
-					System.exit(0);
-		}
-	});
-	getInputMap().put(KeyStroke.getKeyStroke("T"),
-			"pressedT");
-	getActionMap().put("pressedT", new AbstractAction() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			testing = !testing;
-			if (testing) {
-				System.out.println("Testing enabled.");}
-			else {
-				System.out.println("Testing disabled.");
+		getInputMap().put(KeyStroke.getKeyStroke("SPACE"),
+						"pressedSpace");
+		getActionMap().put("pressedSpace", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				EventHandler.this.room.fireShot();
 			}
-		}
-	});
-	getInputMap().put(KeyStroke.getKeyStroke("ENTER"),
-			"pressedEnter");
-	getActionMap().put("pressedEnter", new AbstractAction() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (testing) {
-				room.newRoom();
-				System.out.println("New room spawned.");
+		});
+
+		getInputMap().put(KeyStroke.getKeyStroke("UP"),
+						"pressedUp");
+		getActionMap().put("pressedUp", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+						EventHandler.this.room.movePlayer("up");
+					}
+		});
+
+		getInputMap().put(KeyStroke.getKeyStroke("DOWN"),
+						"pressedDown");
+		getActionMap().put("pressedDown", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+						EventHandler.this.room.movePlayer("down");
+					}
+		});
+
+		getInputMap().put(KeyStroke.getKeyStroke("RIGHT"),
+					"pressedRight");
+		getActionMap().put("pressedRight", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				EventHandler.this.room.movePlayer("right");
+					}
+		});
+
+		getInputMap().put(KeyStroke.getKeyStroke("LEFT"),
+						"pressedLeft");
+		getActionMap().put("pressedLeft", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+						EventHandler.this.room.movePlayer("left");
 			}
-		}
-	});
-	getInputMap().put(KeyStroke.getKeyStroke("R"),
-			"pressedR");
-	getActionMap().put("pressedR", new AbstractAction() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (testing) {
-				System.out.println("Room reset.");
-				room.resetRoom();
+		});
+		getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"),
+				"pressedEscape");
+		getActionMap().put("pressedEscape", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+						System.exit(0);
 			}
-		}
-	});
+		});
+		getInputMap().put(KeyStroke.getKeyStroke("T"),
+				"pressedT");
+		getActionMap().put("pressedT", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				testing = !testing;
+				if (testing) {
+					System.out.println("Testing enabled.");}
+				else {
+					System.out.println("Testing disabled.");
+				}
+			}
+		});
+		getInputMap().put(KeyStroke.getKeyStroke("ENTER"),
+				"pressedEnter");
+		getActionMap().put("pressedEnter", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (testing) {
+					EventHandler.this.room.newRoom();
+					System.out.println("New room spawned.");
+				}
+			}
+		});
+		getInputMap().put(KeyStroke.getKeyStroke("R"),
+				"pressedR");
+		getActionMap().put("pressedR", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (testing) {
+					System.out.println("Room reset.");
+					EventHandler.this.room.resetRoom();
+				}
+			}
+		});
     }
 
     public Dimension getPreferredSize(){

@@ -8,9 +8,11 @@ public final class GraphicsFactory
 {
     //graphics abbreviations
 	// Better names for constants
-    private static final TileType T = TileType.TRANSPARENT;
+    //private static final TileType T = TileType.TRANSPARENT;  // Green?
     private static final TileType R = TileType.RED; // Red
     private static final TileType B = TileType.BLUE; // Blue
+	private static final TileType T = TileType.BLACK; // Black / Transparent
+	private static final TileType Y = TileType.YELLOW; // Yellow
     private static final TileType P = TileType.MAGENTA; // Pink
     //add more as we continue to define different things
 
@@ -18,12 +20,8 @@ public final class GraphicsFactory
     private int squareHeight = 4;
 
     //an entity is one square, but consists of "subsquares" inside the big square. Always an int, not a float.
-    private final int ENTITY_WIDTH = squareWidth * 10;
-    private final int ENTITY_HEIGHT = squareHeight * 10;
-
-    public int getEntityWidth() {return ENTITY_WIDTH;}
-
-    public int getEntityHeight() {return ENTITY_HEIGHT;}
+    private final int OBJ_WIDTH = squareWidth * 10;
+    private final int OBJ_HEIGHT = squareHeight * 10;
 
     /**
      * Singleton patttern, implemented according bill pugh Private constructor so to ensure only one factory can be
@@ -62,7 +60,7 @@ public final class GraphicsFactory
 				{ T, T, B, T, T, T, T, B, T, T },
 				{ T, T, T, B, B, B, B, T, T, T }};
 
-    public Player getPlayer() {return new Player(player, ENTITY_WIDTH, ENTITY_HEIGHT);}
+    public Player getPlayer() {return new Player(player, OBJ_WIDTH, OBJ_HEIGHT);}
 
 
     //enemy is right now a ring of red pixels. transparent blocks will be detected so they don't overwrite ground.
@@ -78,7 +76,7 @@ public final class GraphicsFactory
 				{ T, T, R, T, T, T, T, R, T, T },
 				{ T, T, T, R, R, R, R, T, T, T } };
 
-	public Enemy getNormalEnemy() {return new Enemy(normalEnemy, ENTITY_WIDTH, ENTITY_HEIGHT);}
+	public Enemy getNormalEnemy() {return new Enemy(normalEnemy, OBJ_WIDTH, OBJ_HEIGHT);}
 
 	// Looks like a space invader but spawn sideways, lmao
 	private final TileType[][] invaderEnemy =
@@ -93,7 +91,7 @@ public final class GraphicsFactory
 				{ T, T, T, R, T, T, R, T, T, T },
 				{ T, T, T, T, T, T, T, T, T, T } };
 
-	public Enemy getInvaderEnemy() {return new Enemy(invaderEnemy, ENTITY_WIDTH, ENTITY_HEIGHT);}
+	public Enemy getInvaderEnemy() {return new Enemy(invaderEnemy, OBJ_WIDTH, OBJ_HEIGHT);}
 
     //clusterEnemy is a cross of red pixels. Will be shooting 3 projectiles at a time. See logic in <Class>
     private final TileType[][] clusterEnemy =
@@ -108,13 +106,19 @@ public final class GraphicsFactory
 				{ T, R, T, T, T, T, T, T, R, T },
 				{ R, T, T, T, T, T, T, T, T, R } };
 
-    public Enemy getClusterEnemy() {return new Enemy(clusterEnemy, ENTITY_WIDTH, ENTITY_HEIGHT);}
+    public Enemy getClusterEnemy() {return new Enemy(clusterEnemy, OBJ_WIDTH, OBJ_HEIGHT);}
 
     private final TileType[][] lightShot =
 		{		{ P, P},
 				{ P, P} };
 
-	public Shot getLightShot() {return new Shot(lightShot, ENTITY_WIDTH, ENTITY_HEIGHT);}
+	public Shot getLightShot() {return new Shot(lightShot, OBJ_WIDTH, OBJ_HEIGHT);}
+
+	private final TileType[][] playerShot =
+			{		{ Y, Y},
+					{ Y, Y} };
+
+	public Shot getPlayerShot() {return new Shot(playerShot, OBJ_WIDTH, OBJ_HEIGHT);}
 
     //add more graphic "blocks" here.
 }

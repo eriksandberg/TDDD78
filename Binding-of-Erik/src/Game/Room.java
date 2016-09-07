@@ -83,86 +83,17 @@ public class Room {
 		player.resetSkill();
 		player.resetHP();
 		enemiesInRoom.clear();
+		shotsInRoom.clear();
 		newRoom();
 	}
 
-	private void gameOver() {
-		//player = null; // Remove player?
-		enemiesInRoom.clear();
-		shotsInRoom.clear();
-		System.out.println("Game Over!");
-	}
-
-    /**
-     * This function is used by the paint component to find all objects on each specific square on the board.
-     * It first checks the player, then enemies and last shots.
-     */
-    public TileType getSquare(int x, int y) {
-        TileType square;
-
-		// Get player
-		if (player != null) {
-			if (player.getTile(x, y) != null) {
-				return player.getTile(x, y);
-			}
-		}
-		// Get enemies
-		for(Enemy enemy : enemiesInRoom){
-			if(enemy.getTile(x, y)!=null){
-				return enemy.getTile(x, y);
-			}
-		}
-		// Get shots
-		for (Shot shot : shotsInRoom){
-			if (shot.getTile(x, y) != null) {
-				return shot.getTile(x, y);
-			}
-		}
-
-        square = board[x][y];
-        return square;
-    }
-
-    public void tick(){
-        // Always called by the clock, handles enemies, shots and some game mechanics
-        if (player.isDead()){
-			gameOver();
-		} else if (!enemiesInRoom.isEmpty()) {
-			// Handle enemies (if there are enemies, otherwise spawn a new room)
-			for (Enemy enemy : enemiesInRoom) {
-				// move enemies
-				if (enemy.collision(player)) {
-					player.hp--;  // Currently doesn't really do anything
-				}
-				if (enemy.readyToShoot()) {
-					spawnShot(enemy.xCoord - 4, enemy.yCoord - 4);
-				}
-			}
-			// Handle shots, for each is shorter than iterator but breaks .remove()...
-			Iterator<Shot> s = shotsInRoom.iterator();
-			while (s.hasNext()) {
-				Shot shot = s.next();
-				// Remove shots that hit the player
-				if (shot.collision(player)) {
-					s.remove();
-					player.hp--;  // Currently doesn't really do anything
-				}
-				if (shot.move()) {s.remove();}  // move() return true if the shot is moving out of the map
-			}
-        } else {
-			// Room is empty, increment player skill and spawn a new room
-			player.incSkill();
-			newRoom();
-		}
-        notifyListeners();
-    }
-
 	// Called to spawn the player at pos x, y when "entering" a new room
-    public void spawnPlayer(int x, int y) {
-        this.player.xCoord = x;
+	public void spawnPlayer(int x, int y) {
+		this.player.xCoord = x;
 		this.player.yCoord = y;
+		player.setDirection('E');
 		notifyListeners();
-    }
+	}
 
 	// Randomize a number of enemies based on the players current skill level
 	public void spawnEnemies() {
@@ -194,63 +125,106 @@ public class Room {
 	@SuppressWarnings("NestedAssignment") // 2 lines is better than 4
 	public void spawnShot(int x, int y) {
 		final Shot newShot = GraphicsFactory.getInstance().getLightShot();
-		newShot.xCoordFloat = newShot.xCoord = x;
-		newShot.yCoordFloat = newShot.yCoord = y;
+		newShot.xCoordFloat = newShot.xCoord = x;	// supressed warning
+		newShot.yCoordFloat = newShot.yCoord = y;	// supressed warning
 
 		// Calculate the trajectory of the shot
 		newShot.calcAngle(player.xCoord, player.yCoord);
 
-		// Add the shot to the room and ???
+		// Add the shot to the room
 		shotsInRoom.add(newShot);
 		notifyListeners();
 	}
 
-	// Move this to player
-    public void moveAnywhere(String direction){
-        if (player.isDead()){	// Can't move if we're dead or can't move
-            return;
-        }
-        switch (direction){
-            case "up": //go up
-				player.yCoord -= 1;
-				if (player.outOfBounds()) {player.yCoord += 1;}
-                break;
-            case "down": //go down
-                player.yCoord += 1;
-				if (player.outOfBounds()) {player.yCoord -= 1;}
-                break;
-            case "right": //go right
-				player.xCoord += 1;
-				if (player.outOfBounds()) {player.xCoord -= 1;}
-                break;
-            case "left": //go left
-                player.xCoord -= 1;
-				if (player.outOfBounds()) {player.xCoord += 1;}
-                break;
-        }
+	// Spawn a shot at the players position, traveling in the players direction
+	public void fireShot() {
+		final Shot newShot = GraphicsFactory.getInstance().getPlayerShot();
+		newShot.xCoordFloat = newShot.xCoord = player.xCoord + player.size/2 + 1;
+		newShot.yCoordFloat = newShot.yCoord = player.yCoord - 1;
+
+		newShot.calcAngle(player.xCoord + 100, player.yCoord);
+
+		shotsInRoom.add(newShot);
+		notifyListeners();
+	}
+
+	// Move the player and notify listeners
+	// Maybe put this in tick()?
+	public void movePlayer(String direction) {
+		player.move(direction);
+		notifyListeners();
+	}
+
+    public void tick(){
+        // Always called by the clock, handles enemies, shots and some game mechanics
+        if (player.isDead()){
+			gameOver();
+		} else if (!enemiesInRoom.isEmpty()) {
+			// Handle enemies (if there are enemies, otherwise spawn a new room)
+			for (Enemy enemy : enemiesInRoom) {
+				// move enemies
+				if (enemy.collision(player)) {
+					player.hp--;
+				}
+				if (enemy.readyToShoot()) {
+					spawnShot(enemy.xCoord - 4, enemy.yCoord - 4);
+				}
+			}
+			// Handle shots, for each is shorter than iterator but breaks .remove()...
+			Iterator<Shot> s = shotsInRoom.iterator();
+			while (s.hasNext()) {
+				Shot shot = s.next();
+				// Remove shots that hit the player
+				if (shot.collision(player)) {
+					s.remove();
+					player.hp--;
+				}
+				if (shot.move()) {s.remove();}  // move() return true if the shot is moving out of the map
+			}
+        } else {
+			// Room is empty, increment player skill and spawn a new room
+			player.incSkill();
+			newRoom();
+		}
         notifyListeners();
     }
 
-    public void moveEnemy(Enemy enemy){ //moves entities at random. Smarter moving algorithm later.
-        Random ran = new Random();
-        int x = ran.nextInt(5);
-        switch (x){
-            case 0:
-                enemy.xCoord += 1;
-                break;
-            case 1:
-                enemy.xCoord -= 1;
-                break;
-            case 2:
-                enemy.yCoord += 1;
-                break;
-            case 3:
-                enemy.yCoord -= 1;
-                break;
-            case 4: //remain in position
-                break;
-        }
-    }
+	private void gameOver() {
+		//player = null; // Remove player?
+		enemiesInRoom.clear();
+		shotsInRoom.clear();
+		System.out.println("Game Over!");
+	}
+
+	/**
+	 * This function is used by the paint component to find all objects on each specific square on the board.
+	 * It first checks the player, then enemies and last shots.
+	 */
+	public TileType getSquare(int x, int y) {
+		TileType square;
+
+		// Get player
+		if (player != null) {
+			if (player.getTile(x, y) != null) {
+				return player.getTile(x, y);
+			}
+		}
+		// Get enemies
+		for(Enemy enemy : enemiesInRoom){
+			if(enemy.getTile(x, y)!=null){
+				return enemy.getTile(x, y);
+			}
+		}
+		// Get shots
+		for (Shot shot : shotsInRoom){
+			if (shot.getTile(x, y) != null) {
+				return shot.getTile(x, y);
+			}
+		}
+
+		square = board[x][y];
+		return square;
+	}
 
     private void notifyListeners(){
         for (BoardListener boardListener : boardListenerArray) {

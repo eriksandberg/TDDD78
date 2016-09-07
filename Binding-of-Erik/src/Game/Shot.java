@@ -8,12 +8,13 @@ public class Shot extends GameObject{
 
 	private int shotspeed = 5;  // When generating enemies in the future, generate this
 
-	private float xAngle;
-	private float yAngle;
+	protected float xCoordFloat = 0;
+	protected float yCoordFloat = 0;
+	private float xAngle = 0;
+	private float yAngle = 0;
 
 	public Shot(TileType[][] shape, int width, int height) {
 		super(shape, width, height);
-		//noinspection AssignmentToSuperclassField
 		this.size = 2;
 	}
 
@@ -41,14 +42,12 @@ public class Shot extends GameObject{
 		return outOfBounds();
 	}
 
-/*	// Return false if the shot have left the board
-	private boolean outOfBounds() {
-		if (xCoord < Room.getAdjEdge() || yCoord < Room.getAdjEdge() ||
-			xCoord > Room.getFarEdge() || yCoord > Room.getFarEdge()) return true;
-		return false;
-	}*/
+	public boolean moveStraight() {
+		xCoord += shotspeed;
+		yCoord += shotspeed;
 
+		return outOfBounds();
+	}
 
-	// Currently all shots are hazardous to everyone, enemy and friend alike
-	// Or rather, not hazardous at all
+	// Currently all shots are only hazardous to the player
 }
