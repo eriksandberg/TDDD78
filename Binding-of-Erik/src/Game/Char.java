@@ -19,6 +19,25 @@ public class Char extends GameObject {
 		this.size = 10;
 	}
 
+	public void move(Char c, char direction) { //moves entities at random. Smarter moving algorithm later.
+		switch (direction){
+			case 0:
+				xCoord += 1;
+				break;
+			case 1:
+				xCoord -= 1;
+				break;
+			case 2:
+				yCoord += 1;
+				break;
+			case 3:
+				yCoord -= 1;
+				break;
+			case 4: //remain in position
+				break;
+		}
+	}
+
 	public boolean readyToShoot() {
 		if (shotCooldown == 0) {
 			shotCooldown = 10;   // This should not stay hardcoded forever
@@ -33,44 +52,13 @@ public class Char extends GameObject {
 		this.shotCooldown = shotCooldown;
 	}
 
-	public boolean isDead() {
-		if (this.hp < 1) return true;
-		return false;
-	}
-
+	// No one is born evil!
 	public boolean isEnemy() {
 		return false;
 	}
 
-    /*// Default values for all characters
-    private String name = "J Doe";
-
-    private int health = 1;
-    private int damage = 1;
-
-    public int getHealth() {
-        return health;
-    }
-
-    public int getDamage() {return damage;}
-
-    // Used to set a characters hp to a specific value
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    // Used to damage the character
-    public boolean hurt(int dmg) {
-        this.health =- dmg;
-
-        // Return false if the character died
-        if (isDead()) return false;
-        return true;
-    }
-
-    // Check if the character is dead and return true if it is
-    public boolean isDead() {
-        if (health <= 0) return true;
-        return false;
-    }*/
+	public boolean isDead() {
+		if (this.hp < 1) return true;
+		return false;
+	}
 }

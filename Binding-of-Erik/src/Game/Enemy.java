@@ -23,7 +23,7 @@ public class Enemy extends Char {
         setHealth(health);
     }*/
 
-	// We are enemy!
+	// Born evil.
 	public boolean isEnemy() {
 		return true;
 	}
