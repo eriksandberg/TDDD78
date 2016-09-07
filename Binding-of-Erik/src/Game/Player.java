@@ -15,53 +15,55 @@ public class Player extends Char {
     }
 
 	public void move(String direction) {
-		if (this.isDead()) {	// Can't move if we're dead
+		if (isDead()) {	// Can't move if we're dead
 			return;
 		}
 		switch (direction) {
 			case "up": //go north
-				this.yCoord -= 1;
-				if (this.outOfBounds()) {
-					this.yCoord += 1;
+				yCoord -= 1;
+				if (outOfBounds()) {
+					yCoord += 1;
 				} else {
 					this.direction = 'N';
 				}
 				break;
 			case "down": //go south
-				this.yCoord += 1;
-				if (this.outOfBounds()) {
-					this.yCoord -= 1;
+				yCoord += 1;
+				if (outOfBounds()) {
+					yCoord -= 1;
 				} else {
 					this.direction = 'S';
 				}
 				break;
 			case "right": //go east
-				this.xCoord += 1;
-				if (this.outOfBounds()) {
-					this.xCoord -= 1;
+				xCoord += 1;
+				if (outOfBounds()) {
+					xCoord -= 1;
 				} else {
 					this.direction = 'E';
 				}
 				break;
 			case "left": //go west
-				this.xCoord -= 1;
-				if (this.outOfBounds()) {
-					this.xCoord += 1;
+				xCoord -= 1;
+				if (outOfBounds()) {
+					xCoord += 1;
 				} else {
 					this.direction = 'W';
 				}
 				break;
+			default: break;
 		}
 	}
 
 	public void setDirection(char d) {
 		if ((d == 'N' || d == 'S' || d == 'E' || d == 'W')) {
-			this.direction = d;
+			direction = d;
 		} else {
 			System.out.println("Error: Player direction set to invalid char!"); // In case we screw up
 		}
 	}
 
+	// Return a char indicating what direction the player is facing
 	public char getDirection() {
 		return direction;
 	}

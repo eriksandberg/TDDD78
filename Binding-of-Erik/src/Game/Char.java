@@ -19,22 +19,33 @@ public class Char extends GameObject {
 		this.size = 10;
 	}
 
-	public void move(Char c, char direction) { //moves entities at random. Smarter moving algorithm later.
+	public void move(Char c, char direction) {
 		switch (direction){
-			case 0:
-				xCoord += 1;
-				break;
-			case 1:
-				xCoord -= 1;
-				break;
-			case 2:
-				yCoord += 1;
-				break;
-			case 3:
+			case 'N':
 				yCoord -= 1;
+				if (outOfBounds()) {
+					yCoord += 1;
+				}
 				break;
-			case 4: //remain in position
+			case 'S':
+				yCoord += 1;
+				if (outOfBounds()) {
+					yCoord -= 1;
+				}
 				break;
+			case 'E':
+				xCoord += 1;
+				if (outOfBounds()) {
+					yCoord -= 1;
+				}
+				break;
+			case 'W':
+				yCoord -= 1;
+				if (outOfBounds()) {
+					yCoord += 1;
+				}
+				break;
+			default: break;
 		}
 	}
 

@@ -137,10 +137,12 @@ public class Room {
 	}
 
 	// Spawn a shot at the players position, traveling in the players direction
+	// Currently not actually working
+	// Also, need to recognize if a shot is friendly or not. Either by handling them separate or by an identifyer
 	public void fireShot() {
 		final Shot newShot = GraphicsFactory.getInstance().getPlayerShot();
 		newShot.xCoordFloat = newShot.xCoord = player.xCoord + player.size/2 + 1;
-		newShot.yCoordFloat = newShot.yCoord = player.yCoord - 1;
+		newShot.yCoordFloat = newShot.yCoord = player.yCoord - 4;
 
 		newShot.calcAngle(player.xCoord + 100, player.yCoord);
 

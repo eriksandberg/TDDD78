@@ -42,6 +42,8 @@ public class Shot extends GameObject{
 		return outOfBounds();
 	}
 
+	// The idea is that the players shots fly straight in the direction the player is facing
+	// Player have a function getDirection() that return
 	public boolean moveStraight() {
 		xCoord += shotspeed;
 		yCoord += shotspeed;
