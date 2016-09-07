@@ -207,21 +207,25 @@ public class Room {
 
 	// Move this to player
     public void moveAnywhere(String direction){
-        if (player.isDead() || player.outOfBounds()){	// Can't move if we're dead or can't move
+        if (player.isDead()){	// Can't move if we're dead or can't move
             return;
         }
         switch (direction){
             case "up": //go up
-		player.yCoord -= 1;
+				player.yCoord -= 1;
+				if (player.outOfBounds()) {player.yCoord += 1;}
                 break;
             case "down": //go down
                 player.yCoord += 1;
+				if (player.outOfBounds()) {player.yCoord -= 1;}
                 break;
             case "right": //go right
-		player.xCoord += 1;
+				player.xCoord += 1;
+				if (player.outOfBounds()) {player.xCoord -= 1;}
                 break;
             case "left": //go left
                 player.xCoord -= 1;
+				if (player.outOfBounds()) {player.xCoord += 1;}
                 break;
         }
         notifyListeners();
