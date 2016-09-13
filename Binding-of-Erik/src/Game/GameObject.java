@@ -18,6 +18,9 @@ public class GameObject {
 	protected int xCoord;
 	protected int yCoord;
 
+	// No one is born evil!
+	protected boolean isEnemy = false;
+
 	public GameObject(TileType[][] shape, int width, int height) {
 		this.shape = shape;
 		//this.width = width;
@@ -43,6 +46,10 @@ public class GameObject {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean isEnemy() {
+		return isEnemy;
 	}
 
 	// Return the shape for the paint component to draw

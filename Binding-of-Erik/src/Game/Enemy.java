@@ -12,19 +12,6 @@ public class Enemy extends Char {
 
 	public Enemy(TileType[][] shape, int width, int height) {
 		super(shape, width, height);
-	}
-
-    /*// Constructor spawning an enemy in a specified position and with a specific amount of hp
-    public Enemy(int xcoord, int ycoord, int health) {
-
-        //setXcoord(xcoord);
-        //setYcoord(ycoord);
-
-        setHealth(health);
-    }*/
-
-	// Born evil.
-	public boolean isEnemy() {
-		return true;
+		this.isEnemy = true;	// Born evil.
 	}
 }

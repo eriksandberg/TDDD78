@@ -131,6 +131,9 @@ public class Room {
 		// Calculate the trajectory of the shot
 		newShot.calcAngle(player.xCoord, player.yCoord);
 
+		// true = enemy
+		newShot.setAlignment(true);
+
 		// Add the shot to the room
 		shotsInRoom.add(newShot);
 		notifyListeners();
@@ -140,11 +143,14 @@ public class Room {
 	// Currently not actually working
 	// Also, need to recognize if a shot is friendly or not. Either by handling them separate or by an identifyer
 	public void fireShot() {
-		final Shot newShot = GraphicsFactory.getInstance().getPlayerShot();
-		newShot.xCoordFloat = newShot.xCoord = player.xCoord + player.size/2 + 1;
-		newShot.yCoordFloat = newShot.yCoord = player.yCoord - 4;
+		final StraightShot newShot = GraphicsFactory.getInstance().getPlayerShot();
+		newShot.xCoord = player.xCoord - 4;
+		newShot.yCoord = player.yCoord - 4;
 
-		newShot.calcAngle(player.xCoord + 100, player.yCoord);
+		newShot.setDirection(player.getDirection());
+
+		// false = !enemy
+		newShot.setAlignment(false);
 
 		shotsInRoom.add(newShot);
 		notifyListeners();
@@ -172,16 +178,32 @@ public class Room {
 					spawnShot(enemy.xCoord - 4, enemy.yCoord - 4);
 				}
 			}
-			// Handle shots, for each is shorter than iterator but breaks .remove()...
+			// Handle shots, need to use iterator instead of foreach to be able to use .remove()...
 			Iterator<Shot> s = shotsInRoom.iterator();
 			while (s.hasNext()) {
 				Shot shot = s.next();
+				// move() return true if the shot is moving out of the map
+				if (shot.move()) {s.remove();}
 				// Remove shots that hit the player
-				if (shot.collision(player)) {
-					s.remove();
-					player.hp--;
+				if (shot.isEnemy()) {
+					if (shot.collision(player)) {
+						s.remove();
+						player.hp--;
+					}
+				} else {
+					Iterator<Enemy> e = enemiesInRoom.iterator();
+					while (e.hasNext()) {
+						Enemy enemy = e.next();
+						if (shot.collision(enemy)) {    // Collision detection seem to be quite dodgy
+							s.remove();
+							enemy.hp--;
+							/*if (enemy.isDead()) {
+								e.remove();
+							}*/
+							e.remove();   // OHK enemies for testing purposes
+						}
+					}
 				}
-				if (shot.move()) {s.remove();}  // move() return true if the shot is moving out of the map
 			}
         } else {
 			// Room is empty, increment player skill and spawn a new room

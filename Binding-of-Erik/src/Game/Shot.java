@@ -6,7 +6,7 @@ package Game;
  */
 public class Shot extends GameObject{
 
-	private int shotspeed = 5;  // When generating enemies in the future, generate this
+	protected int shotspeed = 5;  // When generating enemies in the future, generate this
 
 	protected float xCoordFloat = 0;
 	protected float yCoordFloat = 0;
@@ -42,13 +42,8 @@ public class Shot extends GameObject{
 		return outOfBounds();
 	}
 
-	// The idea is that the players shots fly straight in the direction the player is facing
-	// Player have a function getDirection() that return
-	public boolean moveStraight() {
-		xCoord += shotspeed;
-		yCoord += shotspeed;
-
-		return outOfBounds();
+	public void setAlignment(boolean alignment) {
+		this.isEnemy = alignment;
 	}
 
 	// Currently all shots are only hazardous to the player

@@ -11,7 +11,7 @@ package Game;
 public class Char extends GameObject {
 
 	protected int shotCooldown = 10;   // This should not stay hardcoded forever
-	protected int hp = 10;
+	protected int hp = 5;
 
 	public Char(TileType[][] shape, int width, int height) {
 		super(shape, width, height);
@@ -61,11 +61,6 @@ public class Char extends GameObject {
 
 	public void setShotCooldown(int shotCooldown) {
 		this.shotCooldown = shotCooldown;
-	}
-
-	// No one is born evil!
-	public boolean isEnemy() {
-		return false;
 	}
 
 	public boolean isDead() {

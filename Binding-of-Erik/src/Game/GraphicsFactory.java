@@ -118,7 +118,7 @@ public final class GraphicsFactory
 			{		{ Y, Y},
 					{ Y, Y} };
 
-	public Shot getPlayerShot() {return new Shot(playerShot, OBJ_WIDTH, OBJ_HEIGHT);}
+	public StraightShot getPlayerShot() {return new StraightShot(playerShot, OBJ_WIDTH, OBJ_HEIGHT);}
 
     //add more graphic "blocks" here.
 }
