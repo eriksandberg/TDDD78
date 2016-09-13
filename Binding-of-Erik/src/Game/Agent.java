@@ -8,18 +8,18 @@ package Game;
  * Provide some values and functions shared by all characters, both enemies and friends
  */
 
-public class Char extends GameObject {
+public class Agent extends GameObject {
 
 	protected int shotCooldown = 10;   // This should not stay hardcoded forever
 	protected int hp = 5;
 
-	public Char(TileType[][] shape, int width, int height) {
+	public Agent(TileType[][] shape, int width, int height) {
 		super(shape, width, height);
 		//noinspection AssignmentToSuperclassField
 		this.size = 10;
 	}
 
-	public void move(Char c, char direction) {
+	public void move(Agent c, char direction) {
 		switch (direction){
 			case 'N':
 				yCoord -= 1;

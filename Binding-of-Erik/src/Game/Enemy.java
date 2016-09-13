@@ -4,11 +4,11 @@ package Game;
  * User: Erik
  * Date: 2016-04-04
  *
- * A generic enemy inheriting from Char.
+ * A generic enemy inheriting from Agent.
  * Once we get to creating different kinds of enemies they should inherit from this class
  */
 
-public class Enemy extends Char {
+public class Enemy extends Agent {
 
 	public Enemy(TileType[][] shape, int width, int height) {
 		super(shape, width, height);
