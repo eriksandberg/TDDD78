@@ -10,8 +10,8 @@ public class Shot extends GameObject{
 
 	protected float xCoordFloat = 0;
 	protected float yCoordFloat = 0;
-	private float xAngle = 0;
-	private float yAngle = 0;
+	protected float xAngle = 0;
+	protected float yAngle = 0;
 
 	public Shot(TileType[][] shape, int width, int height) {
 		super(shape, width, height);

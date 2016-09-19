@@ -121,12 +121,32 @@ public class Room {
 		return newEnemy;
 	}
 
-	// Spawn a shot aimed at the player
+
+	// Spawn a couple of sparks when things collide
+	public void spawnSparks(Agent origin) {
+		Random rand = new Random();
+
+		// Spawn between 2 and 5 sparks
+		int m = rand.nextInt(3) + 2;
+		for (int i = 0; i < m; i++) {
+			final Spark newSpark = GraphicsFactory.getInstance().getSpark();
+
+			newSpark.xCoordFloat = newSpark.xCoord = origin.xCoord - 4;
+			newSpark.yCoordFloat = newSpark.yCoord = origin.yCoord - 4;
+
+			newSpark.calcAngle(player.xCoord, player.yCoord);
+
+			shotsInRoom.add(newSpark);   // Should probably not cause any problems as long as sparks are seen as friendly
+		}
+		notifyListeners();
+	}
+
+	// Spawn a shot from enemy aimed at the player
 	@SuppressWarnings("NestedAssignment") // 2 lines is better than 4
-	public void spawnShot(int x, int y) {
+	public void spawnShot(Enemy enemy) {
 		final Shot newShot = GraphicsFactory.getInstance().getLightShot();
-		newShot.xCoordFloat = newShot.xCoord = x;	// supressed warning
-		newShot.yCoordFloat = newShot.yCoord = y;	// supressed warning
+		newShot.xCoordFloat = newShot.xCoord = enemy.xCoord - 4;	// supressed warning
+		newShot.yCoordFloat = newShot.yCoord = enemy.yCoord - 4;	// supressed warning
 
 		// Calculate the trajectory of the shot
 		newShot.calcAngle(player.xCoord, player.yCoord);
@@ -175,7 +195,7 @@ public class Room {
 					player.hp--;
 				}
 				if (enemy.readyToShoot()) {
-					spawnShot(enemy.xCoord - 4, enemy.yCoord - 4);
+					spawnShot(enemy);
 				}
 			}
 			// Handle shots, need to use iterator instead of foreach to be able to use .remove()...
@@ -187,6 +207,7 @@ public class Room {
 				// Remove shots that hit the player
 				if (shot.isEnemy()) {
 					if (shot.collision(player)) {
+						//spawnSparks(player);   // TODO: ConcurrentModificationException, can't write to array we're iterating
 						s.remove();
 						player.hp--;
 					}
@@ -200,7 +221,7 @@ public class Room {
 							/*if (enemy.isDead()) {
 								e.remove();
 							}*/
-							e.remove();   // OHK enemies for testing purposes
+							e.remove();   // Currently OHK enemies for testing purposes
 						}
 					}
 				}

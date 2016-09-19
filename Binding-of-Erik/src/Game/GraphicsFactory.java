@@ -115,10 +115,15 @@ public final class GraphicsFactory
 	public Shot getLightShot() {return new Shot(lightShot, OBJ_WIDTH, OBJ_HEIGHT);}
 
 	private final TileType[][] playerShot =
-			{		{ Y, Y},
-					{ Y, Y} };
+		{		{ Y, Y},
+				{ Y, Y} };
 
 	public StraightShot getPlayerShot() {return new StraightShot(playerShot, OBJ_WIDTH, OBJ_HEIGHT);}
+
+	private final TileType[][] spark =
+		{		{ Y } };
+
+	public Spark getSpark() {return new Spark(spark, OBJ_WIDTH, OBJ_HEIGHT);}
 
     //add more graphic "blocks" here.
 }
