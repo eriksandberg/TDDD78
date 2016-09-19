@@ -1,4 +1,4 @@
-package Game;
+package binding_of_erik_game;
 
 /**
  * Created by erik on 05/04/16.
@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 /**
  * Start the game and open the game window
  */
-public class GameWindow { //} extends JFrame {
+public class GameWindow {
 
     private static final int FRAMEWIDTH = 800; //pixels, also our entire coordinates system.
     private static final int FRAMEHEIGHT = 800;

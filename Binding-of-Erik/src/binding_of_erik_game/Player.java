@@ -1,4 +1,4 @@
-package Game;
+package binding_of_erik_game;
 
 /**
  * Created by wassing on 2016-04-04.
@@ -12,6 +12,7 @@ public class Player extends Agent {
     public Player(TileType[][] shape, int width, int height) {
 		super(shape, width, height);
 		this.skill = 1;
+		this.hp = 1000;
     }
 
 	public void move(String direction) {

@@ -1,13 +1,10 @@
-package Game;
+package binding_of_erik_game;
 
 /**
  * Created by wassing on 2016-04-04.
  */
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Room {
 
@@ -27,10 +24,10 @@ public class Room {
     private int width;
 
     private Player player = null;
-    private List<Enemy> enemiesInRoom = new ArrayList<>();
-	private List<Shot> shotsInRoom = new ArrayList<>();
+    private Collection<Enemy> enemiesInRoom = new ArrayList<>();
+	private Collection<Shot> shotsInRoom = new ArrayList<>();
 
-    private final List<BoardListener> boardListenerArray = new ArrayList<BoardListener>();
+    private final Collection<BoardListener> boardListenerArray = new ArrayList<>();
 
     @SuppressWarnings("SuspiciousGetterSetter")
 	public int getPixelWidthPerTile() {return PIXELWIDTH_PER_TILE;} //used by painter
@@ -246,7 +243,7 @@ public class Room {
 		//player = null; // Remove player?
 		enemiesInRoom.clear();
 		shotsInRoom.clear();
-		System.out.println("Game Over!");
+		System.out.println("binding_of_erik_game Over!");
 	}
 
 	/**

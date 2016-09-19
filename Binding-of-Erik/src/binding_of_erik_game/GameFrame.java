@@ -1,4 +1,4 @@
-package Game;
+package binding_of_erik_game;
 
 /**
  * Created by wassing on 2016-04-06.
@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 public class GameFrame extends JFrame{ //this class does all the actual frame updating work. Will be instanced as an object for GameWindow.
 
     private final Room room;
+	private static boolean paused = false;
 
     public GameFrame(Room room, String myWindowTitle){
  	super(myWindowTitle);
@@ -30,10 +31,17 @@ public class GameFrame extends JFrame{ //this class does all the actual frame up
 
     private final Action doOneStep = new AbstractAction(){
 	public void actionPerformed(ActionEvent e) {
-		room.tick();
+		if (!paused) {  // Since player movement is currently done outside of tick() this is not really a true pause
+			room.tick();
+		}
 	}};
 
-	public final void close(){
+	// Pause the game
+	public static void togglePaused() {
+		paused = !paused;
+	}
+
+	public void close(){
 		this.setVisible(false);
 		this.dispose();
 	}

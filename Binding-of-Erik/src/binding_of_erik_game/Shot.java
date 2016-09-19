@@ -1,4 +1,4 @@
-package Game;
+package binding_of_erik_game;
 
 /**
  * User: Erik
@@ -45,6 +45,4 @@ public class Shot extends GameObject{
 	public void setAlignment(boolean alignment) {
 		this.isEnemy = alignment;
 	}
-
-	// Currently all shots are only hazardous to the player
 }

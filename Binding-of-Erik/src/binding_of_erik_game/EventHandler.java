@@ -1,4 +1,4 @@
-package Game;
+package binding_of_erik_game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -72,6 +72,15 @@ public class EventHandler extends JComponent implements BoardListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 						System.exit(0);
+			}
+		});
+		getInputMap().put(KeyStroke.getKeyStroke("P"),
+				"pressedP");
+		getActionMap().put("pressedP", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			GameFrame.togglePaused();
+				System.out.println("Paused.");
 			}
 		});
 		getInputMap().put(KeyStroke.getKeyStroke("T"),

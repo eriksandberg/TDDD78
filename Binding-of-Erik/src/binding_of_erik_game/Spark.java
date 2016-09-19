@@ -1,4 +1,4 @@
-package Game;
+package binding_of_erik_game;
 
 /**
  * User: Erik

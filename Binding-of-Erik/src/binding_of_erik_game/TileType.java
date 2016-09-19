@@ -1,4 +1,4 @@
-package Game;
+package binding_of_erik_game;
 
 import java.util.EnumMap;
 import java.awt.Color;
