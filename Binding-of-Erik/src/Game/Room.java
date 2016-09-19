@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-//public class Room extends JPanel {} //if we do jpanels in jframes, but wait with this.
 public class Room {
 
     //TODO: Fix shooting. Question remains on how to instanciate the shots. Probably spawn as new entities. DONE
@@ -72,18 +71,26 @@ public class Room {
 
 	// Public because EventHandler must be able to spawn a new room due to testing
 	public void newRoom() {
+		clearRoom();   // Remove all shots (and enemies) left in an old room
 		//noinspection MagicNumber, let the player spawn in the middle of the room
 		spawnPlayer(90, 90);
 		spawnEnemies();
 		// Should probably pause for a couple of seconds, don't want to confuse the player
 	}
 
+	// Remove everything in the room but the player
+	private void clearRoom() {
+		enemiesInRoom.clear();
+		shotsInRoom.clear();
+	}
+
 	// Basically a restart, public for the same reason as newRoom is
 	public void resetRoom() {
 		player.resetSkill();
 		player.resetHP();
-		enemiesInRoom.clear();
-		shotsInRoom.clear();
+
+		clearRoom();
+
 		newRoom();
 	}
 
@@ -96,7 +103,7 @@ public class Room {
 	}
 
 	// Randomize a number of enemies based on the players current skill level
-	public void spawnEnemies() {
+	private void spawnEnemies() {
 		Random rand = new Random();
 
 		//
@@ -110,7 +117,7 @@ public class Room {
 	}
 
 	// Spawn an enemy of power level power
-	public Enemy spawnEnemy(int power) {
+	private Enemy spawnEnemy(int power) {
 		Enemy newEnemy = GraphicsFactory.getInstance().getNormalEnemy();
 		newEnemy.setShotCooldown(10 - power);
 
@@ -122,8 +129,9 @@ public class Room {
 	}
 
 
-	// Spawn a couple of sparks when things collide
-	public void spawnSparks(Agent origin) {
+	// Spawn a couple of sparks at orgin
+	@SuppressWarnings("NestedAssignment") // 2 lines is better than 4
+	private void spawnSparks(Agent origin) {
 		Random rand = new Random();
 
 		// Spawn between 2 and 5 sparks
@@ -143,7 +151,7 @@ public class Room {
 
 	// Spawn a shot from enemy aimed at the player
 	@SuppressWarnings("NestedAssignment") // 2 lines is better than 4
-	public void spawnShot(Enemy enemy) {
+	private void spawnShot(Enemy enemy) {
 		final Shot newShot = GraphicsFactory.getInstance().getLightShot();
 		newShot.xCoordFloat = newShot.xCoord = enemy.xCoord - 4;	// supressed warning
 		newShot.yCoordFloat = newShot.yCoord = enemy.yCoord - 4;	// supressed warning
@@ -160,8 +168,7 @@ public class Room {
 	}
 
 	// Spawn a shot at the players position, traveling in the players direction
-	// Currently not actually working
-	// Also, need to recognize if a shot is friendly or not. Either by handling them separate or by an identifyer
+	// Public because it's called from EventHandler
 	public void fireShot() {
 		final StraightShot newShot = GraphicsFactory.getInstance().getPlayerShot();
 		newShot.xCoord = player.xCoord - 4;
@@ -177,12 +184,13 @@ public class Room {
 	}
 
 	// Move the player and notify listeners
-	// Maybe put this in tick()?
+	// Public because it's called from EventHandler
 	public void movePlayer(String direction) {
 		player.move(direction);
 		notifyListeners();
 	}
 
+	// Public because it's called GameFrame
     public void tick(){
         // Always called by the clock, handles enemies, shots and some game mechanics
         if (player.isDead()){
@@ -277,6 +285,7 @@ public class Room {
         }
     }
 
+	// Public because it's called from EventHandler
     public void addBoardListener(BoardListener bl){
         boardListenerArray.add(bl);
     }

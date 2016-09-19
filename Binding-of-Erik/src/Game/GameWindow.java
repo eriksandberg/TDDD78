@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 /**
  * Start the game and open the game window
  */
-public class GameWindow extends JFrame {
+public class GameWindow { //} extends JFrame {
 
     private static final int FRAMEWIDTH = 800; //pixels, also our entire coordinates system.
     private static final int FRAMEHEIGHT = 800;
