@@ -197,9 +197,10 @@ public class Room {
 			gameOver();
 		} else if (!enemiesInRoom.isEmpty()) {
 			// Handle enemies (if there are enemies, otherwise spawn a new room)
-			for (Enemy enemy : enemiesInRoom) {
-				// move enemies
+			for (Enemy enemy : enemiesInRoom) {		// Don't forget to move enemies in the future
+				// touching enemies hurt the player
 				if (enemy.collision(player)) {
+					spawnSparks(player, enemy);
 					player.hp--;
 				}
 				if (enemy.readyToShoot()) {
@@ -224,6 +225,7 @@ public class Room {
 					while (e.hasNext()) {
 						Enemy enemy = e.next();
 						if (shot.collision(enemy)) {    // Collision detection seem to be quite dodgy
+							spawnSparks(enemy, shot);
 							s.remove();
 							enemy.hp--;
 							/*if (enemy.isDead()) {
