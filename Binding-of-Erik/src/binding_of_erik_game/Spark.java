@@ -6,7 +6,7 @@ package binding_of_erik_game;
  */
 public class Spark extends Shot {
 
-	private int lifetime = 10;
+	private int lifetime = 6;
 
 	public Spark(TileType[][] shape) {
 		super(shape);
@@ -22,7 +22,7 @@ public class Spark extends Shot {
 		xCoord = Math.round(xCoordFloat);
 
 		yCoordFloat += shotspeed * yAngle;
-		yCoord = Math.round(yCoordFloat) + 8;
+		yCoord = Math.round(yCoordFloat);
 
 		return outOfBounds();
 	}

@@ -24,6 +24,7 @@ public class Room {
     private int width;
 
     private Player player = null;
+	private Collection<Spark> sparksInRoom = new ArrayList<>();
     private Collection<Enemy> enemiesInRoom = new ArrayList<>();
 	private Collection<Shot> shotsInRoom = new ArrayList<>();
 
@@ -128,20 +129,21 @@ public class Room {
 
 	// Spawn a couple of sparks at orgin
 	@SuppressWarnings("NestedAssignment") // 2 lines is better than 4
-	private void spawnSparks(Agent origin) {
+	private void spawnSparks(Agent origin, GameObject object) {
 		Random rand = new Random();
 
-		// Spawn between 2 and 5 sparks
-		int m = rand.nextInt(3) + 2;
+		// Spawn between 3 and 6 sparks
+		int m = rand.nextInt(4) + 3;
 		for (int i = 0; i < m; i++) {
 			final Spark newSpark = GraphicsFactory.getInstance().getSpark();
 
-			newSpark.xCoordFloat = newSpark.xCoord = origin.xCoord - 4;
-			newSpark.yCoordFloat = newSpark.yCoord = origin.yCoord - 4;
+			newSpark.xCoordFloat = newSpark.xCoord = origin.xCoord - 4;	// supressed warning
+			newSpark.yCoordFloat = newSpark.yCoord = origin.yCoord - 4;	// supressed warning
 
-			newSpark.calcAngle(player.xCoord, player.yCoord);
+			// Adding i to the coordinate give the sparks a nice spread
+			newSpark.calcAngle(object.xCoord + i, object.yCoord + i);
 
-			shotsInRoom.add(newSpark);   // Should probably not cause any problems as long as sparks are seen as friendly
+			sparksInRoom.add(newSpark);
 		}
 		notifyListeners();
 	}
@@ -187,6 +189,7 @@ public class Room {
 		notifyListeners();
 	}
 
+
 	// Public because it's called GameFrame
     public void tick(){
         // Always called by the clock, handles enemies, shots and some game mechanics
@@ -212,7 +215,7 @@ public class Room {
 				// Remove shots that hit the player
 				if (shot.isEnemy()) {
 					if (shot.collision(player)) {
-						//spawnSparks(player);   // TODO: ConcurrentModificationException, can't write to array we're iterating
+						spawnSparks(player, shot);
 						s.remove();
 						player.hp--;
 					}
@@ -231,6 +234,12 @@ public class Room {
 					}
 				}
 			}
+			// Handle sparks
+			Iterator<Spark> sp = sparksInRoom.iterator();
+			while (sp.hasNext()) {
+				Spark spark = sp.next();
+				if (spark.move()) {sp.remove();}
+			}
         } else {
 			// Room is empty, increment player skill and spawn a new room
 			player.incSkill();
@@ -248,7 +257,7 @@ public class Room {
 
 	/**
 	 * This function is used by the paint component to find all objects on each specific square on the board.
-	 * It first checks the player, then enemies and last shots.
+	 * It first checks the player, then enemies, shots and other objects
 	 */
 	public TileType getSquare(int x, int y) {
 		TileType square;
@@ -260,15 +269,21 @@ public class Room {
 			}
 		}
 		// Get enemies
-		for(Enemy enemy : enemiesInRoom){
+		for(Enemy enemy : enemiesInRoom) {
 			if(enemy.getTile(x, y)!=null){
 				return enemy.getTile(x, y);
 			}
 		}
 		// Get shots
-		for (Shot shot : shotsInRoom){
+		for (Shot shot : shotsInRoom) {
 			if (shot.getTile(x, y) != null) {
 				return shot.getTile(x, y);
+			}
+		}
+		// Get Sparks
+		for (Spark spark : sparksInRoom) {
+			if (spark.getTile(x, y) != null) {
+				return spark.getTile(x, y);
 			}
 		}
 
