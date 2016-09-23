@@ -7,7 +7,6 @@ package binding_of_erik_game;
 public final class GraphicsFactory
 {
     //graphics abbreviations
-	// Better names for constants
     //private static final TileType T = TileType.TRANSPARENT;  // Green?
     private static final TileType R = TileType.RED; // Red
     private static final TileType B = TileType.BLUE; // Blue
@@ -16,12 +15,12 @@ public final class GraphicsFactory
     private static final TileType P = TileType.MAGENTA; // Pink
     //add more as we continue to define different things
 
-    private int squareWidth = 4; //could perhaps use a getter
-    private int squareHeight = 4;
+    //private int squareWidth = 4; //could perhaps use a getter
+    //private int squareHeight = 4;
 
     //an entity is one square, but consists of "subsquares" inside the big square. Always an int, not a float.
-    private final int OBJ_WIDTH = squareWidth * 10;
-    private final int OBJ_HEIGHT = squareHeight * 10;
+    //private final int OBJ_WIDTH = squareWidth * 10;
+    //private final int OBJ_HEIGHT = squareHeight * 10;
 
     /**
      * Singleton patttern, implemented according bill pugh Private constructor so to ensure only one factory can be
@@ -32,9 +31,9 @@ public final class GraphicsFactory
     /**
      * Private class singleton holder, that holds the only instance to the factory
      */
-    private static class SingletonHolder
+    private static final class SingletonHolder
     {
-	private static GraphicsFactory INSTANCE = new GraphicsFactory();
+	private static final GraphicsFactory INSTANCE = new GraphicsFactory();
     }
 
     /**
