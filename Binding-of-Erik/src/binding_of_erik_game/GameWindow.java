@@ -9,12 +9,15 @@ import javax.swing.JFrame;
 /**
  * Start the game and open the game window
  */
-public class GameWindow {
+public final class GameWindow {
 
     private static final int FRAMEWIDTH = 800; //pixels, also our entire coordinates system.
     private static final int FRAMEHEIGHT = 800;
 
-    // Main
+	private GameWindow() {
+	}
+
+	// Main
     public static void main(String[] args) {
 		// Create player and the first room
 		Player player = GraphicsFactory.getInstance().getPlayer();
