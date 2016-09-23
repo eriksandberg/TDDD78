@@ -60,7 +60,7 @@ public final class GraphicsFactory
 				{ T, T, B, T, T, T, T, B, T, T },
 				{ T, T, T, B, B, B, B, T, T, T }};
 
-    public Player getPlayer() {return new Player(player, OBJ_WIDTH, OBJ_HEIGHT);}
+    public Player getPlayer() {return new Player(player);}
 
 
     //enemy is right now a ring of red pixels. transparent blocks will be detected so they don't overwrite ground.
@@ -76,7 +76,7 @@ public final class GraphicsFactory
 				{ T, T, R, T, T, T, T, R, T, T },
 				{ T, T, T, R, R, R, R, T, T, T } };
 
-	public Enemy getNormalEnemy() {return new Enemy(normalEnemy, OBJ_WIDTH, OBJ_HEIGHT);}
+	public Enemy getNormalEnemy() {return new Enemy(normalEnemy);}
 
 	// Looks like a space invader but spawn sideways, lmao
 	private final TileType[][] invaderEnemy =
@@ -91,7 +91,7 @@ public final class GraphicsFactory
 				{ T, T, T, R, T, T, R, T, T, T },
 				{ T, T, T, T, T, T, T, T, T, T } };
 
-	public Enemy getInvaderEnemy() {return new Enemy(invaderEnemy, OBJ_WIDTH, OBJ_HEIGHT);}
+	public Enemy getInvaderEnemy() {return new Enemy(invaderEnemy);}
 
     //clusterEnemy is a cross of red pixels. Will be shooting 3 projectiles at a time. See logic in <Class>
     private final TileType[][] clusterEnemy =
@@ -106,24 +106,24 @@ public final class GraphicsFactory
 				{ T, R, T, T, T, T, T, T, R, T },
 				{ R, T, T, T, T, T, T, T, T, R } };
 
-    public Enemy getClusterEnemy() {return new Enemy(clusterEnemy, OBJ_WIDTH, OBJ_HEIGHT);}
+    public Enemy getClusterEnemy() {return new Enemy(clusterEnemy);}
 
     private final TileType[][] lightShot =
 		{		{ P, P},
 				{ P, P} };
 
-	public Shot getLightShot() {return new Shot(lightShot, OBJ_WIDTH, OBJ_HEIGHT);}
+	public Shot getLightShot() {return new Shot(lightShot);}
 
 	private final TileType[][] playerShot =
 		{		{ Y, Y},
 				{ Y, Y} };
 
-	public StraightShot getPlayerShot() {return new StraightShot(playerShot, OBJ_WIDTH, OBJ_HEIGHT);}
+	public StraightShot getPlayerShot() {return new StraightShot(playerShot);}
 
 	private final TileType[][] spark =
 		{		{ Y } };
 
-	public Spark getSpark() {return new Spark(spark, OBJ_WIDTH, OBJ_HEIGHT);}
+	public Spark getSpark() {return new Spark(spark);}
 
     //add more graphic "blocks" here.
 }

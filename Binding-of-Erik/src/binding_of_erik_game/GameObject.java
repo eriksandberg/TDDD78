@@ -12,8 +12,6 @@ public class GameObject {
 
 	private TileType[][] shape;
 	protected int size;
-	//private final int width;
-	//private final int height;	// In case we want to make non square objects
 
 	protected int xCoord;
 	protected int yCoord;
@@ -21,10 +19,8 @@ public class GameObject {
 	// No one is born evil!
 	protected boolean isEnemy = false;
 
-	public GameObject(TileType[][] shape, int width, int height) {
+	public GameObject(TileType[][] shape) {
 		this.shape = shape;
-		//this.width = width;
-		//this.height = height;
 	}
 
 	// Check if another object collide with this.
@@ -48,6 +44,8 @@ public class GameObject {
 		return false;
 	}
 
+	// True == enemy
+	@SuppressWarnings("SuspiciousGetterSetter")  // Actually not suspicious
 	public boolean isEnemy() {
 		return isEnemy;
 	}
@@ -56,7 +54,7 @@ public class GameObject {
 	public TileType getTile(int x, int y) {
 		try {
 			return shape[xCoord - x + 9][yCoord - y + 9];
-		} catch (RuntimeException e) {
+		} catch (RuntimeException ignored) {
 			return null;
 		}
 	}

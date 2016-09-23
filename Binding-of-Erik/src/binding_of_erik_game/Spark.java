@@ -8,8 +8,9 @@ public class Spark extends Shot {
 
 	private int lifetime = 10;
 
-	public Spark(TileType[][] shape, int width, int height) {
-		super(shape, width, height);
+	public Spark(TileType[][] shape) {
+		super(shape);
+		//noinspection AssignmentToSuperclassField
 		shotspeed = 3;
 	}
 

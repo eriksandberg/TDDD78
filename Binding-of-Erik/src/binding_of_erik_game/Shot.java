@@ -13,8 +13,8 @@ public class Shot extends GameObject{
 	protected float xAngle = 0;
 	protected float yAngle = 0;
 
-	public Shot(TileType[][] shape, int width, int height) {
-		super(shape, width, height);
+	public Shot(TileType[][] shape) {
+		super(shape);
 		this.size = 2;
 	}
 

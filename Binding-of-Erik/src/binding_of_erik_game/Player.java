@@ -9,8 +9,8 @@ public class Player extends Agent {
 	private int skill;	// Used to determine how hard a new room will be
 	private char direction = 'E';   // To be used when fireing shots and to display the correct graphics
 
-    public Player(TileType[][] shape, int width, int height) {
-		super(shape, width, height);
+    public Player(TileType[][] shape) {
+		super(shape);
 		this.skill = 1;
 		this.hp = 1000;
     }

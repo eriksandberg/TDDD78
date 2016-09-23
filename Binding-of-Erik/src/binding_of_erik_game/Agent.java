@@ -13,8 +13,8 @@ public class Agent extends GameObject {
 	protected int shotCooldown = 10;   // This should not stay hardcoded forever
 	protected int hp = 5;
 
-	public Agent(TileType[][] shape, int width, int height) {
-		super(shape, width, height);
+	public Agent(TileType[][] shape) {
+		super(shape);
 		//noinspection AssignmentToSuperclassField
 		this.size = 10;
 	}

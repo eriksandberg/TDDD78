@@ -10,8 +10,8 @@ package binding_of_erik_game;
 
 public class Enemy extends Agent {
 
-	public Enemy(TileType[][] shape, int width, int height) {
-		super(shape, width, height);
+	public Enemy(TileType[][] shape) {
+		super(shape);
 		this.isEnemy = true;	// Born evil.
 	}
 }

@@ -8,8 +8,8 @@ public class StraightShot extends Shot {
 
 	private char direction = ' ';
 
-	public StraightShot(TileType[][] shape, int width, int height) {
-		super(shape, width, height);
+	public StraightShot(TileType[][] shape) {
+		super(shape);
 	}
 
 	@Override

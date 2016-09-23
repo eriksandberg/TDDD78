@@ -40,9 +40,4 @@ public class GameFrame extends JFrame{ //this class does all the actual frame up
 	public static void togglePaused() {
 		paused = !paused;
 	}
-
-	public void close(){
-		this.setVisible(false);
-		this.dispose();
-	}
 }
