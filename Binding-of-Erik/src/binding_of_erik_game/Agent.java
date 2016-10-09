@@ -15,7 +15,7 @@ public class Agent extends GameObject {
 
 	public Agent(TileType[][] shape) {
 		super(shape);
-		//noinspection AssignmentToSuperclassField
+		//noinspection AssignmentToSuperclassField //does what?
 		this.size = 10;
 	}
 

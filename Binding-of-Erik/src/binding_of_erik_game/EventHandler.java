@@ -137,10 +137,7 @@ public class EventHandler extends JComponent implements BoardListener {
 		}
 		g2.fillRect(i * room.getPixelWidthPerTile(), j * room.getPixelHeightPerTile(),
 			    room.getPixelWidthPerTile(), room.getPixelHeightPerTile());
-		/*Need a change in how many tiles we have in the room. Base tile needs to be all possible moves.
-		Meaning: room is made up of 20x20 blocks. Every block contains 10 tiles. Need to define pixelsize of tile.
-		Make sure to draw every tile with this function. When working out rooms etc, use an oversized pattern.
-		*/
+		//may need to re-define this later.
 	    }
 	}
     }

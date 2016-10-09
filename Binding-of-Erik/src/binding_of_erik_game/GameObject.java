@@ -45,7 +45,7 @@ public class GameObject {
 	}
 
 	// True == enemy
-	@SuppressWarnings("SuspiciousGetterSetter")  // Actually not suspicious
+	@SuppressWarnings("SuspiciousGetterSetter")  // Actually not suspicious OR IS IT
 	public boolean isEnemy() {
 		return isEnemy;
 	}
