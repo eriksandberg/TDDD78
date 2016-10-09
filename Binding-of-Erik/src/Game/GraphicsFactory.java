@@ -65,7 +65,7 @@ public final class GraphicsFactory
     public Entity getPlayer() {return new Entity(player, ENTITY_WIDTH, ENTITY_HEIGHT);}
 
 
-    //enemy is right now a ring of red pixels. transparent blocks will be detected so they don't overwrite ground.
+    //enemy is right now a ring of red pixels.
     private final TileType[][] normalEnemy =
 	    { 		{ T, T, T, R, R, R, R, T, T, T },
 				{ T, T, R, T, T, T, T, R, T, T },
