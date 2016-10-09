@@ -10,7 +10,9 @@ import java.awt.Color;
  * To change this template use File | Settings | File Templates.
  */
 public enum SquareType {
-    I, J, L, O, S, T, Z, EMPTY, OUTSIDE;
+    I, J, L, O, S, T, Z, EMPTY, OUTSIDE, TRANSPARENT;
+
+    private static Color transparent = new Color(0,0,0,0);
 
     static EnumMap eMap(){
         EnumMap<SquareType, Color> map = new EnumMap<SquareType, Color>(SquareType.class);
@@ -23,6 +25,7 @@ public enum SquareType {
             map.put(SquareType.T, Color.magenta);
             map.put(SquareType.Z, Color.red);
             map.put(SquareType.OUTSIDE, Color.gray);
+	    map.put(SquareType.TRANSPARENT, transparent);
         return map;
     }
 }

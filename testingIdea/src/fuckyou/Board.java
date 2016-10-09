@@ -13,8 +13,8 @@ import java.util.Random;
 
 public class Board {
 
-    private static final int default_width = 10;
-    private static final int default_height = 22;
+    //private static final int default_width = 10;
+    //private static final int default_height = 22;
     private int width = 0;
     private int height = 0;
 
@@ -29,9 +29,9 @@ public class Board {
     private boolean gameOver = false;
 
     // Default constructor
-    public Board(){
+    /*public Board(){
         this(default_width, default_height);
-    }
+    }*/
 
     // Constructor for custom board
     public Board(int width, int height){
@@ -93,7 +93,7 @@ public class Board {
         for (int i = 0; i < poly.getWidth(); i++){
             for (int j = 0; j < poly.getHeight(); j++){
                 if (i+tetrisPieceX >= width || j+tetrisPieceY >= height){
-                    continue;
+                    //continue; //useless line and if statement
                 }
 
                 SquareType type = poly.getShape()[i][j];

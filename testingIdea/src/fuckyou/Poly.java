@@ -1,4 +1,4 @@
-package fuckyou;//package Labb2;
+package fuckyou;
 
 /**
  * Created with IntelliJ IDEA.

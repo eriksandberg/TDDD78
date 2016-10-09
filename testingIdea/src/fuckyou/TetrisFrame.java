@@ -26,7 +26,7 @@ public class TetrisFrame extends JFrame {
         TetrisComponent paintArea = new TetrisComponent(board);
         this.setLayout(new BorderLayout());
         this.add(paintArea, BorderLayout.CENTER);
-        this.createMenu();
+        //this.createMenu(); //currently not being used.
 
         Timer clockTimer = new Timer(250, doOneStep);
         clockTimer.setCoalesce(true);
