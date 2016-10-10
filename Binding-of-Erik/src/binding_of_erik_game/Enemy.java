@@ -13,5 +13,6 @@ public class Enemy extends Agent {
     public Enemy(TileType[][] shape) {
 	super(shape);
 	this.isEnemy = true;	// Born evil.
+	move(this, 'N');
     }
 }
