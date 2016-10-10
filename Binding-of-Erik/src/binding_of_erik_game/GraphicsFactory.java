@@ -10,8 +10,8 @@ public final class GraphicsFactory
     //private static final TileType T = TileType.TRANSPARENT;  // Green?
     private static final TileType R = TileType.RED; // Red
     private static final TileType B = TileType.BLUE; // Blue
-	private static final TileType T = TileType.BLACK; // Black / Transparent
-	private static final TileType Y = TileType.YELLOW; // Yellow
+    private static final TileType T = TileType.BLACK; // Black / Transparent
+    private static final TileType Y = TileType.YELLOW; // Yellow
     private static final TileType P = TileType.MAGENTA; // Pink
     //add more as we continue to define different things
 

@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 public class GameFrame extends JFrame{ //this class does all the actual frame updating work. Will be instanced as an object for GameWindow.
 
     private final Room room;
-	private static boolean paused = false;
+    private static boolean paused = false;
 
     public GameFrame(Room room, String myWindowTitle){
  	super(myWindowTitle);
@@ -31,13 +31,14 @@ public class GameFrame extends JFrame{ //this class does all the actual frame up
 
     private final Action doOneStep = new AbstractAction(){
 	public void actionPerformed(ActionEvent e) {
-		if (!paused) {  // Since player movement is currently done outside of tick() this is not really a true pause
-			room.tick();
-		}
-	}};
+	    if (!paused) {  // Since player movement is currently done outside of tick() this is not really a true pause
+		room.tick();
+	    }
+	}
+    };
 
-	// Pause the game
-	public static void togglePaused() {
+    // Pause the game
+    public static void togglePaused() {
 		paused = !paused;
 	}
 }

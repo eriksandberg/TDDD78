@@ -19,20 +19,20 @@ public final class GameWindow {
 
 	// Main
     public static void main(String[] args) {
-		// Create player and the first room
-		Player player = GraphicsFactory.getInstance().getPlayer();
-		Room startingRoom = new Room(player, FRAMEWIDTH, FRAMEHEIGHT);
+	// Create player and the first room
+	Player player = GraphicsFactory.getInstance().getPlayer();
+	Room startingRoom = new Room(player, FRAMEWIDTH, FRAMEHEIGHT);
 
-		// Set frame name to 'Binding of Erik', set size of frame,
-		// set default to close the application when the window is closed,
-		// center the frame on the screen and make the window visiable
-		GameFrame window = new GameFrame(startingRoom, "Binding of Erik");
-		//noinspection MagicConstant, IDEA recommend using EXIT_ON_CLOSE
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.pack();
-		window.setResizable(false);
-		window.setLocationRelativeTo(null);
-		window.setVisible(true);
-		System.out.println("Binding of Erik: Running!");
+	// Set frame name to 'Binding of Erik', set size of frame,
+	// set default to close the application when the window is closed,
+	// center the frame on the screen and make the window visiable
+	GameFrame window = new GameFrame(startingRoom, "Binding of Erik");
+	//noinspection MagicConstant, IDEA recommend using EXIT_ON_CLOSE
+	window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	window.pack();
+	window.setResizable(false);
+	window.setLocationRelativeTo(null);
+	window.setVisible(true);
+	System.out.println("Binding of Erik: Running!");
     }
 }
