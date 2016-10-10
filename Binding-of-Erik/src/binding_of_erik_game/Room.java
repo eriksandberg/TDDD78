@@ -40,10 +40,12 @@ public class Room {
 
     public int getHeight(){return height;}
 
+    @SuppressWarnings("SuspiciousGetterSetter")
     public static int getFarEdge() {
 		return FAR_EDGE;
 	}
 
+    @SuppressWarnings("SuspiciousGetterSetter")
     public static int getAdjEdge() {
 		return ADJ_EDGE;
 	}
@@ -191,7 +193,7 @@ public class Room {
     // Public because it's called GameFrame
     public void tick(){
         // Always called by the clock, handles enemies, shots and some game mechanics
-        if (player.isDead()){
+	if (player.isDead()){
 	    gameOver();
 	} else if (!enemiesInRoom.isEmpty()) {
 	    // Handle enemies (if there are enemies, otherwise spawn a new room)
@@ -245,7 +247,7 @@ public class Room {
 	    player.incSkill();
 	    newRoom();
 	}
-        notifyListeners();
+	notifyListeners();
     }
 
     private void gameOver() {

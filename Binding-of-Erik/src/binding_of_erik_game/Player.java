@@ -70,7 +70,7 @@ public class Player extends Agent {
     }
 
     public void incSkill() {
-	    this.skill =+ 1;
+	    this.skill += 1;
     }
 
     public int getSkill() {

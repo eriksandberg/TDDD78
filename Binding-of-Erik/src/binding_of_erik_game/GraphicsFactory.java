@@ -98,7 +98,7 @@ public final class GraphicsFactory
 				{ T, R, T, T, T, T, T, T, R, T },
 				{ T, T, R, T, T, T, T, R, T, T },
 				{ T, T, T, R, T, T, R, T, T, T },
-				{ T, T, T, T, R, R, T, T, T, R },
+				{ T, T, T, T, R, R, T, T, T, T },
 				{ T, T, T, T, R, R, T, T, T, T },
 				{ T, T, T, R, T, T, R, T, T, T },
 				{ T, T, R, T, T, T, T, R, T, T },
