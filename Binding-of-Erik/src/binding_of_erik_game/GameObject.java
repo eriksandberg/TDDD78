@@ -23,6 +23,36 @@ public class GameObject {
 	    this.shape = shape;
     }
 
+	public void move(char direction) {
+		switch (direction){
+			case 'N':
+				yCoord -= 1;
+				if (outOfBounds()) {
+					yCoord += 1;
+				}
+				break;
+			case 'S':
+				yCoord += 1;
+				if (outOfBounds()) {
+					yCoord -= 1;
+				}
+				break;
+			case 'E':
+				xCoord += 1;
+				if (outOfBounds()) {
+					yCoord -= 1;
+				}
+				break;
+			case 'W':
+				yCoord -= 1;
+				if (outOfBounds()) {
+					yCoord += 1;
+				}
+				break;
+			default: break;
+		}
+	}
+
     // Check if another object collide with this.
     // An object could move fast enough to "jump" over another object,
     // avoid by not having them move to many pixels each tick

@@ -34,7 +34,7 @@ public class EventHandler extends JComponent implements BoardListener {
 	getActionMap().put("pressedUp", new AbstractAction() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-				    EventHandler.this.room.movePlayer("up");
+				    EventHandler.this.room.movePlayer("N");
 			    }
 	});
 
@@ -42,7 +42,7 @@ public class EventHandler extends JComponent implements BoardListener {
 	getActionMap().put("pressedDown", new AbstractAction() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-				    EventHandler.this.room.movePlayer("down");
+				    EventHandler.this.room.movePlayer("S");
 			    }
 	});
 
@@ -50,7 +50,7 @@ public class EventHandler extends JComponent implements BoardListener {
 	getActionMap().put("pressedRight", new AbstractAction() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		    EventHandler.this.room.movePlayer("right");
+		    EventHandler.this.room.movePlayer("E");
 			    }
 	});
 
@@ -58,7 +58,7 @@ public class EventHandler extends JComponent implements BoardListener {
 	getActionMap().put("pressedLeft", new AbstractAction() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-				    EventHandler.this.room.movePlayer("left");
+				    EventHandler.this.room.movePlayer("W");
 	    }
 	});
 	getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "pressedEscape");

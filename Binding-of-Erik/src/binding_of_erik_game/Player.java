@@ -20,7 +20,7 @@ public class Player extends Agent {
 	    return;
 	}
 	switch (direction) {
-	    case "up": //go north
+	    case "N": //go north
 		yCoord -= 1;
 		if (outOfBounds()) {
 		    yCoord += 1;
@@ -28,7 +28,7 @@ public class Player extends Agent {
 		    this.direction = 'N';
 		}
 		break;
-	    case "down": //go south
+	    case "S": //go south
 		yCoord += 1;
 		if (outOfBounds()) {
 		    yCoord -= 1;
@@ -36,7 +36,7 @@ public class Player extends Agent {
 		    this.direction = 'S';
 		}
 		break;
-	    case "right": //go east
+	    case "E": //go east
 		xCoord += 1;
 		if (outOfBounds()) {
 		    xCoord -= 1;
@@ -44,7 +44,7 @@ public class Player extends Agent {
 		    this.direction = 'E';
 		}
 		break;
-	    case "left": //go west
+	    case "W": //go west
 		xCoord -= 1;
 		if (outOfBounds()) {
 		    xCoord += 1;
