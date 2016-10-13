@@ -53,62 +53,62 @@ public final class GraphicsFactory
 
     //player is right now a ring of blue pixels.
     private final TileType[][] player =
-	    { 			{ T, T, T, T, T, T, T, T, T, T },
-				{ T, T, W, Gr, Gr, Gr, Gr, T, T, T },
-				{ T, T, W, T, T, T, T, T, T, T },
-		    		{ T, T, W, W, T, T, T, T, T, T },
-				{ T, O, Gr, Gr, W, W, W, W, T, T }, //north
-				{ T, O, Gr, Gr, W, W, W, W, T, T }, //north
-		    		{ T, T, W, W, T, T, T, T, T, T },
-				{ T, T, W, T, T, T, T, T, T, T },
-				{ T, T, W, Gr, Gr, Gr, Gr, T, T, T },
-				{ T, T, T, T, T, T, T, T, T, T }};
+	{{ T, T, T, T, T, T, T, T, T, T },
+	{ T, T, W, Gr, Gr, Gr, Gr, T, T, T },
+	{ T, T, W, T, T, T, T, T, T, T },
+	{ T, T, W, W, T, T, T, T, T, T },
+	{ T, O, Gr, Gr, W, W, W, W, T, T }, //north
+	{ T, O, Gr, Gr, W, W, W, W, T, T }, //north
+	{ T, T, W, W, T, T, T, T, T, T },
+	{ T, T, W, T, T, T, T, T, T, T },
+	{ T, T, W, Gr, Gr, Gr, Gr, T, T, T },
+	{ T, T, T, T, T, T, T, T, T, T }};
 
     public Player getPlayer() {return new Player(player);}
 
 
     //enemy is right now a ring of red pixels. transparent blocks will be detected so they don't overwrite ground.
     private final TileType[][] normalEnemy =
-	    { 		{ T, T, T, R, R, R, R, T, T, T },
-				{ T, T, R, T, T, T, T, R, T, T },
-				{ T, R, T, T, T, T, T, T, R, T },
-		    	{ R, T, T, T, T, T, T, T, T, R },
-				{ R, T, T, T, T, T, T, T, T, R },
-				{ R, T, T, T, T, T, T, T, T, R },
-				{ R, T, T, T, T, T, T, T, T, R },
-				{ T, R, T, T, T, T, T, T, R, T },
-				{ T, T, R, T, T, T, T, R, T, T },
-				{ T, T, T, R, R, R, R, T, T, T } };
+	{{ T, T, T, R, R, R, R, T, T, T },
+	{ T, T, R, T, T, T, T, R, T, T },
+	{ T, R, T, T, T, T, T, T, R, T },
+	{ R, T, T, T, T, T, T, T, T, R },
+	{ R, T, T, T, T, T, T, T, T, R },
+	{ R, T, T, T, T, T, T, T, T, R },
+	{ R, T, T, T, T, T, T, T, T, R },
+	{ T, R, T, T, T, T, T, T, R, T },
+	{ T, T, R, T, T, T, T, R, T, T },
+	{ T, T, T, R, R, R, R, T, T, T } };
 
-	public Enemy getNormalEnemy() {return new Enemy(normalEnemy);}
+    public Enemy getNormalEnemy() {return new Enemy(normalEnemy);}
 
-	// Looks like a space invader but spawn sideways, lmao
-	private final TileType[][] invaderEnemy =
-		{ 		{ T, T, T, T, T, T, T, T, T, T },
-				{ T, T, R, T, T, T, T, R, T, T },
-				{ T, T, T, R, T, T, R, T, T, T },
-				{ T, T, R, R, R, R, R, R, T, T },
-				{ T, R, R, T, R, R, T, R, R, T },
-				{ R, R, R, R, R, R, R, R, R, R },
-				{ R, T, R, R, R, R, R, R, T, R },
-				{ R, T, R, T, T, T, T, R, T, R },
-				{ T, T, T, R, T, T, R, T, T, T },
-				{ T, T, T, T, T, T, T, T, T, T } };
+    // Looks like a space invader but spawn sideways, lmao
+    private final TileType[][] invaderEnemy =
+	{{ T, T, T, T, T, T, T, T, T, T },
+	{ T, T, R, T, T, T, T, R, T, T },
+	{ T, T, T, R, T, T, R, T, T, T },
+	{ T, T, R, R, R, R, R, R, T, T },
+	{ T, R, R, T, R, R, T, R, R, T },
+	{ R, R, R, R, R, R, R, R, R, R },
+	{ R, T, R, R, R, R, R, R, T, R },
+	{ R, T, R, T, T, T, T, R, T, R },
+	{ T, T, T, R, T, T, R, T, T, T },
+	{ T, T, T, T, T, T, T, T, T, T } };
 
-	public Enemy getInvaderEnemy() {return new Enemy(invaderEnemy);}
+    public Enemy getInvaderEnemy() {return new Enemy(invaderEnemy);}
 
     //clusterEnemy is a cross of red pixels. Will be shooting 3 projectiles at a time. See logic in <Class>
     private final TileType[][] clusterEnemy =
-	    { 		{ R, T, T, T, T, T, T, T, T, R },
-				{ T, R, T, T, T, T, T, T, R, T },
-				{ T, T, R, T, T, T, T, R, T, T },
-				{ T, T, T, R, T, T, R, T, T, T },
-				{ T, T, T, T, R, R, T, T, T, T },
-				{ T, T, T, T, R, R, T, T, T, T },
-				{ T, T, T, R, T, T, R, T, T, T },
-				{ T, T, R, T, T, T, T, R, T, T },
-				{ T, R, T, T, T, T, T, T, R, T },
-				{ R, T, T, T, T, T, T, T, T, R } };
+	{{ R, T, T, T, T, T, T, T, T, R },
+	{ T, R, T, T, T, T, T, T, R, T },
+	{ T, T, R, T, T, T, T, R, T, T },
+	{ T, T, T, R, T, T, R, T, T, T },
+	{ T, T, T, T, R, R, T, T, T, T },
+	{ T, T, T, T, R, R, T, T, T, T },
+	{ T, T, T, R, T, T, R, T, T, T },
+	{ T, T, R, T, T, T, T, R, T, T },
+	{ T, R, T, T, T, T, T, T, R, T },
+	{ R, T, T, T, T, T, T, T, T, R } };
 
     public Enemy getClusterEnemy() {return new Enemy(clusterEnemy);}
 
