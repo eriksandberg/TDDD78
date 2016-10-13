@@ -113,21 +113,21 @@ public final class GraphicsFactory
     public Enemy getClusterEnemy() {return new Enemy(clusterEnemy);}
 
     private final TileType[][] lightShot =
-		{		{ P, P},
-				{ P, P} };
+	{{ P, P},
+	{ P, P} };
 
-	public Shot getLightShot() {return new Shot(lightShot);}
+    public Shot getLightShot() {return new Shot(lightShot);}
 
-	private final TileType[][] playerShot =
-		{		{ Y, Y},
-				{ Y, Y} };
+    private final TileType[][] playerShot =
+	{{ Y, Y},
+	{ Y, Y} };
 
-	public StraightShot getPlayerShot() {return new StraightShot(playerShot);}
+    public StraightShot getPlayerShot() {return new StraightShot(playerShot);}
 
-	private final TileType[][] spark =
-		{		{ Y } };
+    private final TileType[][] spark =
+	{{ Y } };
 
-	public Spark getSpark() {return new Spark(spark);}
+    public Spark getSpark() {return new Spark(spark);}
 
     //add more graphic "blocks" here.
 }
