@@ -98,7 +98,7 @@ public class Room {
     public void spawnPlayer(int x, int y) {
 	this.player.xCoord = x;
 	this.player.yCoord = y;
-	player.setDirection('E');
+	player.setDirection('N');
 	notifyListeners();
     }
 

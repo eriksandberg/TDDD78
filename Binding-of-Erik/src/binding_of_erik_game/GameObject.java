@@ -79,13 +79,13 @@ public class GameObject {
 			//do nothing
 			break;
 		    case 'E':
-			rotateThisMany(1);
+			rotateThisMany(3);
 			break;
 		    case 'S':
 			rotateThisMany(2);
 			break;
 		    case 'W':
-			rotateThisMany(3);
+			rotateThisMany(1);
 			break;
 		    default: break;
 		}
@@ -93,13 +93,13 @@ public class GameObject {
 	    case 'E':
 		switch(newDirection){
 		    case 'N':
-			rotateThisMany(3);
+			rotateThisMany(1);
 			break;
 		    case 'E':
 			//do nothing
 			break;
 		    case 'S':
-			rotateThisMany(1);
+			rotateThisMany(3);
 			break;
 		    case 'W':
 			rotateThisMany(2);
@@ -113,13 +113,13 @@ public class GameObject {
 			rotateThisMany(2);
 			break;
 		    case 'E':
-			rotateThisMany(3);
+			rotateThisMany(1);
 			break;
 		    case 'S':
 			//do nothing
 			break;
 		    case 'W':
-			rotateThisMany(1);
+			rotateThisMany(3);
 			break;
 		    default: break;
 		}
@@ -127,13 +127,13 @@ public class GameObject {
 	    case 'W':
 		switch(newDirection){
 		    case 'N':
-			rotateThisMany(1);
+			rotateThisMany(3);
 			break;
 		    case 'E':
 			rotateThisMany(2);
 			break;
 		    case 'S':
-			rotateThisMany(3);
+			rotateThisMany(1);
 			break;
 		    case 'W':
 			//do nothing
@@ -144,6 +144,81 @@ public class GameObject {
 	    default: break;
 	}
     }
+    /*public void rotate(char newDirection, char oldDirection){
+    	//two-layer nested switch, 4x4 = 16 possible outcomes.
+    	//old is where we were facing before.
+    	switch(oldDirection){
+    	    case 'N':
+    		switch(newDirection){
+    		    case 'N':
+    			rotateThisMany(2);
+    			break;
+    		    case 'E':
+    			rotateThisMany(1);
+    			break;
+    		    case 'S':
+    			rotateThisMany(0);
+    			break;
+    		    case 'W':
+    			rotateThisMany(3);
+    			break;
+    		    default: break;
+    		}
+    		break;
+    	    case 'E':
+    		switch(newDirection){
+    		    case 'N':
+    			rotateThisMany(3);
+    			break;
+    		    case 'E':
+    			rotateThisMany(2);
+    			break;
+    		    case 'S':
+    			rotateThisMany(1);
+    			break;
+    		    case 'W':
+    			rotateThisMany(0);
+    			break;
+    		    default: break;
+    		}
+    		break;
+    	    case 'S':
+    		switch(newDirection){
+    		    case 'N':
+    			rotateThisMany(0);
+    			break;
+    		    case 'E':
+    			rotateThisMany(3);
+    			break;
+    		    case 'S':
+    			rotateThisMany(2);
+    			break;
+    		    case 'W':
+    			rotateThisMany(1);
+    			break;
+    		    default: break;
+    		}
+    		break;
+    	    case 'W':
+    		switch(newDirection){
+    		    case 'N':
+    			rotateThisMany(1);
+    			break;
+    		    case 'E':
+    			rotateThisMany(0);
+    			break;
+    		    case 'S':
+    			rotateThisMany(3);
+    			break;
+    		    case 'W':
+    			rotateThisMany(2);
+    			break;
+    		    default: break;
+    		}
+    		break;
+    	    default: break;
+    	}
+        }*/
 
     public void rotateThisMany(int times){
 	for (int i = 0; i < times; i++){
