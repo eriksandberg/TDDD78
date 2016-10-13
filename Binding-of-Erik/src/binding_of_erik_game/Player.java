@@ -10,9 +10,10 @@ public class Player extends Agent {
     private char direction = 'N';   // To be used when fireing shots and to display the correct graphics
 
     public Player(TileType[][] shape) {
-		super(shape);
-		this.skill = 1;
-		this.hp = 1000;  // For testing purposes we don't want to die
+	super(shape);
+	this.size = 10;
+	this.skill = 1;
+	this.hp = 1000;  // For testing purposes we don't want to die
     }
 
 	@Override
