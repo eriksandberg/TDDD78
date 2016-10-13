@@ -10,7 +10,7 @@ package binding_of_erik_game;
 
 public class GameObject {
 
-	// Every object have a shape, a size and a position in the Room
+    // Every object have a shape, a size and a position in the Room
     private TileType[][] shape;
     protected int size;
     protected int xCoord;
@@ -19,8 +19,8 @@ public class GameObject {
     // No one is born evil!
     protected boolean isEnemy = false;
 
-	// Constructor
-	// Let the inheriting objects set position and size as they are not 100% required
+    // Constructor
+    // Let the inheriting objects set position and size as they are not 100% required
     public GameObject(TileType[][] shape) {
 	this.shape = shape;
     }
@@ -69,17 +69,95 @@ public class GameObject {
 	return false;
     }
 
-    public void rotateCW(){
-	//right now we assume that all objects have square dimensions
-	final int M = this.size;
-	final int N = this.size;
-	TileType rotatedShape[][] = new TileType[N][M];
-	for (int r = 0; r < M; r++) {
-	    for (int c = 0; c < N; c++) {
-		rotatedShape[c][M-1-r] = this.shape[r][c];
-	    }
+    public void rotate(char newDirection, char oldDirection){
+	//two-layer nested switch, 4x4 = 16 possible outcomes.
+	//old is where we were facing before.
+	switch(oldDirection){
+	    case 'N':
+		switch(newDirection){
+		    case 'N':
+			//do nothing
+			break;
+		    case 'E':
+			rotateThisMany(1);
+			break;
+		    case 'S':
+			rotateThisMany(2);
+			break;
+		    case 'W':
+			rotateThisMany(3);
+			break;
+		    default: break;
+		}
+		break;
+	    case 'E':
+		switch(newDirection){
+		    case 'N':
+			rotateThisMany(3);
+			break;
+		    case 'E':
+			//do nothing
+			break;
+		    case 'S':
+			rotateThisMany(1);
+			break;
+		    case 'W':
+			rotateThisMany(2);
+			break;
+		    default: break;
+		}
+		break;
+	    case 'S':
+		switch(newDirection){
+		    case 'N':
+			rotateThisMany(2);
+			break;
+		    case 'E':
+			rotateThisMany(3);
+			break;
+		    case 'S':
+			//do nothing
+			break;
+		    case 'W':
+			rotateThisMany(1);
+			break;
+		    default: break;
+		}
+		break;
+	    case 'W':
+		switch(newDirection){
+		    case 'N':
+			rotateThisMany(1);
+			break;
+		    case 'E':
+			rotateThisMany(2);
+			break;
+		    case 'S':
+			rotateThisMany(3);
+			break;
+		    case 'W':
+			//do nothing
+			break;
+		    default: break;
+		}
+		break;
+	    default: break;
 	}
-	this.shape = rotatedShape;
+    }
+
+    public void rotateThisMany(int times){
+	for (int i = 0; i < times; i++){
+	    //right now we assume that all objects have square dimensions
+	    final int M = this.size;
+	    final int N = this.size;
+	    TileType rotatedShape[][] = new TileType[N][M];
+	    for (int r = 0; r < M; r++) {
+		for (int c = 0; c < N; c++) {
+		    rotatedShape[c][M - 1 - r] = this.shape[r][c];
+		}
+	    }
+	    this.shape = rotatedShape;
+	}
     }
 
     // Return true if the shot have left the board
