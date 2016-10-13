@@ -98,7 +98,7 @@ public class Room {
     public void spawnPlayer(int x, int y) {
 	this.player.xCoord = x;
 	this.player.yCoord = y;
-	player.setDirection('N');
+	player.setDirection(player.getDirection()); //TODO: Change this later, atm fix to not fuck up heading on room reset
 	notifyListeners();
     }
 

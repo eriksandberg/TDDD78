@@ -53,16 +53,16 @@ public final class GraphicsFactory
 
     //player is right now a ring of blue pixels.
     private final TileType[][] player =
-	    { 		{ T, T, T, B, B, B, B, T, T, T },
-				{ T, T, B, T, T, T, T, B, T, T },
-				{ T, B, T, T, T, T, T, T, B, T },
-		    	{ B, T, T, T, T, T, T, T, T, B },
-				{ B, T, T, T, T, T, T, T, P, B },
-				{ B, T, T, T, T, T, T, T, P, B },
-		    	{ B, T, T, T, T, T, T, T, T, B },
-				{ T, B, T, T, T, T, T, T, B, T },
-				{ T, T, B, T, T, T, T, B, T, T },
-				{ T, T, T, B, B, B, B, T, T, T }};
+	{{ T, T, T, T, T, T, T, T, T, T },
+	{ T, T, W, Gr, Gr, Gr, Gr, T, T, T },
+	{ T, T, W, T, T, T, T, T, T, T },
+	{ T, T, W, W, T, T, T, T, T, T },
+	{ T, O, Gr, Gr, W, W, W, W, T, T }, //north
+	{ T, O, Gr, Gr, W, W, W, W, T, T }, //north
+	{ T, T, W, W, T, T, T, T, T, T },
+	{ T, T, W, T, T, T, T, T, T, T },
+	{ T, T, W, Gr, Gr, Gr, Gr, T, T, T },
+	{ T, T, T, T, T, T, T, T, T, T }};
 
     public Player getPlayer() {return new Player(player);}
 
@@ -99,35 +99,35 @@ public final class GraphicsFactory
 
     //clusterEnemy is a cross of red pixels. Will be shooting 3 projectiles at a time. See logic in <Class>
     private final TileType[][] clusterEnemy =
-	    { 		{ R, T, T, T, T, T, T, T, T, R },
-				{ T, R, T, T, T, T, T, T, R, T },
-				{ T, T, R, T, T, T, T, R, T, T },
-				{ T, T, T, R, T, T, R, T, T, T },
-				{ T, T, T, T, R, R, T, T, T, T },
-				{ T, T, T, T, R, R, T, T, T, T },
-				{ T, T, T, R, T, T, R, T, T, T },
-				{ T, T, R, T, T, T, T, R, T, T },
-				{ T, R, T, T, T, T, T, T, R, T },
-				{ R, T, T, T, T, T, T, T, T, R } };
+	{{ R, T, T, T, T, T, T, T, T, R },
+	{ T, R, T, T, T, T, T, T, R, T },
+	{ T, T, R, T, T, T, T, R, T, T },
+	{ T, T, T, R, T, T, R, T, T, T },
+	{ T, T, T, T, R, R, T, T, T, T },
+	{ T, T, T, T, R, R, T, T, T, T },
+	{ T, T, T, R, T, T, R, T, T, T },
+	{ T, T, R, T, T, T, T, R, T, T },
+	{ T, R, T, T, T, T, T, T, R, T },
+	{ R, T, T, T, T, T, T, T, T, R } };
 
     public Enemy getClusterEnemy() {return new Enemy(clusterEnemy);}
 
     private final TileType[][] lightShot =
-		{		{ P, P},
-				{ P, P} };
+	{{ P, P},
+	{ P, P} };
 
-	public Shot getLightShot() {return new Shot(lightShot);}
+    public Shot getLightShot() {return new Shot(lightShot);}
 
-	private final TileType[][] playerShot =
-		{		{ Y, Y},
-				{ Y, Y} };
+    private final TileType[][] playerShot =
+	{{ Y, Y},
+	{ Y, Y} };
 
-	public StraightShot getPlayerShot() {return new StraightShot(playerShot);}
+    public StraightShot getPlayerShot() {return new StraightShot(playerShot);}
 
-	private final TileType[][] spark =
-		{		{ Y } };
+    private final TileType[][] spark =
+	{{ Y } };
 
-	public Spark getSpark() {return new Spark(spark);}
+    public Spark getSpark() {return new Spark(spark);}
 
 	private final TileType[][] star =
 		{		{ W, W, W, W, W} };
