@@ -53,16 +53,16 @@ public final class GraphicsFactory
 
     //player is right now a ring of blue pixels.
     private final TileType[][] player =
-	    { 		{ T, T, T, B, B, B, B, T, T, T },
-				{ T, T, B, T, T, T, T, B, T, T },
-				{ T, B, T, T, T, T, T, T, B, T },
-		    	{ B, T, T, T, T, T, T, T, T, B },
-				{ B, T, T, T, T, T, T, T, P, B },
-				{ B, T, T, T, T, T, T, T, P, B },
-		    	{ B, T, T, T, T, T, T, T, T, B },
-				{ T, B, T, T, T, T, T, T, B, T },
-				{ T, T, B, T, T, T, T, B, T, T },
-				{ T, T, T, B, B, B, B, T, T, T }};
+	    { 			{ T, T, T, T, T, T, T, T, T, T },
+				{ T, T, W, Gr, Gr, Gr, Gr, T, T, T },
+				{ T, T, W, T, T, T, T, T, T, T },
+		    		{ T, T, W, W, T, T, T, T, T, T },
+				{ T, O, Gr, Gr, W, W, W, W, T, T }, //north
+				{ T, O, Gr, Gr, W, W, W, W, T, T }, //north
+		    		{ T, T, W, W, T, T, T, T, T, T },
+				{ T, T, W, T, T, T, T, T, T, T },
+				{ T, T, W, Gr, Gr, Gr, Gr, T, T, T },
+				{ T, T, T, T, T, T, T, T, T, T }};
 
     public Player getPlayer() {return new Player(player);}
 
