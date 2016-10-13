@@ -14,6 +14,11 @@ public final class GraphicsFactory
 	private static final TileType W = TileType.WHITE; // White
     private static final TileType Y = TileType.YELLOW; // Yellow
     private static final TileType P = TileType.MAGENTA; // Pink
+    private static final TileType C = TileType.CYAN; //Light Blue
+    private static final TileType O = TileType.ORANGE; //Orange
+    private static final TileType G = TileType.GREEN; //Green
+    private static final TileType Gr = TileType.GRAY; //Gray
+    private static final TileType W = TileType.WHITE; //White
     //add more as we continue to define different things
 
     //private int squareWidth = 4; //could perhaps use a getter
@@ -53,8 +58,8 @@ public final class GraphicsFactory
 				{ T, T, B, T, T, T, T, B, T, T },
 				{ T, B, T, T, T, T, T, T, B, T },
 		    	{ B, T, T, T, T, T, T, T, T, B },
-				{ B, T, T, T, T, T, T, T, T, B },
-				{ B, T, T, T, T, T, T, T, T, B },
+				{ B, T, T, T, T, T, T, T, P, B },
+				{ B, T, T, T, T, T, T, T, P, B },
 		    	{ B, T, T, T, T, T, T, T, T, B },
 				{ T, B, T, T, T, T, T, T, B, T },
 				{ T, T, B, T, T, T, T, B, T, T },

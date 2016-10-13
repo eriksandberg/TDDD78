@@ -98,7 +98,7 @@ public class Room {
     public void spawnPlayer(int x, int y) {
 	this.player.xCoord = x;
 	this.player.yCoord = y;
-	player.setDirection('E');
+	player.setDirection('N');
 	notifyListeners();
     }
 
@@ -185,8 +185,9 @@ public class Room {
     // Move the player and notify listeners
     // Public because it's called from EventHandler
     public void movePlayer(char direction) {
-		player.move(direction);
-		notifyListeners();
+	player.rotate(direction, player.getDirection());
+	player.move(direction);
+	notifyListeners();
     }
 
 
@@ -283,7 +284,7 @@ public class Room {
 	    }
 	}
 	// Get Sparks
-	for (Spark spark : miscInRoom) {
+	for (GameObject spark : miscInRoom) {
 	    if (spark.getTile(x, y) != null) {
 		return spark.getTile(x, y);
 	    }
