@@ -24,7 +24,7 @@ public class Room {
     private int width;
 
     private Player player = null;
-    private Collection<Spark> sparksInRoom = new ArrayList<>();
+    private Collection<GameObject> miscInRoom = new ArrayList<>();
     private Collection<Enemy> enemiesInRoom = new ArrayList<>();
     private Collection<Shot> shotsInRoom = new ArrayList<>();
 
@@ -143,7 +143,7 @@ public class Room {
 	    // Adding i to the coordinate give the sparks a nice spread
 	    newSpark.calcAngle(object.xCoord + i, object.yCoord + i);
 
-	    sparksInRoom.add(newSpark);
+	    miscInRoom.add(newSpark);
 	}
 	notifyListeners();
     }
@@ -237,9 +237,9 @@ public class Room {
 		}
 	    }
 	    // Handle sparks
-	    Iterator<Spark> sp = sparksInRoom.iterator();
+	    Iterator<GameObject> sp = miscInRoom.iterator();
 	    while (sp.hasNext()) {
-		    Spark spark = sp.next();
+		    GameObject spark = sp.next();
 		    if (spark.move()) {sp.remove();}
 	    }
 	} else {
@@ -283,7 +283,7 @@ public class Room {
 	    }
 	}
 	// Get Sparks
-	for (Spark spark : sparksInRoom) {
+	for (Spark spark : miscInRoom) {
 	    if (spark.getTile(x, y) != null) {
 		return spark.getTile(x, y);
 	    }

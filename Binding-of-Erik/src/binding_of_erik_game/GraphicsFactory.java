@@ -11,6 +11,7 @@ public final class GraphicsFactory
     private static final TileType R = TileType.RED; // Red
     private static final TileType B = TileType.BLUE; // Blue
     private static final TileType T = TileType.BLACK; // Black / Transparent
+	private static final TileType W = TileType.WHITE; // White
     private static final TileType Y = TileType.YELLOW; // Yellow
     private static final TileType P = TileType.MAGENTA; // Pink
     //add more as we continue to define different things
@@ -73,7 +74,7 @@ public final class GraphicsFactory
 				{ R, T, T, T, T, T, T, T, T, R },
 				{ T, R, T, T, T, T, T, T, R, T },
 				{ T, T, R, T, T, T, T, R, T, T },
-				{ T, T, T, R, R, R, R, T, T, T } };
+				{ R, R, R, R, R, R, R, R, R, R } };
 
 	public Enemy getNormalEnemy() {return new Enemy(normalEnemy);}
 
@@ -123,6 +124,11 @@ public final class GraphicsFactory
 		{		{ Y } };
 
 	public Spark getSpark() {return new Spark(spark);}
+
+	private final TileType[][] star =
+		{		{ W, W, W, W, W} };
+
+	public Star getStar() {return new Star(star);}
 
     //add more graphic "blocks" here.
 }
