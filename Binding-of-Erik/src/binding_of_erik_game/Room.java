@@ -184,9 +184,9 @@ public class Room {
 
     // Move the player and notify listeners
     // Public because it's called from EventHandler
-    public void movePlayer(String direction) {
-	player.move(direction);
-	notifyListeners();
+    public void movePlayer(char direction) {
+		player.move(direction);
+		notifyListeners();
     }
 
 
