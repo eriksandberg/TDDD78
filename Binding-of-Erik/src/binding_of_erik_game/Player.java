@@ -61,6 +61,7 @@ public class Player extends Agent {
 	}
     }
 
+
     public void setDirection(char d) {
 	if ((d == 'N' || d == 'S' || d == 'E' || d == 'W')) {
 	    direction = d;
