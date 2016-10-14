@@ -69,8 +69,7 @@ public class Player extends Agent {
 					xCoord += 1;
 				}
 				break;
-			default:
-				break;
+			default:break;
 		}
 	}
 

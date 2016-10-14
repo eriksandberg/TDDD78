@@ -232,7 +232,7 @@ public class Room {
 	// Spawn a shot from enemy aimed at the player
 	@SuppressWarnings("NestedAssignment") // 2 lines is better than 4
 	private void spawnShot(Enemy enemy) {
-		final Shot newShot = GraphicsFactory.getInstance().getLightShot();
+		Shot newShot = GraphicsFactory.getInstance().getLightShot();
 		newShot.xCoordFloat = newShot.xCoord = enemy.xCoord - 4;    // supressed warning
 		newShot.yCoordFloat = newShot.yCoord = enemy.yCoord - 4;    // supressed warning
 
@@ -249,18 +249,34 @@ public class Room {
 
 	// Spawn a shot at the players position, traveling in the players direction
 	// Public because it's called from EventHandler
-	public void fireShot() {
-		final StraightShot newShot = GraphicsFactory.getInstance().getPlayerShot();
-		newShot.xCoord = player.xCoord - 4;
-		newShot.yCoord = player.yCoord - 4;
+	public void fireShot(String shotType) {
+		switch(shotType){
+			case ("StraightShot"):
+				shotsInRoom.add(spawnPlayerShot(player.getDirection()));
+				break;
+			case ("StrafeShots"):
+				char playerFacing = player.getDirection();
+			    	if (playerFacing == 'N' || playerFacing == 'S'){
+					shotsInRoom.add(spawnPlayerShot('E'));
+					shotsInRoom.add(spawnPlayerShot('W'));
+				} else {
+					shotsInRoom.add(spawnPlayerShot('N'));
+					shotsInRoom.add(spawnPlayerShot('S'));
+				}
+				break;
+			default: break;
+		}
 
-		newShot.setDirection(player.getDirection());
-
-		// false = !enemy
-		newShot.setAlignment(false);
-
-		shotsInRoom.add(newShot);
 		notifyListeners();
+	}
+
+    	private StraightShot spawnPlayerShot(char direction){
+	    	StraightShot newShot = GraphicsFactory.getInstance().getPlayerShot();
+	    	newShot.xCoord = player.xCoord - 4;
+		newShot.yCoord = player.yCoord - 4;
+	    	newShot.setAlignment(false); //false != enemy
+	    	newShot.setDirection(direction);
+	    	return newShot;
 	}
 
 	// Move the player and notify listeners

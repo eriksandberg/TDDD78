@@ -35,7 +35,15 @@ public class EventHandler extends JComponent implements BoardListener {
 	getActionMap().put("pressedSpace", new AbstractAction()
 	{
 	    @Override public void actionPerformed(ActionEvent e) {
-		EventHandler.this.room.fireShot();
+		EventHandler.this.room.fireShot("StraightShot");
+	    }
+	});
+
+	getInputMap().put(KeyStroke.getKeyStroke("C"), "pressedC");
+	getActionMap().put("pressedC", new AbstractAction()
+	{
+	    @Override public void actionPerformed(ActionEvent e) {
+		EventHandler.this.room.fireShot("StrafeShots");
 	    }
 	});
 
@@ -161,137 +169,137 @@ public class EventHandler extends JComponent implements BoardListener {
 
     }
 
-        private class upAction extends AbstractAction {
-	    private boolean onKeyRelease;
+    private class upAction extends AbstractAction {
+	private boolean onKeyRelease;
 
-	    public upAction(boolean onKeyRelease) {
-		this.onKeyRelease = onKeyRelease;
-	    }
-
-	    @Override
-	    public void actionPerformed(ActionEvent evt) {
-	  	if (!onKeyRelease) {
-		    if (upTimer != null && upTimer.isRunning()) {
-			return;
-		    }
-		    EventHandler.this.room.movePlayer('N');
-
-		    upTimer = new Timer(TIMER_DELAY, new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			    EventHandler.this.room.movePlayer('N');
-			}
-		    });
-		    upTimer.start();
-		} else {
-		    EventHandler.this.room.movePlayer('X');
-		    if (upTimer != null && upTimer.isRunning()) {
-		       upTimer.stop();
-		       upTimer = null;
-		    }
-		}
-	    }
-        }
-
-    	private class downAction extends AbstractAction {
-	    private boolean onKeyRelease;
-
-    	    public downAction(boolean onKeyRelease) {
-    	       this.onKeyRelease = onKeyRelease;
-    	    }
-
-	    @Override
-	    public void actionPerformed(ActionEvent evt) {
-		if (!onKeyRelease) {
-		    if (downTimer != null && downTimer.isRunning()) {
-    		    	return;
-		    }
-		    EventHandler.this.room.movePlayer('S');
-
-		    downTimer = new Timer(TIMER_DELAY, new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			   EventHandler.this.room.movePlayer('S');
-			}
-		    });
-    		downTimer.start();
-		} else {
-		    EventHandler.this.room.movePlayer('X');
-		    if (downTimer != null && downTimer.isRunning()) {
-		        downTimer.stop();
-		        downTimer = null;
-		    }
-    	     	}
-	    }
+	public upAction(boolean onKeyRelease) {
+	    this.onKeyRelease = onKeyRelease;
 	}
 
-    	private class rightAction extends AbstractAction {
-    	    private boolean onKeyRelease;
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+	    if (!onKeyRelease) {
+		if (upTimer != null && upTimer.isRunning()) {
+		    return;
+		}
+		EventHandler.this.room.movePlayer('N');
 
-    	    public rightAction(boolean onKeyRelease) {
-    		this.onKeyRelease = onKeyRelease;
-    	    }
+		upTimer = new Timer(TIMER_DELAY, new ActionListener() {
 
-    	    @Override
-    	    public void actionPerformed(ActionEvent evt) {
-    	  	if (!onKeyRelease) {
-    		    if (rightTimer != null && rightTimer.isRunning()) {
-    			return;
-    		    }
-    		    EventHandler.this.room.movePlayer('E');
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+			EventHandler.this.room.movePlayer('N');
+		    }
+		});
+		upTimer.start();
+	    } else {
+		EventHandler.this.room.movePlayer('X');
+		if (upTimer != null && upTimer.isRunning()) {
+		   upTimer.stop();
+		   upTimer = null;
+		}
+	    }
+	}
+    }
 
-    		    rightTimer = new Timer(TIMER_DELAY, new ActionListener() {
+    private class downAction extends AbstractAction {
+	private boolean onKeyRelease;
 
-    			@Override
-    			public void actionPerformed(ActionEvent e) {
-    			    EventHandler.this.room.movePlayer('E');
-    			}
-    		    });
-    		    rightTimer.start();
-    		} else {
-    		    EventHandler.this.room.movePlayer('X');
-    		    if (rightTimer != null && rightTimer.isRunning()) {
-    		       rightTimer.stop();
-    		       rightTimer = null;
-    		    }
-    		}
-    	    }
+	public downAction(boolean onKeyRelease) {
+	   this.onKeyRelease = onKeyRelease;
 	}
 
-    	private class leftAction extends AbstractAction {
-    	    private boolean onKeyRelease;
-
-	    public leftAction(boolean onKeyRelease) {
-	       this.onKeyRelease = onKeyRelease;
-	    }
-
-    	    @Override
-    	    public void actionPerformed(ActionEvent evt) {
-    		if (!onKeyRelease) {
-    		    if (leftTimer != null && leftTimer.isRunning()) {
-			return;
-    		    }
-    		    EventHandler.this.room.movePlayer('W');
-
-    		    leftTimer = new Timer(TIMER_DELAY, new ActionListener() {
-
-    			@Override
-    			public void actionPerformed(ActionEvent e) {
-    			   EventHandler.this.room.movePlayer('W');
-    			}
-    		    });
-		    leftTimer.start();
-    		} else {
-    		    EventHandler.this.room.movePlayer('X');
-    		    if (leftTimer != null && leftTimer.isRunning()) {
-    		        leftTimer.stop();
-    		        leftTimer = null;
-    		    }
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+	    if (!onKeyRelease) {
+		if (downTimer != null && downTimer.isRunning()) {
+		    return;
 		}
-    	    }
-    	}
+		EventHandler.this.room.movePlayer('S');
+
+		downTimer = new Timer(TIMER_DELAY, new ActionListener() {
+
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		       EventHandler.this.room.movePlayer('S');
+		    }
+		});
+	    downTimer.start();
+	    } else {
+		EventHandler.this.room.movePlayer('X');
+		if (downTimer != null && downTimer.isRunning()) {
+		    downTimer.stop();
+		    downTimer = null;
+		}
+	    }
+	}
+    }
+
+    private class rightAction extends AbstractAction {
+	private boolean onKeyRelease;
+
+	public rightAction(boolean onKeyRelease) {
+	    this.onKeyRelease = onKeyRelease;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+	    if (!onKeyRelease) {
+		if (rightTimer != null && rightTimer.isRunning()) {
+		    return;
+		}
+		EventHandler.this.room.movePlayer('E');
+
+		rightTimer = new Timer(TIMER_DELAY, new ActionListener() {
+
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+			EventHandler.this.room.movePlayer('E');
+		    }
+		});
+		rightTimer.start();
+	    } else {
+		EventHandler.this.room.movePlayer('X');
+		if (rightTimer != null && rightTimer.isRunning()) {
+		   rightTimer.stop();
+		   rightTimer = null;
+		}
+	    }
+	}
+    }
+
+    private class leftAction extends AbstractAction {
+	private boolean onKeyRelease;
+
+	public leftAction(boolean onKeyRelease) {
+	   this.onKeyRelease = onKeyRelease;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+	    if (!onKeyRelease) {
+		if (leftTimer != null && leftTimer.isRunning()) {
+		    return;
+		}
+		EventHandler.this.room.movePlayer('W');
+
+		leftTimer = new Timer(TIMER_DELAY, new ActionListener() {
+
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		       EventHandler.this.room.movePlayer('W');
+		    }
+		});
+		leftTimer.start();
+	    } else {
+		EventHandler.this.room.movePlayer('X');
+		if (leftTimer != null && leftTimer.isRunning()) {
+		    leftTimer.stop();
+		    leftTimer = null;
+		}
+	    }
+	}
+    }
 
     public Dimension getPreferredSize(){
 	return new Dimension(SQUARE_WIDTH, SQUARE_HEIGHT);
