@@ -91,6 +91,7 @@ public class Room {
 	private void clearRoom() {
 		enemiesInRoom.clear();
 		shotsInRoom.clear();
+		miscInRoom.clear();
 	}
 
 	// Basically a restart, public for the same reason as newRoom is
@@ -124,7 +125,6 @@ public class Room {
 			int e = rand.nextInt(i) + 1;
 			enemiesInRoom.add(spawnEnemy(e));
 			i -= e;
-			System.out.println("Skill: " + player.getSkill());
 		}
 		notifyListeners();
 
@@ -169,9 +169,19 @@ public class Room {
 	}
 
 	// Spawn "traveling star" at a random position
-	private void spawnStars() {
+	private void spawnStar() {
 		Random rand = new Random();
 
+		// We don't want to always spawn stars
+		int i = rand.nextInt(6);
+		if (i != 0) {
+			return;
+		}
+
+		final Star newStar = GraphicsFactory.getInstance().getStar();
+		newStar.xCoord = rand.nextInt(FAR_EDGE - 18);
+		newStar.yCoord = 0;
+		miscInRoom.add(newStar);
 	}
 
 	// Spawn a couple of sparks at orgin
@@ -297,6 +307,8 @@ public class Room {
 					misc.remove();
 				}
 			}
+			// Perhaps spawn a star
+			spawnStar();
 		} else {
 			// Room is empty, increment player skill and spawn a new room
 			player.incSkill();
