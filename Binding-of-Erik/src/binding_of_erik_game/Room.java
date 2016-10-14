@@ -167,8 +167,10 @@ public class Room {
 		return true;
 	}
 
+	// Spawn "traveling star" at a random position
 	private void spawnStars() {
 		Random rand = new Random();
+
 	}
 
 	// Spawn a couple of sparks at orgin
@@ -283,12 +285,12 @@ public class Room {
 					}
 				}
 			}
-			// Handle sparks
-			Iterator<GameObject> sp = miscInRoom.iterator();
-			while (sp.hasNext()) {
-				GameObject spark = sp.next();
-				if (spark.move()) {
-					sp.remove();
+			// Handle graphical stuff
+			Iterator<GameObject> misc = miscInRoom.iterator();
+			while (misc.hasNext()) {
+				GameObject gfx = misc.next();
+				if (gfx.move()) {
+					misc.remove();
 				}
 			}
 		} else {
