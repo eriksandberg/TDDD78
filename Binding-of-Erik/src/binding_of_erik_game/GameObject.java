@@ -48,6 +48,16 @@ public class GameObject {
 		return false;
 	}
 
+	// Return true if the object have left the room
+	protected boolean outOfBounds() {
+		//if statement can be simplified to a simple return (logical operation), but this is more readable.
+		if ((xCoord - size < Room.getAdjEdge()) || (yCoord - size < Room.getAdjEdge()) ||
+			(xCoord + 2 * size > Room.getFarEdge()) || (yCoord + 2 * size > Room.getFarEdge())) {
+			return true;
+		}
+		return false;
+	}
+
 	public void rotate(char newDirection, char oldDirection) {
 		//two-layer nested switch, 4x4 = 16 possible outcomes.
 		//old is where we were facing before.
@@ -142,16 +152,6 @@ public class GameObject {
 			}
 			this.shape = rotatedShape;
 		}
-	}
-
-	// Return true if the shot have left the board
-	protected boolean outOfBounds() {
-		//if statement can be simplified to a simple return (logical operation), but this is more readable.
-		if ((xCoord - size < Room.getAdjEdge()) || (yCoord - size < Room.getAdjEdge()) ||
-				(xCoord + 2 * size > Room.getFarEdge()) || (yCoord + 2 * size > Room.getFarEdge())) {
-			return true;
-		}
-		return false;
 	}
 
 	// True == enemy

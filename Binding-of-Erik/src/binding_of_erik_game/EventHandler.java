@@ -108,6 +108,42 @@ public class EventHandler extends JComponent implements BoardListener {
 	    }
 	});
 
+    KeyStroke fKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_F, 0, false);
+    getInputMap().put(fKeyPressed, "F pressed");
+    getActionMap().put("F pressed", new AbstractAction() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		    EventHandler.this.room.movePlayer('R');
+	    }
+    });
+
+    KeyStroke fKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_F, 0, true);
+    getInputMap().put(fKeyReleased, "F released");
+    getActionMap().put("F released", new AbstractAction() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		    EventHandler.this.room.movePlayer('X');
+	    }
+    });
+
+    KeyStroke aKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, false);
+    getInputMap().put(aKeyPressed, "A pressed");
+    getActionMap().put("A pressed", new AbstractAction() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		    EventHandler.this.room.movePlayer('L');
+	    }
+    });
+
+    KeyStroke aKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true);
+    getInputMap().put(aKeyReleased, "A released");
+    getActionMap().put("A released", new AbstractAction() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		    EventHandler.this.room.movePlayer('X');
+	    }
+    });
+
 	getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "pressedEscape");
 	getActionMap().put("pressedEscape", new AbstractAction() {
 	    @Override
@@ -115,6 +151,7 @@ public class EventHandler extends JComponent implements BoardListener {
 					System.exit(0);
 		}
 	});
+
 	getInputMap().put(KeyStroke.getKeyStroke("P"), "pressedP");
 	getActionMap().put("pressedP", new AbstractAction() {
 	    @Override
@@ -123,6 +160,7 @@ public class EventHandler extends JComponent implements BoardListener {
 		System.out.println("Paused.");
 	    }
 	});
+
 	getInputMap().put(KeyStroke.getKeyStroke("T"), "pressedT");
 	getActionMap().put("pressedT", new AbstractAction() {
 	    @Override
@@ -132,9 +170,10 @@ public class EventHandler extends JComponent implements BoardListener {
 		    System.out.println("Testing enabled.");}
 		else {
 		    System.out.println("Testing disabled.");
-		}
+			}
 	    }
 	});
+
 	getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "pressedEnter");
 	getActionMap().put("pressedEnter", new AbstractAction() {
 	    @Override
@@ -142,9 +181,10 @@ public class EventHandler extends JComponent implements BoardListener {
 		if (testing) {
 		    EventHandler.this.room.newRoom();
 		    System.out.println("New room spawned.");
-		}
+			}
 	    }
 	});
+
 	getInputMap().put(KeyStroke.getKeyStroke("R"), "pressedR");
 	getActionMap().put("pressedR", new AbstractAction() {
 	    @Override
@@ -152,7 +192,7 @@ public class EventHandler extends JComponent implements BoardListener {
 		if (testing) {
 		    System.out.println("Room reset.");
 		    EventHandler.this.room.resetRoom();
-		}
+			}
 	    }
 	});
     }
@@ -162,21 +202,21 @@ public class EventHandler extends JComponent implements BoardListener {
 	}
 
     public void paintComponent(Graphics g){
-	super.paintComponent(g);
-	final Graphics2D g2 = (Graphics2D) g;
-	for (int i = 0; i < room.getWidth(); i++){
-	    for (int j = 0; j < room.getHeight(); j++){
-		TileType square = room.getSquare(i, j);
-		if (square != TileType.TRANSPARENT) {
-		    g2.setColor(map.get(square));
-		} else {
-		    g2.setColor(Color.green); //need a general solution for this to look good. Use TEMP
-		}
-		g2.fillRect(i * room.getPixelWidthPerTile(), j * room.getPixelHeightPerTile(),
+		super.paintComponent(g);
+		final Graphics2D g2 = (Graphics2D) g;
+		for (int i = 0; i < room.getWidth(); i++){
+	        for (int j = 0; j < room.getHeight(); j++){
+				TileType square = room.getSquare(i, j);
+				if (square != TileType.TRANSPARENT) {
+		            g2.setColor(map.get(square));
+				} else {
+		            g2.setColor(Color.green); //need a general solution for this to look good. Use TEMP
+				}
+				g2.fillRect(i * room.getPixelWidthPerTile(), j * room.getPixelHeightPerTile(),
 				room.getPixelWidthPerTile(), room.getPixelHeightPerTile());
-		//may need to re-define this later.
-	    }
-	}
+				//may need to re-define this later.
+	        }
+		}
     }
 
     public void boardChanged(){

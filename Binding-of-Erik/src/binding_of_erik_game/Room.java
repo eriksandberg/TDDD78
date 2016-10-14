@@ -124,7 +124,6 @@ public class Room {
 			int e = rand.nextInt(i) + 1;
 			enemiesInRoom.add(spawnEnemy(e));
 			i -= e;
-			System.out.println("Skill: " + player.getSkill());
 		}
 		notifyListeners();
 
