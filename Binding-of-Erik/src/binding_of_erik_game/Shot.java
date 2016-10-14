@@ -32,17 +32,19 @@ public class Shot extends GameObject{
     }
 
     // Move the shot according to position, angle and speed, return false if the shot have left the board
+	@Override
     public boolean move() {
-	xCoordFloat += shotspeed * xAngle;
-	xCoord = Math.round(xCoordFloat);
+		xCoordFloat += shotspeed * xAngle;
+		xCoord = Math.round(xCoordFloat);
 
-	yCoordFloat += shotspeed * yAngle;
-	yCoord = Math.round(yCoordFloat);
+		yCoordFloat += shotspeed * yAngle;
+		yCoord = Math.round(yCoordFloat);
 
     	return outOfBounds();
     }
 
-    public void setAlignment(boolean alignment) {
+    @SuppressWarnings("SuspiciousGetterSetter")
+	public void setAlignment(boolean alignment) {
 		this.isEnemy = alignment;
 	}
 }

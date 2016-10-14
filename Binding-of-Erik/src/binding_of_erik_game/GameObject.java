@@ -39,9 +39,13 @@ public class GameObject {
     public boolean collision(GameObject other) {
 	if ((Math.abs(other.xCoord - this.xCoord) * 2) < (other.size + this.size) &&
 	    (Math.abs(other.yCoord - this.yCoord) * 2) < (other.size + this.size)) {
-	    System.out.println("Collision!");
+	/*if 	(this.xCoord < (other.xCoord + other.size) &&
+		(this.xCoord + this.size) > other.xCoord &&
+		 this.yCoord < (other.yCoord + other.size) &&
+		(this.yCoord + this.size) > other.yCoord) {*/
+		System.out.println("Collision!");
 	    return true;
-	}
+		}
 	return false;
     }
 

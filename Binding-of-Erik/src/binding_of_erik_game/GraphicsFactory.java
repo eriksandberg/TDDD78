@@ -51,18 +51,18 @@ public final class GraphicsFactory
 	return SingletonHolder.INSTANCE;
     }
 
-    //player is right now a ring of blue pixels.
+    // All objects should preferably take up all of their allowed space for collisions to look better
     private final TileType[][] player =
-	{{ T, T, T, T, T, T, T, T, T, T },
-	{ T, T, W, Gr, Gr, Gr, Gr, T, T, T },
+	{{ T, T, T, Gr, Gr, T, T, T, T, T },
+	{ T, T, W, Gr, Gr, Gr, Gr, Gr, T, T },
 	{ T, T, W, T, T, T, T, T, T, T },
-	{ T, T, W, W, T, T, T, T, T, T },
-	{ T, O, Gr, Gr, W, W, W, W, T, T }, //north
-	{ T, O, Gr, Gr, W, W, W, W, T, T }, //north
-	{ T, T, W, W, T, T, T, T, T, T },
+	{ T, W, W, W, T, T, T, T, T, T },
+	{ O, O, Gr, Gr, W, W, W, W, W, W }, //north
+	{ O, O, Gr, Gr, W, W, W, W, W, W }, //north
+	{ T, W, W, W, T, T, T, T, T, T },
 	{ T, T, W, T, T, T, T, T, T, T },
-	{ T, T, W, Gr, Gr, Gr, Gr, T, T, T },
-	{ T, T, T, T, T, T, T, T, T, T }};
+	{ T, T, W, Gr, Gr, Gr, Gr, Gr, T, T },
+	{ T, T, T, Gr, Gr, T, T, T, T, T }};
 
     public Player getPlayer() {return new Player(player);}
 

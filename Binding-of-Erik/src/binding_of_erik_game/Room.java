@@ -73,7 +73,7 @@ public class Room {
     public void newRoom() {
 	clearRoom();   // Remove all shots (and enemies) left in an old room
 	//noinspection MagicNumber, let the player spawn in the middle of the room
-	spawnPlayer(90, 90);
+	spawnPlayer(0, 0);
 	spawnEnemies();
 	// Should probably pause for a couple of seconds, don't want to confuse the player
     }
@@ -126,6 +126,9 @@ public class Room {
 	return newEnemy;
     }
 
+	private void spawnStars() {
+		Random rand = new Random();
+	}
 
     // Spawn a couple of sparks at orgin
     @SuppressWarnings("NestedAssignment") // 2 lines is better than 4
