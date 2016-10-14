@@ -242,6 +242,9 @@ public class Room {
 	// Move the player and notify listeners
 	// Public because it's called from EventHandler
 	public void movePlayer(char direction) {
+	    	if (direction == 'X'){
+		    player.move(direction); //actually does not move
+		}
 		player.rotate(direction, player.getDirection());
 		player.move(direction);
 		notifyListeners();

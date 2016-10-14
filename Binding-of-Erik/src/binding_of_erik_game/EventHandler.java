@@ -42,7 +42,6 @@ public class EventHandler extends JComponent implements BoardListener {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 					EventHandler.this.room.movePlayer('N');
-		System.out.println("Pressed up");
 				}
 	});
 
@@ -52,7 +51,6 @@ public class EventHandler extends JComponent implements BoardListener {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 					EventHandler.this.room.movePlayer('X');
-		System.out.println("Released up");
 				}
 	});
 
@@ -89,7 +87,7 @@ public class EventHandler extends JComponent implements BoardListener {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 					EventHandler.this.room.movePlayer('X');
-				}
+	    }
 	});
 
 	KeyStroke leftKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, false);
@@ -107,7 +105,7 @@ public class EventHandler extends JComponent implements BoardListener {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 					EventHandler.this.room.movePlayer('X');
-				}
+	    }
 	});
 
 	getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "pressedEscape");
