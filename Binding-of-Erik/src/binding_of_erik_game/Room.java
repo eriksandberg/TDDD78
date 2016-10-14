@@ -184,13 +184,16 @@ public class Room {
 	shotsInRoom.add(newShot);
 	notifyListeners();
     }
-
     // Move the player and notify listeners
     // Public because it's called from EventHandler
     public void movePlayer(char direction) {
-	player.rotate(direction, player.getDirection());
-	player.move(direction);
-	notifyListeners();
+	if (direction == 'X'){ //x means stop
+	    player.move(direction); //will actually not move.
+	} else {
+	    player.rotate(direction, player.getDirection());
+	    player.move(direction);
+	    notifyListeners();
+	}
     }
 
 

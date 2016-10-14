@@ -1,6 +1,7 @@
 package binding_of_erik_game;
 
-// import javafx.scene.input.KeyEvent; //might be used later
+//import javafx.scene.input.KeyEvent; //might be used later
+import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 import java.awt.Color;
@@ -35,37 +36,80 @@ public class EventHandler extends JComponent implements BoardListener {
 		}
 	});
 
-	getInputMap().put(KeyStroke.getKeyStroke("UP"), "pressedUp");
-	getActionMap().put("pressedUp", new AbstractAction() {
+	KeyStroke upKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false);
+	getInputMap().put(upKeyPressed, "up key pressed");
+	getActionMap().put("up key pressed", new AbstractAction() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 					EventHandler.this.room.movePlayer('N');
+		System.out.println("Pressed up");
 				}
 	});
 
-	getInputMap().put(KeyStroke.getKeyStroke("DOWN"), "pressedDown");
-	getActionMap().put("pressedDown", new AbstractAction() {
+	KeyStroke upKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true);
+	getInputMap().put(upKeyReleased, "up key released");
+	getActionMap().put("up key released", new AbstractAction() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+					EventHandler.this.room.movePlayer('X');
+		System.out.println("Released up");
+				}
+	});
+
+	KeyStroke downKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, false);
+	getInputMap().put(downKeyPressed, "down key pressed");
+	getActionMap().put("down key pressed", new AbstractAction() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 					EventHandler.this.room.movePlayer('S');
 				}
 	});
 
-	getInputMap().put(KeyStroke.getKeyStroke("RIGHT"), "pressedRight");
-	getActionMap().put("pressedRight", new AbstractAction() {
+	KeyStroke downKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, true);
+	getInputMap().put(downKeyReleased, "down key released");
+	getActionMap().put("down key released", new AbstractAction() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-			EventHandler.this.room.movePlayer('E');
+					EventHandler.this.room.movePlayer('X');
 				}
 	});
 
-	getInputMap().put(KeyStroke.getKeyStroke("LEFT"), "pressedLeft");
-	getActionMap().put("pressedLeft", new AbstractAction() {
+	KeyStroke rightKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, false);
+	getInputMap().put(rightKeyPressed, "right key pressed");
+	getActionMap().put("right key pressed", new AbstractAction() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+					EventHandler.this.room.movePlayer('E');
+				}
+	});
+
+	KeyStroke rightKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true);
+	getInputMap().put(rightKeyReleased, "right key released");
+	getActionMap().put("right key released", new AbstractAction() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+					EventHandler.this.room.movePlayer('X');
+				}
+	});
+
+	KeyStroke leftKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, false);
+	getInputMap().put(leftKeyPressed, "left key pressed");
+	getActionMap().put("left key pressed", new AbstractAction() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 					EventHandler.this.room.movePlayer('W');
-		}
+				}
 	});
+
+	KeyStroke leftKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true);
+	getInputMap().put(leftKeyReleased, "left key released");
+	getActionMap().put("left key released", new AbstractAction() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+					EventHandler.this.room.movePlayer('X');
+				}
+	});
+
 	getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "pressedEscape");
 	getActionMap().put("pressedEscape", new AbstractAction() {
 	    @Override

@@ -22,39 +22,42 @@ public class Player extends Agent {
 	  return;
 	}
 	switch (direction) {
-	case 'N': //go north
-	    yCoord -= 1;
-	    if (outOfBounds()) {
-		yCoord += 1;
-	    } else {
-		this.direction = 'N';
-	    }
-	    break;
-	case 'S': //go south
-	    yCoord += 1;
-	    if (outOfBounds()) {
+	    case 'X': //don't move, everybody don't move, it's a don't move dance!
+		//don't move!
+		break;
+	    case 'N': //go north
 		yCoord -= 1;
-	    } else {
-		this.direction = 'S';
-	    }
-	    break;
-	case 'E': //go east
-	    xCoord += 1;
-	    if (outOfBounds()) {
-		xCoord -= 1;
-	    } else {
-		this.direction = 'E';
-	    }
-	    break;
-	case 'W': //go west
-	    xCoord -= 1;
-	    if (outOfBounds()) {
+		if (outOfBounds()) {
+		    yCoord += 1;
+		} else {
+		    this.direction = 'N';
+		}
+		break;
+	    case 'S': //go south
+		yCoord += 1;
+		if (outOfBounds()) {
+		    yCoord -= 1;
+		} else {
+		    this.direction = 'S';
+		}
+		break;
+	    case 'E': //go east
 		xCoord += 1;
-	    } else {
-		this.direction = 'W';
-	    }
-	    break;
-	default: break;
+		if (outOfBounds()) {
+		    xCoord -= 1;
+		} else {
+		    this.direction = 'E';
+		}
+		break;
+	    case 'W': //go west
+		xCoord -= 1;
+		if (outOfBounds()) {
+		    xCoord += 1;
+		} else {
+		    this.direction = 'W';
+		}
+		break;
+	    default: break;
 	}
     }
 
