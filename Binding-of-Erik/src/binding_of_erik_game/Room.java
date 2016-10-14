@@ -300,18 +300,24 @@ public class Room {
 			gameOver();
 		} else if (!enemiesInRoom.isEmpty()) {
 			// Handle enemies (if there are enemies, otherwise spawn a new room)
-			for (Enemy enemy : enemiesInRoom) {
-				enemy.move();
-				// touching enemies hurt the player
-				if (enemy.collision(player)) {
-					spawnSparks(player, enemy);
-					player.hp--;
-				}
-				if (enemy.readyToShoot()) {
-					spawnShot(enemy);
+			Iterator<Enemy> e = enemiesInRoom.iterator();
+			while (e.hasNext()) {
+				Enemy enemy = e.next();
+				if (enemy.isDead()) {
+					e.remove();
+				} else {
+					enemy.move();
+					// touching enemies hurt the player
+					if (enemy.collision(player)) {
+						spawnSparks(player, enemy);
+						player.hp--;
+					}
+					if (enemy.readyToShoot()) {
+						spawnShot(enemy);
+					}
 				}
 			}
-			// Handle shots, need to use iterator instead of foreach to be able to use .remove()...
+			// Handle shots
 			Iterator<Shot> s = shotsInRoom.iterator();
 			while (s.hasNext()) {
 				Shot shot = s.next();
@@ -319,7 +325,7 @@ public class Room {
 				if (shot.move()) {
 					s.remove();
 				}
-				// Remove shots that hit the player
+				// Remove enemy shots that hit the player
 				if (shot.isEnemy()) {
 					if (shot.collision(player)) {
 						spawnSparks(player, shot);
@@ -327,16 +333,14 @@ public class Room {
 						player.hp--;
 					}
 				} else {
-					Iterator<Enemy> e = enemiesInRoom.iterator();
+					// Remove player shots that hit an enemy
+					e = enemiesInRoom.iterator();
 					while (e.hasNext()) {
 						Enemy enemy = e.next();
-						if (shot.collision(enemy)) {    // Collision detection seem to be quite dodgy
+						if (shot.collision(enemy)) {
 							spawnSparks(enemy, shot);
 							s.remove();
 							enemy.hp--;
-						}
-						if (enemy.isDead()) {   //TODO: Fix enemies dying without player shots existing
-							e.remove();
 						}
 					}
 				}
