@@ -14,7 +14,6 @@ public class TravelingEnemy extends Enemy {
 	@Override
 	public boolean move() {
 		yCoord += 2;
-		System.out.println("moving");
 
 		if (outOfBounds()) {hp = 0;}
 		return true;
