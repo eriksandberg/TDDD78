@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.EnumMap;
 
 /**
@@ -19,6 +20,8 @@ public class EventHandler extends JComponent implements BoardListener {
 
     private static final int SQUARE_WIDTH = 800; //graphical size of the actual GameFrame
     private static final int SQUARE_HEIGHT = 800;
+    private static final int TIMER_DELAY = 50;
+    private Timer upTimer, downTimer, rightTimer, leftTimer;
     private final Room room;
     private final EnumMap<TileType, Color> map = TileType.eMap();
 
@@ -34,78 +37,6 @@ public class EventHandler extends JComponent implements BoardListener {
 	    public void actionPerformed(ActionEvent e) {
 			EventHandler.this.room.fireShot();
 		}
-	});
-
-	KeyStroke upKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false);
-	getInputMap().put(upKeyPressed, "up key pressed");
-	getActionMap().put("up key pressed", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-					EventHandler.this.room.movePlayer('N');
-				}
-	});
-
-	KeyStroke upKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true);
-	getInputMap().put(upKeyReleased, "up key released");
-	getActionMap().put("up key released", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-					EventHandler.this.room.movePlayer('X');
-				}
-	});
-
-	KeyStroke downKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, false);
-	getInputMap().put(downKeyPressed, "down key pressed");
-	getActionMap().put("down key pressed", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-					EventHandler.this.room.movePlayer('S');
-				}
-	});
-
-	KeyStroke downKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, true);
-	getInputMap().put(downKeyReleased, "down key released");
-	getActionMap().put("down key released", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-					EventHandler.this.room.movePlayer('X');
-				}
-	});
-
-	KeyStroke rightKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, false);
-	getInputMap().put(rightKeyPressed, "right key pressed");
-	getActionMap().put("right key pressed", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-					EventHandler.this.room.movePlayer('E');
-				}
-	});
-
-	KeyStroke rightKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true);
-	getInputMap().put(rightKeyReleased, "right key released");
-	getActionMap().put("right key released", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-					EventHandler.this.room.movePlayer('X');
-	    }
-	});
-
-	KeyStroke leftKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, false);
-	getInputMap().put(leftKeyPressed, "left key pressed");
-	getActionMap().put("left key pressed", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-					EventHandler.this.room.movePlayer('W');
-				}
-	});
-
-	KeyStroke leftKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true);
-	getInputMap().put(leftKeyReleased, "left key released");
-	getActionMap().put("left key released", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-					EventHandler.this.room.movePlayer('X');
-	    }
 	});
 
 	getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "pressedEscape");
@@ -155,11 +86,177 @@ public class EventHandler extends JComponent implements BoardListener {
 		}
 	    }
 	});
-    }
+
+	KeyStroke upKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false);
+	KeyStroke upKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true);
+	KeyStroke downKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, false);
+	KeyStroke downKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, true);
+	KeyStroke rightKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, false);
+	KeyStroke rightKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true);
+	KeyStroke leftKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, false);
+	KeyStroke leftKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true);
+
+	getInputMap().put(upKeyPressed, "up key pressed");
+	getInputMap().put(upKeyReleased, "up key released");
+
+	getActionMap().put("up key pressed", new upAction(false));
+      	getActionMap().put("up key released", new upAction(true));
+
+	getInputMap().put(downKeyPressed, "down key pressed");
+	getInputMap().put(downKeyReleased, "down key released");
+
+	getActionMap().put("down key pressed", new downAction(false));
+	getActionMap().put("down key released", new downAction(true));
+
+	getInputMap().put(rightKeyPressed, "right key pressed");
+	getInputMap().put(rightKeyReleased, "right key released");
+
+	getActionMap().put("right key pressed", new rightAction(false));
+	getActionMap().put("right key released", new rightAction(true));
+
+	getInputMap().put(leftKeyPressed, "left key pressed");
+	getInputMap().put(leftKeyReleased, "left key released");
+
+	getActionMap().put("left key pressed", new leftAction(false));
+	getActionMap().put("left key released", new leftAction(true));
+
+        }
+
+        private class upAction extends AbstractAction {
+	    private boolean onKeyRelease;
+
+	    public upAction(boolean onKeyRelease) {
+		this.onKeyRelease = onKeyRelease;
+	    }
+
+	    @Override
+	    public void actionPerformed(ActionEvent evt) {
+	  	if (!onKeyRelease) {
+		    if (upTimer != null && upTimer.isRunning()) {
+			return;
+		    }
+		    EventHandler.this.room.movePlayer('N');
+
+		    upTimer = new Timer(TIMER_DELAY, new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			    EventHandler.this.room.movePlayer('N');
+			}
+		    });
+		    upTimer.start();
+		} else {
+		    EventHandler.this.room.movePlayer('X');
+		    if (upTimer != null && upTimer.isRunning()) {
+		       upTimer.stop();
+		       upTimer = null;
+		    }
+		}
+	    }
+        }
+
+    	private class downAction extends AbstractAction {
+	    private boolean onKeyRelease;
+
+    	    public downAction(boolean onKeyRelease) {
+    	       this.onKeyRelease = onKeyRelease;
+    	    }
+
+	    @Override
+	    public void actionPerformed(ActionEvent evt) {
+		if (!onKeyRelease) {
+		    if (downTimer != null && downTimer.isRunning()) {
+    		    	return;
+		    }
+		    EventHandler.this.room.movePlayer('S');
+
+		    downTimer = new Timer(TIMER_DELAY, new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			   EventHandler.this.room.movePlayer('S');
+			}
+		    });
+    		downTimer.start();
+		} else {
+		    EventHandler.this.room.movePlayer('X');
+		    if (downTimer != null && downTimer.isRunning()) {
+		        downTimer.stop();
+		        downTimer = null;
+		    }
+    	     	}
+	    }
+	}
+
+    	private class rightAction extends AbstractAction {
+    	    private boolean onKeyRelease;
+
+    	    public rightAction(boolean onKeyRelease) {
+    		this.onKeyRelease = onKeyRelease;
+    	    }
+
+    	    @Override
+    	    public void actionPerformed(ActionEvent evt) {
+    	  	if (!onKeyRelease) {
+    		    if (rightTimer != null && rightTimer.isRunning()) {
+    			return;
+    		    }
+    		    EventHandler.this.room.movePlayer('E');
+
+    		    rightTimer = new Timer(TIMER_DELAY, new ActionListener() {
+
+    			@Override
+    			public void actionPerformed(ActionEvent e) {
+    			    EventHandler.this.room.movePlayer('E');
+    			}
+    		    });
+    		    rightTimer.start();
+    		} else {
+    		    EventHandler.this.room.movePlayer('X');
+    		    if (rightTimer != null && rightTimer.isRunning()) {
+    		       rightTimer.stop();
+    		       rightTimer = null;
+    		    }
+    		}
+    	    }
+	}
+
+    	private class leftAction extends AbstractAction {
+    	    private boolean onKeyRelease;
+
+	    public leftAction(boolean onKeyRelease) {
+	       this.onKeyRelease = onKeyRelease;
+	    }
+
+    	    @Override
+    	    public void actionPerformed(ActionEvent evt) {
+    		if (!onKeyRelease) {
+    		    if (leftTimer != null && leftTimer.isRunning()) {
+			return;
+    		    }
+    		    EventHandler.this.room.movePlayer('W');
+
+    		    leftTimer = new Timer(TIMER_DELAY, new ActionListener() {
+
+    			@Override
+    			public void actionPerformed(ActionEvent e) {
+    			   EventHandler.this.room.movePlayer('W');
+    			}
+    		    });
+		    leftTimer.start();
+    		} else {
+    		    EventHandler.this.room.movePlayer('X');
+    		    if (leftTimer != null && leftTimer.isRunning()) {
+    		        leftTimer.stop();
+    		        leftTimer = null;
+    		    }
+		}
+    	    }
+    	}
 
     public Dimension getPreferredSize(){
-		return new Dimension(SQUARE_WIDTH, SQUARE_HEIGHT);
-	}
+	return new Dimension(SQUARE_WIDTH, SQUARE_HEIGHT);
+    }
 
     public void paintComponent(Graphics g){
 	super.paintComponent(g);
