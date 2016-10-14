@@ -4,7 +4,7 @@ package binding_of_erik_game;
  * User: Erik
  * Date: 2016-04-04
  *
- * The highest class in the object hirarchy.
+ * The highest class in the object hierarchy.
  * All characters and objects featuring in a room inherit from this class.
  */
 
