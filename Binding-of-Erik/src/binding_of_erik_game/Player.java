@@ -63,7 +63,7 @@ public class Player extends Agent {
 
 
     public void setDirection(char d) {
-	if ((d == 'N' || d == 'S' || d == 'E' || d == 'W')) {
+	if ((d == 'N' || d == 'S' || d == 'E' || d == 'W' || d == 'X')) {
 	    direction = d;
 	} else {
 	    System.out.println("Error: Player direction set to invalid char!"); // In case we screw up
