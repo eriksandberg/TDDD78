@@ -16,7 +16,7 @@ public class StraightShot extends Shot {
     public boolean move() {
 	switch(direction) {
 	    case 'N':
-		this.yCoord -= shotspeed;
+		yCoord -= shotspeed;
 		break;
 	    case 'S':
 		yCoord += shotspeed;
