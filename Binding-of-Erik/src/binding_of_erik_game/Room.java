@@ -264,6 +264,8 @@ public class Room {
 					shotsInRoom.add(spawnPlayerShot('S'));
 				}
 				break;
+		    	case ("Big bad bomb"):
+
 			default: break;
 		}
 
