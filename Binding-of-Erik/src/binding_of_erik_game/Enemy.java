@@ -14,6 +14,13 @@ public class Enemy extends Agent {
     public Enemy(TileType[][] shape) {
 		super(shape);
 		this.isEnemy = true;	// Born evil.
+	    this.yCoord = 0;        // All enemies spawn at the top of the room
 		move('N');
     }
+
+	// The standard enemy does not move
+	@Override
+	public boolean move() {
+		return outOfBounds();
+	}
 }

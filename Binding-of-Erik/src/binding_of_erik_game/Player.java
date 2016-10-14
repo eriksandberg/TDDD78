@@ -12,7 +12,7 @@ public class Player extends Agent {
 	public Player(TileType[][] shape) {
 		super(shape);
 		this.size = 10;
-		this.skill = 1;
+		this.skill = 4;
 		this.hp = 1000;  // For testing purposes we don't want to die
 	}
 

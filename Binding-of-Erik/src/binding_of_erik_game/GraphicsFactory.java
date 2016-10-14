@@ -66,6 +66,17 @@ public final class GraphicsFactory
 
     public Player getPlayer() {return new Player(player);}
 
+	public Enemy getEnemy(int kind) {
+		switch (kind) {
+			case 1:
+				return getNormalEnemy();
+			case 2:
+				return getTravelingEnemy();
+			default:
+				break;
+		}
+		return null;
+	}
 
     //enemy is right now a ring of red pixels. transparent blocks will be detected so they don't overwrite ground.
     private final TileType[][] normalEnemy =
@@ -81,6 +92,20 @@ public final class GraphicsFactory
 				{ R, R, R, R, R, R, R, R, R, R } };
 
 	public Enemy getNormalEnemy() {return new Enemy(normalEnemy);}
+
+	private final TileType[][] travelingEnemy =
+		{ 		{ T, T, T, R, R, R, R, T, T, T },
+				{ T, T, R, T, T, T, T, R, T, T },
+				{ T, R, T, T, T, T, T, T, R, T },
+				{ R, B, B, B, B, B, B, B, B, R },
+				{ R, T, T, T, T, T, T, T, T, R },
+				{ R, T, T, T, T, T, T, T, T, R },
+				{ R, B, B, B, B, B, B, B, B, R },
+				{ T, R, T, T, T, T, T, T, R, T },
+				{ T, T, R, T, T, T, T, R, T, T },
+				{ T, T, T, R, R, R, R, T, T, T } };
+
+	public TravelingEnemy getTravelingEnemy() {return new TravelingEnemy(travelingEnemy);}
 
 	// Looks like a space invader but spawn sideways, lmao
 	private final TileType[][] invaderEnemy =

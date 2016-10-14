@@ -10,8 +10,9 @@ package binding_of_erik_game;
 
 public class Agent extends GameObject {
 
-    protected int shotCooldown = 10;   // This should not stay hardcoded forever
-    protected int hp = 5;
+	protected int shotCooldown;
+    protected int currentShotCooldown = 10;   // Everyone will wait 10 ticks before firing their first shot
+    protected int hp = 1;
 
     public Agent(TileType[][] shape) {
 		super(shape);
@@ -46,23 +47,24 @@ public class Agent extends GameObject {
 					yCoord += 1;
 				}
 				break;
-			default: break;
+			default:
+				break;
 		}
 	}
 
     public boolean readyToShoot() {
-		if (shotCooldown == 0) {
-			shotCooldown = 10;   // This should not stay hardcoded forever
+		if (currentShotCooldown == 0) {
+			currentShotCooldown = shotCooldown;
 			return true;
 		} else {
-			shotCooldown--;
+			currentShotCooldown--;
 			return false;
 		}
     }
 
-    public void setShotCooldown(int shotCooldown) {
-	    this.shotCooldown = shotCooldown;
-    }
+	public void setShotCooldown(int shotCooldown) {
+		this.shotCooldown = shotCooldown;
+	}
 
     public boolean isDead() {
 		if (this.hp < 1) return true;

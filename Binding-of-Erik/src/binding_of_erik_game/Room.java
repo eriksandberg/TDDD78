@@ -115,39 +115,63 @@ public class Room {
 	private void spawnEnemies() {
 		Random rand = new Random();
 		int i = player.getSkill();
-		// Spawn 2 falling enemies if the player have reached room 5
-	   /* if (i >= 4) {
 
-	    }*/
+		// Spawn 2 falling enemies if the player have reached skill lvl 4
+	    if (i >= 4) {
+		    enemiesInRoom.add(spawnEnemy(2, 1));   // These only have 1 power level
+		    enemiesInRoom.add(spawnEnemy(2, 1));
+			i -= 4;
+	    }
 
+		// Spawn normal enemies
 		while (i > 0) {
 			int e = rand.nextInt(i) + 1;
-			enemiesInRoom.add(spawnEnemy(e));
+			enemiesInRoom.add(spawnEnemy(1, e));
 			i -= e;
 		}
 		notifyListeners();
-
 	}
 
-	// Spawn an enemy of power level power
-	private Enemy spawnEnemy(int power) {
-		Enemy newEnemy = GraphicsFactory.getInstance().getNormalEnemy();
-		newEnemy.setShotCooldown(10 - power);
+	// Spawn an enemy of kind kind and power level power
+	@SuppressWarnings("MagicNumber")    // 40 (in steps of 4) is the max power lvl of an enemy
+	private Enemy spawnEnemy(int kind, int power) {
+		Enemy newEnemy = GraphicsFactory.getInstance().getEnemy(kind);
 
-		// add random spawn based on boundaries
-		Random rand = new Random();
-		int pos = rand.nextInt(FAR_EDGE - 18);
-		// Prevent enemies for spawning on top of each other
-		while (!spaceXFree(pos)) {
-			pos = rand.nextInt(FAR_EDGE - 18);
-		}
-		newEnemy.xCoord = pos;
-		newEnemy.yCoord = 0;
+		newEnemy.xCoord = enemySpawnPos(kind);
+
+		// Set enemys power
+		if (power >  10) {power = 10;}
+		newEnemy.setShotCooldown(40 - power*4);
 
 		return newEnemy;
 	}
 
-	// Check if a position (x-axis) is free from enemies
+	@SuppressWarnings("ReuseOfLocalVariable")   // I want them all named pos
+	private int enemySpawnPos(int kind) {
+		Random rand = new Random();
+		int pos = 0;
+
+		switch(kind) {
+			case 1:
+				// add random spawn based on boundaries
+				pos = rand.nextInt(FAR_EDGE - 18);
+				// Prevent enemies for spawning on top of each other
+				while (!spaceXFree(pos)) {
+					pos = rand.nextInt(FAR_EDGE - 18); //TODO: magic number n shit
+				}
+				return pos;
+			case 2:
+				pos = 10;   // Place first one at left edge
+				if (!spaceXFree(pos)) {
+					pos = 190;  // Second one at right edge
+				}
+				return pos;
+			default:
+				return pos;
+		}
+	}
+
+	// Return true if a position (x-axis) is free from enemies
 	private boolean spaceXFree(int pos) {
 		for (Enemy enemy : enemiesInRoom) {
 			if ((pos + 10) > enemy.xCoord && pos < (enemy.xCoord + enemy.size)) {
@@ -157,7 +181,7 @@ public class Room {
 		return true;
 	}
 
-	// Check if a position (y-axis) is free from enemies
+	// Return true if a position (y-axis) is free from enemies
 	private boolean spaceYFree(int pos) {
 		for (Enemy enemy : enemiesInRoom) {
 			if ((pos + 10) > enemy.yCoord && pos < (enemy.yCoord + enemy.size)) {
@@ -257,7 +281,8 @@ public class Room {
 			gameOver();
 		} else if (!enemiesInRoom.isEmpty()) {
 			// Handle enemies (if there are enemies, otherwise spawn a new room)
-			for (Enemy enemy : enemiesInRoom) {        // Don't forget to move enemies in the future
+			for (Enemy enemy : enemiesInRoom) {
+				enemy.move();
 				// touching enemies hurt the player
 				if (enemy.collision(player)) {
 					spawnSparks(player, enemy);
@@ -290,10 +315,9 @@ public class Room {
 							spawnSparks(enemy, shot);
 							s.remove();
 							enemy.hp--;
-				/*if (enemy.isDead()) {
-				e.remove();
-			    }*/
-							e.remove();   // Currently OHK enemies for testing purposes
+						}
+						if (enemy.isDead()) {   //TODO: Fix enemies dying without player shots existing
+							e.remove();
 						}
 					}
 				}
