@@ -32,62 +32,97 @@ public class EventHandler extends JComponent implements BoardListener {
 
 	// All key binds in the game
 	getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "pressedSpace");
-	getActionMap().put("pressedSpace", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-			EventHandler.this.room.fireShot();
-		}
+	getActionMap().put("pressedSpace", new AbstractAction()
+	{
+	    @Override public void actionPerformed(ActionEvent e) {
+		EventHandler.this.room.fireShot();
+	    }
 	});
 
 	getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "pressedEscape");
-	getActionMap().put("pressedEscape", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-					System.exit(0);
-		}
+	getActionMap().put("pressedEscape", new AbstractAction()
+	{
+	    @Override public void actionPerformed(ActionEvent e) {
+		System.exit(0);
+	    }
 	});
 
 	getInputMap().put(KeyStroke.getKeyStroke("P"), "pressedP");
-	getActionMap().put("pressedP", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	getActionMap().put("pressedP", new AbstractAction()
+	{
+	    @Override public void actionPerformed(ActionEvent e) {
 		GameFrame.togglePaused();
 		System.out.println("Paused.");
 	    }
 	});
 
 	getInputMap().put(KeyStroke.getKeyStroke("T"), "pressedT");
-	getActionMap().put("pressedT", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	getActionMap().put("pressedT", new AbstractAction()
+	{
+	    @Override public void actionPerformed(ActionEvent e) {
 		testing = !testing;
 		if (testing) {
-		    System.out.println("Testing enabled.");}
-		else {
+		    System.out.println("Testing enabled.");
+		} else {
 		    System.out.println("Testing disabled.");
-			}
+		}
 	    }
 	});
 
 	getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "pressedEnter");
-	getActionMap().put("pressedEnter", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	getActionMap().put("pressedEnter", new AbstractAction()
+	{
+	    @Override public void actionPerformed(ActionEvent e) {
 		if (testing) {
 		    EventHandler.this.room.newRoom();
 		    System.out.println("New room spawned.");
-			}
+		}
 	    }
 	});
 
 	getInputMap().put(KeyStroke.getKeyStroke("R"), "pressedR");
-	getActionMap().put("pressedR", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	getActionMap().put("pressedR", new AbstractAction()
+	{
+	    @Override public void actionPerformed(ActionEvent e) {
 		if (testing) {
 		    System.out.println("Room reset.");
 		    EventHandler.this.room.resetRoom();
-			}
+		}
+	    }
+	});
+	KeyStroke fKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_F, 0, false);
+	getInputMap().put(fKeyPressed, "F pressed");
+	getActionMap().put("F pressed", new AbstractAction() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		EventHandler.this.room.movePlayer('R');
+	    }
+	});
+
+	KeyStroke fKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_F, 0, true);
+	getInputMap().put(fKeyReleased, "F released");
+	getActionMap().put("F released", new AbstractAction() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		EventHandler.this.room.movePlayer('X');
+	    }
+	});
+
+	KeyStroke aKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, false);
+	getInputMap().put(aKeyPressed, "A pressed");
+	getActionMap().put("A pressed", new AbstractAction() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		EventHandler.this.room.movePlayer('L');
+	    }
+	});
+
+	KeyStroke aKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true);
+	getInputMap().put(aKeyReleased, "A released");
+	getActionMap().put("A released", new AbstractAction() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		EventHandler.this.room.movePlayer('X');
 	    }
 	});
 
@@ -104,7 +139,7 @@ public class EventHandler extends JComponent implements BoardListener {
 	getInputMap().put(upKeyReleased, "up key released");
 
 	getActionMap().put("up key pressed", new upAction(false));
-      	getActionMap().put("up key released", new upAction(true));
+	getActionMap().put("up key released", new upAction(true));
 
 	getInputMap().put(downKeyPressed, "down key pressed");
 	getInputMap().put(downKeyReleased, "down key released");
@@ -124,7 +159,7 @@ public class EventHandler extends JComponent implements BoardListener {
 	getActionMap().put("left key pressed", new leftAction(false));
 	getActionMap().put("left key released", new leftAction(true));
 
-        }
+    }
 
         private class upAction extends AbstractAction {
 	    private boolean onKeyRelease;
