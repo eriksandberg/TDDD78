@@ -130,9 +130,9 @@ public final class GraphicsFactory
     public Spark getSpark() {return new Spark(spark);}
 
 	private final TileType[][] star =
-		{		{ W, W, W, W, W} };
+		{		{ W, W, W, W, W, W, W, W, W, W} };
 
-	//public Star getStar() {return new Star(star);}
+	public Star getStar() {return new Star(star);}
 
     //add more graphic "blocks" here.
 }

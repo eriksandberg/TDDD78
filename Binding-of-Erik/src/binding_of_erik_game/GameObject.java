@@ -27,9 +27,9 @@ public class GameObject {
 
 	// Objects that's not simply "falling" down the screen will implement their own movement
 	public boolean move() {
-		yCoord -= 5;
-
-		return outOfBounds();
+		yCoord += 5;
+		System.out.println("Moved");
+		return outOfBounds();  // Might be problematic for long items
 	}
 
     // Check if another object collide with this.
