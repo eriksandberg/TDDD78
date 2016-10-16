@@ -4,10 +4,10 @@ package binding_of_erik_game;
  * Created by wassing on 2016-04-12.
  */
 
+@SuppressWarnings("ConstantNamingConvention")  // For the initial constants, long names look bad in the arrays
 public final class GraphicsFactory
 {
     //graphics abbreviations
-    //private static final TileType T = TileType.TRANSPARENT;  // Green?
     private static final TileType R = TileType.RED; // Red
     private static final TileType B = TileType.BLUE; // Blue
     private static final TileType T = TileType.BLACK; // Black / Transparent
@@ -19,13 +19,6 @@ public final class GraphicsFactory
     private static final TileType Gr = TileType.GRAY; //Gray
     private static final TileType W = TileType.WHITE; //White
     //add more as we continue to define different things
-
-    //private int squareWidth = 4; //could perhaps use a getter
-    //private int squareHeight = 4;
-
-    //an entity is one square, but consists of "subsquares" inside the big square. Always an int, not a float.
-    //private final int OBJ_WIDTH = squareWidth * 10;
-    //private final int OBJ_HEIGHT = squareHeight * 10;
 
     /**
      * Singleton patttern, implemented according bill pugh Private constructor so to ensure only one factory can be
