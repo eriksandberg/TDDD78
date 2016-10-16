@@ -73,10 +73,13 @@ public final class GraphicsFactory
 			case 2:
 				return getTravelingEnemy();
 			default:
-				break;
+				return getNullEnemy();
 		}
-		return null;
 	}
+
+	private final TileType[][] nullEnemy = {};
+
+	public Enemy getNullEnemy() {return new Enemy(nullEnemy);}
 
     //enemy is right now a ring of red pixels. transparent blocks will be detected so they don't overwrite ground.
     private final TileType[][] normalEnemy =
