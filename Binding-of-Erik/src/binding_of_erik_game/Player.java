@@ -26,47 +26,47 @@ public class Player extends Agent {
 				//don't move!
 				break;
 			case 'N': //go north
-				yCoord -= 1;
+				yCoord -= 2;
 				if (outOfBounds()) {
-					yCoord += 1;
+					yCoord += 2;
 				} else {
 					this.direction = 'N';
 				}
 				break;
 			case 'S': //go south
-				yCoord += 1;
+				yCoord += 2;
 				if (outOfBounds()) {
-					yCoord -= 1;
+					yCoord -= 2;
 				} else {
 					this.direction = 'S';
 				}
 				break;
 			case 'E': //go east
-				xCoord += 1;
+				xCoord += 2;
 				if (outOfBounds()) {
-					xCoord -= 1;
+					xCoord -= 2;
 				} else {
 					this.direction = 'E';
 				}
 				break;
 			case 'R': // Go right/Strafe east
-				xCoord += 1;
+				xCoord += 2;
 				if (outOfBounds()) {
-					xCoord -= 1;
+					xCoord -= 2;
 				}
 				break;
 			case 'W': //go west
-				xCoord -= 1;
+				xCoord -= 2;
 				if (outOfBounds()) {
-					xCoord += 1;
+					xCoord += 2;
 				} else {
 					this.direction = 'W';
 				}
 				break;
 			case 'L': // Go left/Strafe west
-				xCoord -= 1;
+				xCoord -= 2;
 				if (outOfBounds()) {
-					xCoord += 1;
+					xCoord += 2;
 				}
 				break;
 			default:break;
