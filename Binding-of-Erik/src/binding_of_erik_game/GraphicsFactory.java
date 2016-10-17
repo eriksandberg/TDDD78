@@ -150,10 +150,26 @@ public final class GraphicsFactory
 
     public Spark getSpark() {return new Spark(spark);}
 
-	private final TileType[][] star =
-		{		{ W, W, W, W, W, W, W, W, W, W} };
+    //eye candy
+    private final TileType[][] star =
+	    {{ W, W} };
 
-	public Star getStar() {return new Star(star);}
+    public Star getStar() {return new Star(star);}
+
+    //eye candy
+    public final TileType[][] galaxy =
+	    {{ T, T, T, T, T, T, T, T, T, T },
+	    { T, T, T, T, T, Y, T, T, T, T },
+	    { T, T, T, T, T, T, Y, T, T, T },
+	    { T, T, W, W, T, T, Y, T, T, T },
+	    { T, W, T, T, W, Y, T, T, T, T },
+	    { T, T, T, T, Y, W, T, T, W, T },
+	    { T, T, T, Y, T, T, W, W, T, T },
+	    { T, T, T, Y, T, T, T, T, T, T },
+	    { T, T, T, T, Y, T, T, T, T, T },
+	    { T, T, T, T, T, T, T, T, T, T }};
+
+    public Galaxy getGalaxy() {return new Galaxy(galaxy);}
 
     //add more graphic "blocks" here.
 }
