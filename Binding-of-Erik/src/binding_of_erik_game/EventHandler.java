@@ -20,7 +20,7 @@ public class EventHandler extends JComponent implements BoardListener {
     private boolean testing = false;
 
     private static final int SQUARE_WIDTH = 800; //graphical size of the actual GameFrame
-    private static final int SQUARE_HEIGHT = 900;
+    private static final int SQUARE_HEIGHT = 800;
     private static final int TIMER_DELAY = 50;
     private Timer upTimer, downTimer, rightTimer, leftTimer;
     private final Room room;
@@ -313,13 +313,13 @@ public class EventHandler extends JComponent implements BoardListener {
 	final Graphics2D g2 = (Graphics2D) g;
 	for (int i = 0; i < room.getWidth(); i++){
 	    for (int j = 0; j < room.getHeight(); j++){
-		TileType square = room.getSquare(j, i);
+		TileType square = room.getSquare(i, j);
 		if (square != TileType.TRANSPARENT) {
 		    g2.setColor(map.get(square));
 		} else {
 		    g2.setColor(Color.black); //need a general solution for this to look good. Use TEMP
 		}
-		g2.fillRect(j * room.getPixelWidthPerTile(), i * room.getPixelHeightPerTile(),
+		g2.fillRect(i * room.getPixelWidthPerTile(), j * room.getPixelHeightPerTile(),
 		room.getPixelWidthPerTile(), room.getPixelHeightPerTile());
 		//may need to re-define this later.
 	    }

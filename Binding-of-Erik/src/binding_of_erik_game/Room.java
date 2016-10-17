@@ -260,9 +260,7 @@ public class Room {
 	// Spawn a shot at the players position, traveling in the players direction
 	// Public because it's called from EventHandler
 	public void fireShot(String shotType) {
-	    System.out.println("Player X: " + player.xCoord);
-	    System.out.println("Player Y: " + player.yCoord);
-		switch(shotType){
+	    	switch(shotType){
 			case ("StraightShot"):
 				shotsInRoom.add(spawnPlayerShot(player.getDirection()));
 				break;
