@@ -3,31 +3,31 @@
  */
 public class Player
 {
-    public static final int SPEED_SLOW = 0;
-    public static final int SPEED_MEDIUM = 1;
-    public static final int SPEED_FAST = 2;
+    //public static final int SPEED_SLOW = 0;
+    //public static final int SPEED_MEDIUM = 1;
+    //public static final int SPEED_FAST = 2;
 
-    public static final String MODE_NORMAL = "Normal";
-    public static final String MODE_GHOST = "Ghost";
-    public static final String MODE_INVULNERABLE = "Invulnerable";
+    //public static final String MODE_NORMAL = "Normal";
+    //public static final String MODE_GHOST = "Ghost";
+    //public static final String MODE_INVULNERABLE = "Invulnerable";
 
     private int x, y;
-    private int speed = SPEED_SLOW;
-    private String mode = MODE_NORMAL;
+    private Mode mode = Mode.MODE_NORMAL;
+    private Speed speed = Speed.SPEED_SLOW;
 
-    public int getSpeed() {
+    public Speed getSpeed() {
         return speed;
     }
 
-    public void setSpeed(final int speed) {
+    public void setSpeed(final Speed speed) {
         this.speed = speed;
     }
 
-    public String getMode() {
+    public Mode getMode(final Mode mode) {
         return mode;
     }
 
-    public void setMode(final String mode) {
+    public void setMode(final Mode mode) {
         this.mode = mode;
     }
 
@@ -51,10 +51,10 @@ public class Player
     public String getDescription() {
         StringBuilder buf = new StringBuilder();
         buf.append("Player is ");
-	buf.append(Speed.SPEED_SLOW.toString()); //this is wrong, should somehow easily get whatever speed that is set.
+	buf.append(speed.toString()); //this is wrong, should somehow easily get whatever speed that is set.
 
         buf.append(" and ");
-	buf.append(Mode.MODE_NORMAL.toString()); //this is wrong
+	buf.append(mode.toString()); //this is wrong
 
         return buf.toString();
     }

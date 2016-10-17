@@ -11,14 +11,6 @@ public class Game
 
     public void playerHitPowerup(Powerup power) {
         activePowerups.add(power);
-        if (power instanceof SpeedPowerup) {
-            player.setSpeed(Player.SPEED_FAST);
-        } else if (power instanceof GhostPowerup) {
-            player.setMode(Player.MODE_GHOST);
-        } else if (power instanceof InvulnerablePowerup) {
-            player.setMode(Player.MODE_INVULNERABLE);
-        } else {
-            throw new IllegalArgumentException("Unknown powerup: " + power);
-        }
+	power.playerHitMe(player);
     }
 }

@@ -9,6 +9,10 @@ public class InvulnerablePowerup implements Powerup
         g.fillOval(x, y, 10, 10);
     }
 
+    public void playerHitMe(Player player){
+    	player.setMode(Mode.MODE_INVULNERABLE);
+    }
+
     @Override public String getDescription() {
         return "Makes a player invulnerable for a while";
     }

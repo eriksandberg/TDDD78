@@ -3,14 +3,5 @@
  */
 public enum Mode
 {
-    MODE_NORMAL("NORMAL"), MODE_GHOST("GHOST"), MODE_INVULNERABLE("INVULNERABLE");
-
-    private String modeName;
-
-    Mode(String name){modeName = name;}
-
-    @Override
-    public String toString(){
-	return modeName;
-    }
+    MODE_NORMAL, MODE_GHOST, MODE_INVULNERABLE
 }

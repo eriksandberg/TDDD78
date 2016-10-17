@@ -9,6 +9,10 @@ public class GhostPowerup implements Powerup
         g.fillOval(x, y, 10, 10);
     }
 
+    public void playerHitMe(Player player){
+    	player.setMode(Mode.MODE_GHOST);
+    }
+
     @Override public String getDescription() {
         return "Makes a player into a ghost that can travel through walls";
     }

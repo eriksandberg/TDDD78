@@ -3,14 +3,5 @@
  */
 public enum Speed
 {
-    SPEED_SLOW("SLOW"), SPEED_MEDIUM("MEDIUM"), SPEED_FAST("FAST");
-
-    private String speedName;
-
-    Speed(String name){speedName = name;}
-
-    @Override
-    public String toString(){
-	return speedName;
-    }
+    SPEED_SLOW, SPEED_MEDIUM, SPEED_FAST
 }
