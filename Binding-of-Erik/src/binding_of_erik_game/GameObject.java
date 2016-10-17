@@ -41,7 +41,11 @@ public class GameObject {
 	/*if 	(this.xCoord < (other.xCoord + other.size) &&
 		(this.xCoord + this.size) > other.xCoord &&
 		 this.yCoord < (other.yCoord + other.size) &&
-		(this.yCoord + this.size) > other.yCoord) {*/
+		(this.yCoord + this.size) > other.yCoord) {
+		    System.out.println("Object A(x): " + other.xCoord);
+		    System.out.println("Object B(x): " + this.xCoord);
+		    System.out.println("Object A(y): " + other.yCoord);
+		    System.out.println("Object B(y): " + this.yCoord);*/
 			System.out.println("Collision!");
 			return true;
 		}
@@ -68,12 +72,14 @@ public class GameObject {
 						//do nothing
 						break;
 					case 'E':
+					    if (xCoord == 190){ break;}
 						rotateThisMany(3);
 						break;
 					case 'S':
 						rotateThisMany(2);
 						break;
 					case 'W':
+					    if (xCoord == 0){ break;}
 						rotateThisMany(1);
 						break;
 					default:
@@ -83,12 +89,14 @@ public class GameObject {
 			case 'E':
 				switch (newDirection) {
 					case 'N':
+					    if (yCoord == 0){ break;}
 						rotateThisMany(1);
 						break;
 					case 'E':
 						//do nothing
 						break;
 					case 'S':
+					    if (yCoord == 190){ break;}
 						rotateThisMany(3);
 						break;
 					case 'W':
@@ -104,12 +112,14 @@ public class GameObject {
 						rotateThisMany(2);
 						break;
 					case 'E':
+					    if (xCoord == 190) { break;}
 						rotateThisMany(1);
 						break;
 					case 'S':
 						//do nothing
 						break;
 					case 'W':
+					    if (xCoord == 0) { break;}
 						rotateThisMany(3);
 						break;
 					default:
@@ -119,12 +129,14 @@ public class GameObject {
 			case 'W':
 				switch (newDirection) {
 					case 'N':
+					    if (yCoord == 0){ break;}
 						rotateThisMany(3);
 						break;
 					case 'E':
 						rotateThisMany(2);
 						break;
 					case 'S':
+					    if (yCoord == 190){ break;}
 						rotateThisMany(1);
 						break;
 					case 'W':

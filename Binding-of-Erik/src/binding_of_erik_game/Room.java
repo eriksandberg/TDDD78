@@ -76,8 +76,8 @@ public class Room {
 		this.height = height; //200
 
 		board = new TileType[width][height];
-		for (int tileX = 0; tileX < width; tileX++) { //will loop for every "square" and assign a tile to it.
-			for (int tileY = 0; tileY < height; tileY++) {
+		for (int tileX = 0; tileX < this.width; tileX++) { //will loop for every "square" and assign a tile to it.
+			for (int tileY = 0; tileY < this.height; tileY++) {
 				board[tileX][tileY] = TileType.BLACK; // Space yo
 			}
 		}
@@ -87,7 +87,7 @@ public class Room {
 	// Public because EventHandler must be able to spawn a new room due to testing
 	public void newRoom() {
 		clearRoom();   // Remove all shots (and enemies) left in an old room
-		//noinspection MagicNumber, let the player spawn in the middle of the room
+		//noinspection MagicNumber, let the player spawn in the middle of the room (at the bottom)
 		spawnPlayer(100, 180);
 		spawnEnemies();
 		// Should probably pause for a couple of seconds, don't want to confuse the player
@@ -260,6 +260,8 @@ public class Room {
 	// Spawn a shot at the players position, traveling in the players direction
 	// Public because it's called from EventHandler
 	public void fireShot(String shotType) {
+	    System.out.println("Player X: " + player.xCoord);
+	    System.out.println("Player Y: " + player.yCoord);
 		switch(shotType){
 			case ("StraightShot"):
 				shotsInRoom.add(spawnPlayerShot(player.getDirection()));
