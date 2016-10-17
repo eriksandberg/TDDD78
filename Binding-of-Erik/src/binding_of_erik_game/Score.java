@@ -23,7 +23,6 @@ public final class Score {
 	private int[] scoreList = new int[10];
 	private int scoreListIndexLen = scoreList.length - 1;
 
-	private int highscore;
 	private int currentScore;
 
 	private Path filePath = Paths.get("", "scoreList.txt");
@@ -41,8 +40,6 @@ public final class Score {
 				scoreList[i] = Integer.parseInt(line);    // First int we get from the file is put first in the array
 				// TODO: Do something if we get garbage
 			}
-			highscore = scoreList[0];
-			System.out.println(Arrays.toString(scoreList));
 		}
 	}
 
@@ -78,13 +75,12 @@ public final class Score {
 		}
 	}
 
-	// Increase score
-	public void addToCurrentScore(int currentScore) {
-		this.currentScore += currentScore;
-		// Highscore!
-		if (currentScore > highscore) {
-			highscore = currentScore;
-			System.out.println(highscore);
-		}
+	// Add to score
+	public void addToCurrentScore(int score) {
+		this.currentScore += score;
+	}
+
+	public void subFromCurrentScore(int score) {
+		this.currentScore -= score;
 	}
 }

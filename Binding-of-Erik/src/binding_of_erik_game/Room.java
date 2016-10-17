@@ -344,6 +344,7 @@ public class Room {
 						spawnSparks(player, shot);
 						s.remove();
 						player.hp--;
+						score.subFromCurrentScore(100); // Getting hit is baaaaaad
 					}
 				} else {
 					// Remove player shots that hit an enemy
@@ -354,6 +355,7 @@ public class Room {
 							spawnSparks(enemy, shot);
 							s.remove();
 							enemy.hp--;
+							score.addToCurrentScore(10);    // Some few points for hitting
 						}
 					}
 				}
