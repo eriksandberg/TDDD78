@@ -64,8 +64,8 @@ public class Room {
 	public Room(Player player, int width, int height) {
 		this.player = player;
 
-		this.width = width; //800
-		this.height = height; //800
+		this.width = width; //200
+		this.height = height; //200
 
 		board = new TileType[width][height];
 		for (int tileX = 0; tileX < width; tileX++) { //will loop for every "square" and assign a tile to it.
@@ -141,7 +141,7 @@ public class Room {
 
 		// Set enemys power
 		if (power >  10) {power = 10;}
-		newEnemy.setShotCooldown(40 - power*4);
+		newEnemy.setShotCooldown(40 - power * 4);
 
 		return newEnemy;
 	}

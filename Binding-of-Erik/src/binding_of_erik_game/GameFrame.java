@@ -24,7 +24,7 @@ public class GameFrame extends JFrame{ //this class does all the actual frame up
 	this.add(paintArea, BorderLayout.CENTER);
 	//this.createMenu(); extra for later, options for file etc.
 
-	Timer clockTimer = new Timer(100, doOneStep); //4 ticks per second atm, will increase framerate to about 30 later on.
+	Timer clockTimer = new Timer(100, doOneStep); //10 ticks per second atm, will increase framerate to about 30 later on.
 	clockTimer.setCoalesce(true);
 	clockTimer.start();
     }
