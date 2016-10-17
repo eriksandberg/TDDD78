@@ -11,8 +11,8 @@ import javax.swing.JFrame;
  */
 public final class GameWindow {
 
-    private static final int FRAMEWIDTH = 200; //pixels, also our entire coordinates system.
-    private static final int FRAMEHEIGHT = 200;
+    private static final int FRAMEWIDTH = 400; //pixels, also our entire coordinates system.
+    private static final int FRAMEHEIGHT = 400;
 
 	private GameWindow() {
 	}

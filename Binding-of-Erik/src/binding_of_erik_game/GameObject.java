@@ -41,7 +41,11 @@ public class GameObject {
 	/*if 	(this.xCoord < (other.xCoord + other.size) &&
 		(this.xCoord + this.size) > other.xCoord &&
 		 this.yCoord < (other.yCoord + other.size) &&
-		(this.yCoord + this.size) > other.yCoord) {*/
+		(this.yCoord + this.size) > other.yCoord) {
+		    System.out.println("Object A(x): " + other.xCoord);
+		    System.out.println("Object B(x): " + this.xCoord);
+		    System.out.println("Object A(y): " + other.yCoord);
+		    System.out.println("Object B(y): " + this.yCoord);*/
 			System.out.println("Collision!");
 			return true;
 		}
