@@ -68,12 +68,14 @@ public class GameObject {
 						//do nothing
 						break;
 					case 'E':
+					    if (xCoord == 190){ break;}
 						rotateThisMany(3);
 						break;
 					case 'S':
 						rotateThisMany(2);
 						break;
 					case 'W':
+					    if (xCoord == 0){ break;}
 						rotateThisMany(1);
 						break;
 					default:
@@ -83,12 +85,14 @@ public class GameObject {
 			case 'E':
 				switch (newDirection) {
 					case 'N':
+					    if (yCoord == 0){ break;}
 						rotateThisMany(1);
 						break;
 					case 'E':
 						//do nothing
 						break;
 					case 'S':
+					    if (yCoord == 190){ break;}
 						rotateThisMany(3);
 						break;
 					case 'W':
@@ -104,12 +108,14 @@ public class GameObject {
 						rotateThisMany(2);
 						break;
 					case 'E':
+					    if (xCoord == 190) { break;}
 						rotateThisMany(1);
 						break;
 					case 'S':
 						//do nothing
 						break;
 					case 'W':
+					    if (xCoord == 0) { break;}
 						rotateThisMany(3);
 						break;
 					default:
@@ -119,12 +125,14 @@ public class GameObject {
 			case 'W':
 				switch (newDirection) {
 					case 'N':
+					    if (yCoord == 0){ break;}
 						rotateThisMany(3);
 						break;
 					case 'E':
 						rotateThisMany(2);
 						break;
 					case 'S':
+					    if (yCoord == 190){ break;}
 						rotateThisMany(1);
 						break;
 					case 'W':
