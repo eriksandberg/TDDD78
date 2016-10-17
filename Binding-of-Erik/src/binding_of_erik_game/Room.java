@@ -1,10 +1,11 @@
 package binding_of_erik_game;
 
+import java.io.IOException;
+import java.util.*;
+
 /**
  * Created by wassing on 2016-04-04.
  */
-
-import java.util.*;
 
 public class Room {
 
@@ -24,6 +25,8 @@ public class Room {
 	private int width;
 
 	private Player player = null;
+	protected Score score = null;
+
 	private Collection<GameObject> miscInRoom = new ArrayList<>();
 	private Collection<Enemy> enemiesInRoom = new ArrayList<>();
 	private Collection<Shot> shotsInRoom = new ArrayList<>();
@@ -63,6 +66,11 @@ public class Room {
 	 */
 	public Room(Player player, int width, int height) {
 		this.player = player;
+		try {
+			score = new Score();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		this.width = width; //200
 		this.height = height; //200
@@ -73,7 +81,6 @@ public class Room {
 				board[tileX][tileY] = TileType.BLACK; // Space yo
 			}
 		}
-
 		newRoom();
 	}
 
@@ -141,7 +148,8 @@ public class Room {
 
 		// Set enemys power
 		if (power >  10) {power = 10;}
-		newEnemy.setShotCooldown(40 - power * 4);
+		newEnemy.setShotCooldown(40 - power * 4 - 1);   // We don't want enemies with cooldown = 0
+		newEnemy.setWorth(newEnemy.getWorth() + (power * 40));
 
 		return newEnemy;
 	}
@@ -305,7 +313,8 @@ public class Room {
 			Iterator<Enemy> e = enemiesInRoom.iterator();
 			while (e.hasNext()) {
 				Enemy enemy = e.next();
-				if (enemy.isDead()) {
+				if (enemy.isDead()) {   // Killing an enemy
+					score.addToCurrentScore(enemy.getWorth());  // Increase score
 					e.remove();
 				} else {
 					enemy.move();
@@ -359,6 +368,7 @@ public class Room {
 			spawnBackgroundGraphics();
 		} else {
 			// Room is empty, increment player skill and spawn a new room
+
 			player.incSkill();
 			newRoom();
 		}
@@ -369,6 +379,9 @@ public class Room {
 		//player = null; // Remove player?
 		enemiesInRoom.clear();
 		shotsInRoom.clear();
+
+		score.saveScore();
+		score.writeHighscore();
 		System.out.println("binding_of_erik_game Over!");
 	}
 

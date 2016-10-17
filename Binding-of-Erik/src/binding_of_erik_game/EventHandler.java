@@ -14,6 +14,7 @@ import java.util.EnumMap;
 /**
  * Created by wassing on 2016-04-06.
  */
+
 public class EventHandler extends JComponent implements BoardListener {
 
     private boolean testing = false;
@@ -51,6 +52,8 @@ public class EventHandler extends JComponent implements BoardListener {
 	getActionMap().put("pressedEscape", new AbstractAction()
 	{
 	    @Override public void actionPerformed(ActionEvent e) {
+		EventHandler.this.room.score.saveScore();
+		EventHandler.this.room.score.writeHighscore();  // Save current score
 		System.exit(0);
 	    }
 	});
