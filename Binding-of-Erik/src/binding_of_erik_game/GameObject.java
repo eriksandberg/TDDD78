@@ -36,18 +36,20 @@ public class GameObject {
 	// avoid by not having them move to many pixels each tick
 	//TODO: Implement better collision detection, right now has an offset because it aims for player bottom right pixel
 	public boolean collision(GameObject other) {
-		if ((Math.abs(other.xCoord - this.xCoord) * 2) < (other.size + this.size) &&
-			(Math.abs(other.yCoord - this.yCoord) * 2) < (other.size + this.size)) {
-	/*if 	(this.xCoord < (other.xCoord + other.size) &&
-		(this.xCoord + this.size) > other.xCoord &&
-		 this.yCoord < (other.yCoord + other.size) &&
-		(this.yCoord + this.size) > other.yCoord) {
-		    System.out.println("Object A(x): " + other.xCoord);
-		    System.out.println("Object B(x): " + this.xCoord);
-		    System.out.println("Object A(y): " + other.yCoord);
-		    System.out.println("Object B(y): " + this.yCoord);*/
-			System.out.println("Collision!");
-			return true;
+	    	//this one checks shots only. Shots are maximum "4" big.
+		if ((this.size < 5) && (other.xCoord >= this.xCoord) && (this.xCoord >= other.xCoord - 10) && (other.yCoord >= this.yCoord) &&
+		    (this.yCoord >= other.yCoord - 10)) {
+		    //the above if statement could be refined if we had a function call to getOffset depending on size
+		    //but its secondary right now, could be completed later.
+		    System.out.println("Collision!");
+		    return true;
+		} else if ((this.size > 5) && (Math.abs(other.xCoord - this.xCoord) * 2) < (other.size + this.size) &&
+		    (Math.abs(other.yCoord - this.yCoord) * 2) < (other.size + this.size)){
+		    System.out.println("BodyCollision!");
+		    //For both these if-cases we could have a simple "return (statement)", but then we can't print.
+		    //We print for debuging purposes at the moment. Easily changed later.
+		    //Might have to refactor this particular code.
+		    return true;
 		}
 		return false;
 	}
