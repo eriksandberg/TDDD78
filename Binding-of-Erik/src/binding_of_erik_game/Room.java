@@ -4,7 +4,6 @@ package binding_of_erik_game;
  * Created by wassing on 2016-04-04.
  */
 
-import javax.swing.*;
 import java.util.*;
 
 public class Room {
@@ -65,8 +64,8 @@ public class Room {
 	public Room(Player player, int width, int height) {
 		this.player = player;
 
-		this.width = width; //800
-		this.height = height; //800
+		this.width = width; //200
+		this.height = height; //200
 
 		board = new TileType[width][height];
 		for (int tileX = 0; tileX < width; tileX++) { //will loop for every "square" and assign a tile to it.
@@ -142,7 +141,7 @@ public class Room {
 
 		// Set enemys power
 		if (power >  10) {power = 10;}
-		newEnemy.setShotCooldown(40 - power*4);
+		newEnemy.setShotCooldown(40 - power * 4);
 
 		return newEnemy;
 	}
@@ -192,20 +191,23 @@ public class Room {
 		return true;
 	}
 
-	// Spawn "traveling star" at a random position
-	private void spawnStar() {
+	// Spawns background candy at a random position. Can be either star or galaxy
+	private void spawnBackgroundGraphics() {
 		Random rand = new Random();
 
 		// We don't want to always spawn stars
-		int i = rand.nextInt(6);
-		if (i != 0) {
-			return;
-		}
-
-		final Star newStar = GraphicsFactory.getInstance().getStar();
-		newStar.xCoord = rand.nextInt(FAR_EDGE - 18);
-		newStar.yCoord = 0;
-		miscInRoom.add(newStar);
+		int i = rand.nextInt(24);
+		if (i < 4) { //4 out of 24 possible scenarios spawn a star
+			final Star newStar = GraphicsFactory.getInstance().getStar();
+			newStar.xCoord = rand.nextInt(FAR_EDGE - 18);
+			newStar.yCoord = 0;
+			miscInRoom.add(newStar);
+		} else if (i == 4) { //1 out of 24 possible scenarios spawn a galaxy
+			final Galaxy newGalaxy = GraphicsFactory.getInstance().getGalaxy();
+			newGalaxy.xCoord = rand.nextInt(FAR_EDGE - 18);
+			newGalaxy.yCoord = 0;
+			miscInRoom.add(newGalaxy);
+	    	}
 	}
 
 	// Spawn a couple of sparks at orgin
@@ -265,7 +267,7 @@ public class Room {
 				}
 				break;
 		    	case ("Big bad bomb"):
-
+				break;
 			default: break;
 		}
 
@@ -354,7 +356,7 @@ public class Room {
 				}
 			}
 			// Perhaps spawn a star
-			spawnStar();
+			spawnBackgroundGraphics();
 		} else {
 			// Room is empty, increment player skill and spawn a new room
 			player.incSkill();
