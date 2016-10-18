@@ -217,6 +217,17 @@ public class Board {
         return squareArray;
     }*/
 
+    public void collapseCol(int x, int y){
+	//only works for the very bottom row of the Heavy block right now.
+	if (squareArray[x][y-1] == SquareType.EMPTY){
+	    addSquareAt(squareArray[x][y], x, y-1); //array x,y is origin
+	}
+    }
+
+    public void addSquareAt(SquareType type, int x, int y){
+	squareArray[x][y] = type;
+    }
+
     public void removeSquareAt(int x, int y){
 	squareArray[x][y] = SquareType.EMPTY;
 	notifyListeners();
