@@ -57,11 +57,8 @@ public class GameObject {
 	// Return true if the object have left the room
 	protected boolean outOfBounds() {
 		//if statement can be simplified to a simple return (logical operation), but this is more readable.
-		if ((xCoord - size < Room.getAdjEdge()) || (yCoord - size < Room.getAdjEdge()) ||
-			(xCoord + 2 * size > Room.getFarEdge()) || (yCoord + 2 * size > Room.getFarEdge())) {
-			return true;
-		}
-		return false;
+		return ((xCoord - size < Room.getAdjEdge()) || (yCoord - size < Room.getAdjEdge()) ||
+			(xCoord + 2 * size > Room.getFarEdge()) || (yCoord + 2 * size > Room.getFarEdge()));
 	}
 
 	public void rotate(char newDirection, char oldDirection) {
