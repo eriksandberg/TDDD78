@@ -14,8 +14,8 @@ public class Fallthrough implements CollisionHandler {
 		//Don't have to check for X, only for Y. X only hinders side-movement, Y is the final determinator if we can place the block or not.
 		for (int i = 0; i < poly.getWidth(); i++) {      // Loop over width of a poly
 			for (int j = 0; j < poly.getHeight(); j++) {     // Loop over height
-				if ( board.getTetrisPieceX() + i > board.getColumns() || // Utanför höger kant
-					board.getTetrisPieceY() + j > board.getRows() || //utanför vänster kant
+				if (board.getTetrisPieceX() + i >= board.getColumns() || (poly.getShape()[i][j] != SquareType.EMPTY) &&  board.getTetrisPieceX() + i >= board.getColumns() || // Utanför höger kant
+					board.getTetrisPieceY() + j >= board.getRows() || //utanför vänster kant
 					board.getTetrisPieceY() + j < 0) { // Under golvet
 				    	return true;
 				}
