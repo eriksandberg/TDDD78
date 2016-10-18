@@ -8,12 +8,11 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 
 /**
  * User: Erik
  * Date: 2016-10-16
- * This class handle the players score, and reading/writing scoreList to file.
+ * This class handles the players score, and reads/writes scoreList to file.
  * We write to file on game over and when we manually close the application, even if we're in the middle of a game
  */
 
