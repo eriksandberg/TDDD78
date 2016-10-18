@@ -21,6 +21,8 @@ public class Room {
 
 	private Player player = null;
 	protected Score score = null;
+    	private boolean gameIsOver = false;
+    	private static final int MAX_LEVEL = 10;
 
 	private Collection<GameObject> miscInRoom = new ArrayList<>();
 	private Collection<Enemy> enemiesInRoom = new ArrayList<>();
@@ -337,7 +339,13 @@ public class Room {
 	public void tick() {
 		// Always called by the clock, handles enemies, shots and some game mechanics
 		if (player.isDead()) {
+		    gameOver();
+		}else if (player.getSkill() == MAX_LEVEL + 1){
+		    if (!gameIsOver) {
+			System.out.println("Congratulations, you won!");
 			gameOver();
+			gameIsOver = true;
+		    }
 		} else if (!enemiesInRoom.isEmpty()) {
 			// Handle enemies (if there are enemies, otherwise spawn a new room)
 			Iterator<Enemy> e = enemiesInRoom.iterator();
@@ -404,9 +412,10 @@ public class Room {
 			spawnBackgroundGraphics();
 		} else {
 			// Room is empty, increment player skill and spawn a new room
-			player.incSkill();
-		    	//System.out.println(player.getSkill()); //is a debugger.
-			newRoom();
+			player.incSkill(); //increases level
+			if (player.getSkill() != MAX_LEVEL + 1){
+			    newRoom();
+			}
 		}
 		notifyListeners();
 	}
