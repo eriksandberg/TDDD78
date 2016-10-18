@@ -195,7 +195,7 @@ public class Room {
 		return true;
 	}
 
-	// Return true if a position (y-axis) is free from enemies
+	// Return true if a position (y-axis) is free from enemies, we don't use this currently.
 	private boolean spaceYFree(int pos) {
 		for (Enemy enemy : enemiesInRoom) {
 			if ((pos + 10) > enemy.yCoord && pos < (enemy.yCoord + enemy.size)) {
