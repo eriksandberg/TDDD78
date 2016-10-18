@@ -14,8 +14,8 @@ import java.util.EnumMap;
  */
 public class TetrisComponent extends JComponent implements BoardListener {
 
-    private static final int squareWidth = 300;
-    private static final int squareHeight = 660;
+    private static final int SQUARE_WIDTH = 300; //300
+    private static final int SQUARE_HEIGHT = 660; //660
     private final Board board;
     private final EnumMap<SquareType, Color> map = SquareType.eMap();
 
@@ -25,14 +25,21 @@ public class TetrisComponent extends JComponent implements BoardListener {
         this.setPreferredSize(getPreferredSize());
         myBoard.addBoardListener(this);
 
-        getInputMap().put(KeyStroke.getKeyStroke("SPACE"),
-                "pressedSpace");
-        getActionMap().put("pressedSpace", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                board.tick();
-            }
-        });
+        getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "pressedSpace");
+        getActionMap().put("pressedSpace", new AbstractAction()
+	{
+	    @Override public void actionPerformed(ActionEvent e) {
+		board.tick();
+	    }
+	});
+
+	getInputMap().put(KeyStroke.getKeyStroke("T"), "pressedT");
+	getActionMap().put("pressedT", new AbstractAction() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		board.resetBoard();
+	    }
+	});
 
         getInputMap().put(KeyStroke.getKeyStroke("UP"),
                 "pressedUp");
@@ -72,7 +79,7 @@ public class TetrisComponent extends JComponent implements BoardListener {
     }
 
     public Dimension getPreferredSize(){
-        return new Dimension(squareWidth, squareHeight);
+        return new Dimension(SQUARE_WIDTH, SQUARE_HEIGHT);
     }
 
     public void paintComponent(Graphics g){
@@ -86,6 +93,9 @@ public class TetrisComponent extends JComponent implements BoardListener {
                 g2.fillRect(i*30, j*30, 30, 30);
             }
         }
+	g2.setColor(Color.RED);
+	g2.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+	g2.drawString("Current Score: " + Integer.toString(board.getScore()),board.getColumns(),board.getRows()+2);
     }
 
     public void BoardChanged(){

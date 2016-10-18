@@ -20,8 +20,7 @@ public class TetrisFrame extends JFrame {
 
         super(myWindowTitle);
 
-        this.board = board;
-        //textArea = new JTextArea(board.getRows(), board.getColumns());
+	this.board = board;
         //textArea.setText(tetris.TetrisTextView.convertToText(board));
         TetrisComponent paintArea = new TetrisComponent(board);
         this.setLayout(new BorderLayout());
@@ -36,7 +35,9 @@ public class TetrisFrame extends JFrame {
 
     private final Action doOneStep = new AbstractAction(){
         public void actionPerformed(ActionEvent e){
-            board.tick();
+	    if (!board.gameOver) {
+		board.tick();
+	    }
             //repaint();
             //board.randomizeBoard();
             //TetrisComponent paintArea = new TetrisComponent(board);
