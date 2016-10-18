@@ -6,11 +6,14 @@ package tetris;
 public class DefaultCollisionHandler implements CollisionHandler
 {
     public boolean hasCollision(Board board) {
+	if (board.getTetrisPiece() == null) {
+	    return false;
+	}
 	for (int i = board.getTetrisPieceY(); i < board.getTetrisPieceY() + board.getTetrisPieceSize(); i++) {
 	    for (int j = board.getTetrisPieceX(); j < board.getTetrisPieceX() + board.getTetrisPieceSize(); j++) {
 		SquareType boardType = board.getSquare(j, i);
-		SquareType polyType = board.getTetrisPiece().getPolyTypeAt(j - board.getTetrisPieceX(), i - board.getTetrisPieceY());
-
+		SquareType polyType =
+			board.getTetrisPiece().getPolyTypeAt(j - board.getTetrisPieceX(), i - board.getTetrisPieceY());
 		if (board.getTetrisPieceY() > 2) {
 		    if (boardType != SquareType.EMPTY && polyType != SquareType.EMPTY) {
 			return true;
@@ -22,7 +25,6 @@ public class DefaultCollisionHandler implements CollisionHandler
 		}
 	    }
 	}
-	System.out.println("hej jag har har");
 	return false;
     }
 }

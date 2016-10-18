@@ -82,7 +82,8 @@ public class Board {
             }
             //if (hasCollision(tetrisPiece)){
 	    if (collisionHandler.hasCollision(this)){
-                gameOver = true;
+		System.out.println("huhu");
+		gameOver = true;
                 tetrisPiece = null;
             }
         }
@@ -92,7 +93,6 @@ public class Board {
             insertPoly(tetrisPiece);
         }
         removeRows();
-	System.out.println("made it to here");
 	notifyListeners();
     }
 
