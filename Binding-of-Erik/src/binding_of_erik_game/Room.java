@@ -114,7 +114,7 @@ public class Room {
 	public void spawnPlayer(int x, int y) {
 		this.player.xCoord = x;
 		this.player.yCoord = y;
-		player.setDirection(player.getDirection()); //TODO: Change this later, atm fix to not fuck up heading on room reset
+		player.setDirection(player.getDirection()); //fix to not fuck up rotation
 		notifyListeners();
 	}
 
@@ -123,12 +123,15 @@ public class Room {
 		Random rand = new Random();
 		int i = player.getSkill();
 
-		// Spawn 2 falling enemies if the player have reached skill lvl 4
-	    if (i >= 4) {
-		    enemiesInRoom.add(spawnEnemy(2, 1));   // These only have 1 power level
-		    enemiesInRoom.add(spawnEnemy(2, 1));
-			i -= 4;
-	    }
+		// Spawn a boss every 5th level
+		if (i % 5 == 0){
+			enemiesInRoom.add(spawnEnemy(4, 1)); //the big bad baus
+		} else if (i >= 4) {
+		//spawn 2 falling enemies if the player has reached skill lvl 4
+			enemiesInRoom.add(spawnEnemy(2, 1)); // These only have 1 power level
+			enemiesInRoom.add(spawnEnemy(2, 1));
+		    	//i -= 4; looping for testing purposes.
+		}
 
 		// Spawn normal enemies
 		while (i > 0) {
@@ -143,19 +146,23 @@ public class Room {
 	@SuppressWarnings("MagicNumber")    // 40 (in steps of 4) is the max power lvl of an enemy
 	private Enemy spawnEnemy(int kind, int power) {
 		Enemy newEnemy = GraphicsFactory.getInstance().getEnemy(kind);
-
-		newEnemy.xCoord = enemySpawnPos(kind);
+		newEnemy.xCoord = enemySpawnPos(kind, newEnemy.getSize());
+	    	if (kind == 4){
+		    //we have a boss
+		    newEnemy.yCoord = newEnemy.getSize();
+		}
 
 		// Set enemys power
 		if (power >  10) {power = 10;}
 		newEnemy.setShotCooldown(40 - power * 4 - 1);   // We don't want enemies with cooldown = 0
-		newEnemy.setWorth(newEnemy.getWorth() + (power * 40));
+		//newEnemy.setWorth(newEnemy.getWorth() + (power * 40)); //using a hardcoded worth right now.
 
+	    	newEnemy.rotateThisMany(1);
 		return newEnemy;
 	}
 
 	@SuppressWarnings("ReuseOfLocalVariable")   // I want them all named pos
-	private int enemySpawnPos(int kind) {
+	private int enemySpawnPos(int kind, int size) {
 		Random rand = new Random();
 		int pos = 0;
 
@@ -169,11 +176,14 @@ public class Room {
 				}
 				return pos;
 			case 2:
-				pos = 10;   // Place first one at left edge
+				pos = 0;   // Place first one at left edge
 				if (!spaceXFree(pos)) {
 					pos = 190;  // Second one at right edge
 				}
 				return pos;
+		    	case 4:
+			    	pos = (100+size); //always spawn boss in the middle
+			    	return pos;
 			default:
 				return pos;
 		}
@@ -243,8 +253,8 @@ public class Room {
 	@SuppressWarnings("NestedAssignment") // 2 lines is better than 4
 	private void spawnShot(Enemy enemy) {
 		Shot newShot = GraphicsFactory.getInstance().getLightShot();
-		newShot.xCoordFloat = newShot.xCoord = enemy.xCoord - 4;    // supressed warning
-		newShot.yCoordFloat = newShot.yCoord = enemy.yCoord - 4;    // supressed warning
+		newShot.xCoordFloat = newShot.xCoord = enemy.xCoord - enemy.getSize()/2; //spawn shot in middle of enemy
+		newShot.yCoordFloat = newShot.yCoord = enemy.yCoord - enemy.getSize()/2;
 
 		// Calculate the trajectory of the shot
 		newShot.calcAngle(player.xCoord, player.yCoord);
@@ -303,7 +313,7 @@ public class Room {
 	}
 
 
-	// Public because it's called GameFrame
+	// Public because it's called by GameFrame
 	public void tick() {
 		// Always called by the clock, handles enemies, shots and some game mechanics
 		if (player.isDead()) {
@@ -350,9 +360,9 @@ public class Room {
 					while (e.hasNext()) {
 						Enemy enemy = e.next();
 						if (shot.collision(enemy)) {
-							spawnSparks(enemy, shot);
-							s.remove();
 							enemy.hp--;
+							s.remove();
+						    	spawnSparks(enemy, shot);
 							score.addToCurrentScore(10);    // Some few points for hitting
 						}
 					}
@@ -372,6 +382,7 @@ public class Room {
 			// Room is empty, increment player skill and spawn a new room
 
 			player.incSkill();
+		    	//System.out.println(player.getSkill());
 			newRoom();
 		}
 		notifyListeners();

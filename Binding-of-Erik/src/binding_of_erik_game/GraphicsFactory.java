@@ -14,9 +14,10 @@ public final class GraphicsFactory
     private static final TileType Y = TileType.YELLOW; // Yellow
     private static final TileType P = TileType.MAGENTA; // Pink
     private static final TileType O = TileType.ORANGE; //Orange
-    private static final TileType Gr = TileType.GRAY; //Gray
+    private static final TileType G = TileType.GRAY; //Gray
     private static final TileType W = TileType.WHITE; //White
     // More available if wanted, see TileType
+    private int bossNumber = 0;
 
     /**
      * Singleton patttern, implemented according bill pugh Private constructor so to ensure only one factory can be
@@ -44,16 +45,16 @@ public final class GraphicsFactory
 
     // All objects should preferably take up all of their allowed space for collisions to look better
     private final TileType[][] player =
-		{{ T, T, T, Gr, Gr, T, T, T, T, T },
-		 { T, T, W, Gr, Gr, Gr, Gr, Gr, T, T },
+		{{ T, T, T, G, G, T, T, T, T, T },
+		 { T, T, W, G, G, G, G, G, T, T },
 		 { T, T, W, T, T, T, T, T, T, T },
 		 { T, W, W, W, T, T, T, T, T, T },
-		 { O, O, Gr, Gr, W, W, W, W, W, W }, //north
-		 { O, O, Gr, Gr, W, W, W, W, W, W }, //north
+		 { O, O, G, G, W, W, W, W, W, W }, //north
+		 { O, O, G, G, W, W, W, W, W, W }, //north
 		 { T, W, W, W, T, T, T, T, T, T },
 		 { T, T, W, T, T, T, T, T, T, T },
-		 { T, T, W, Gr, Gr, Gr, Gr, Gr, T, T },
-		 { T, T, T, Gr, Gr, T, T, T, T, T }};
+		 { T, T, W, G, G, G, G, G, T, T },
+		 { T, T, T, G, G, T, T, T, T, T }};
 
     public Player getPlayer() {return new Player(player);}
 
@@ -64,6 +65,16 @@ public final class GraphicsFactory
 				return new Enemy(normalEnemy);
 			case 2:
 				return new TravelingEnemy(travelingEnemy);
+		    	case 3:
+			    	//return new InvaderEnemy(invaderEnemy);
+		    	case 4:
+			    	bossNumber++;
+			    	switch (bossNumber){
+				    	case 1:
+						return new FirstBoss(firstBoss);
+					//add more bosses here
+				    	default: break;
+				}
 			default:
 			return new Enemy(nullEnemy);
 		}
@@ -71,7 +82,6 @@ public final class GraphicsFactory
 
 	private final TileType[][] nullEnemy = {};
 
-    //enemy is right now a ring of red pixels. transparent blocks will be detected so they don't overwrite ground.
     private final TileType[][] normalEnemy =
 	    {{ T, T, T, R, R, R, R, T, T, T },
 		 { T, T, R, T, T, T, T, R, T, T },
@@ -84,30 +94,30 @@ public final class GraphicsFactory
 		 { T, T, R, T, T, T, T, R, T, T },
 		 { R, R, R, R, R, R, R, R, R, R }};
 
-	private final TileType[][] travelingEnemy =
-		{{ T, T, T, R, R, R, R, T, T, T },
-		 { T, T, R, T, T, T, T, R, T, T },
-		 { T, R, T, T, T, T, T, T, R, T },
-		 { R, B, B, B, B, B, B, B, B, R },
-		 { R, T, T, T, T, T, T, T, T, R },
-		 { R, T, T, T, T, T, T, T, T, R },
-		 { R, B, B, B, B, B, B, B, B, R },
-		 { T, R, T, T, T, T, T, T, R, T },
-		 { T, T, R, T, T, T, T, R, T, T },
-		 { T, T, T, R, R, R, R, T, T, T }};
+    private final TileType[][] travelingEnemy =
+	    {{ T, T, T, R, R, R, R, T, T, T },
+	     { T, T, R, T, T, T, T, R, T, T },
+	     { T, R, T, T, T, T, T, T, R, T },
+	     { R, B, B, B, B, B, B, B, B, R },
+	     { R, T, T, T, T, T, T, T, T, R },
+	     { R, T, T, T, T, T, T, T, T, R },
+	     { R, B, B, B, B, B, B, B, B, R },
+	     { T, R, T, T, T, T, T, T, R, T },
+	     { T, T, R, T, T, T, T, R, T, T },
+	     { T, T, T, R, R, R, R, T, T, T }};
 
-	// Looks like a space invader but spawn sideways, lmao
-	private final TileType[][] invaderEnemy =
-		{{ T, T, T, T, T, T, T, T, T, T },
-		 { T, T, R, T, T, T, T, R, T, T },
-		 { T, T, T, R, T, T, R, T, T, T },
-		 { T, T, R, R, R, R, R, R, T, T },
-		 { T, R, R, T, R, R, T, R, R, T },
-		 { R, R, R, R, R, R, R, R, R, R },
-		 { R, T, R, R, R, R, R, R, T, R },
-		 { R, T, R, T, T, T, T, R, T, R },
-		 { T, T, T, R, T, T, R, T, T, T },
-		 { T, T, T, T, T, T, T, T, T, T }};
+    // Looks like a space invader but spawn sideways, lmao
+    private final TileType[][] invaderEnemy =
+	    {{ T, T, T, T, T, T, T, T, T, T },
+	     { T, T, R, T, T, T, T, R, T, T },
+	     { T, T, T, R, T, T, R, T, T, T },
+	     { T, T, R, R, R, R, R, R, T, T },
+	     { T, R, R, T, R, R, T, R, R, T },
+	     { R, R, R, R, R, R, R, R, R, R },
+	     { R, T, R, R, R, R, R, R, T, R },
+	     { R, T, R, T, T, T, T, R, T, R },
+	     { T, T, T, R, T, T, R, T, T, T },
+	     { T, T, T, T, T, T, T, T, T, T }};
 
     //clusterEnemy is a cross of red pixels. Will be shooting 3 projectiles at a time. See logic in <Class>
     private final TileType[][] clusterEnemy =
@@ -159,6 +169,28 @@ public final class GraphicsFactory
 	    { T, T, T, T, T, T, T, T, T, T }};
 
     public Galaxy getGalaxy() {return new Galaxy(galaxy);}
+
+    public final TileType[][] firstBoss =
+	    {{ T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T },
+	    { T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T },
+	    { T, T, T, T, T, T, T, T, T, B, B, T, T, T, T, T, T, T, T, T },
+	    { T, T, T, T, T, T, G, G, G, G, G, G, G, G, T, T, T, T, T, T },
+	    { T, T, T, G, G, G, T, T, T, T, T, T, T, T, G, G, G, T, T, T },
+	    { T, T, T, G, T, T, T, T, T, T, T, T, T, T, T, T, G, T, T, T },
+	    { T, T, T, T, G, T, T, T, T, T, T, T, T, T, T, G, T, T, T, T },
+	    { T, T, T, T, G, T, T, T, T, T, T, T, T, T, T, G, T, T, T, T },
+	    { T, T, T, T, T, G, T, T, T, T, T, T, T, T, G, T, T, T, T, T },
+	    { T, T, T, T, T, G, T, T, T, T, T, T, T, T, G, T, T, T, T, T },
+	    { T, T, T, T, T, T, G, T, T, T, T, T, T, G, T, T, T, T, T, T },
+	    { T, T, T, T, T, T, G, T, T, T, T, T, T, G, T, T, T, T, T, T },
+	    { T, T, T, T, T, T, T, G, T, T, T, T, G, T, T, T, T, T, T, T },
+	    { T, T, T, T, T, T, T, G, T, T, T, T, G, T, T, T, T, T, T, T },
+	    { T, T, T, T, T, T, T, T, G, T, T, G, T, T, T, T, T, T, T, T },
+	    { T, T, T, T, T, T, T, T, G, T, T, G, T, T, T, T, T, T, T, T },
+	    { T, T, T, T, T, T, T, T, T, G, G, T, T, T, T, T, T, T, T, T },
+	    { T, T, T, T, T, T, T, T, T, G, G, T, T, T, T, T, T, T, T, T },
+	    { T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T },
+	    { T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T },};
 
     //add more graphic "blocks" here.
 }
