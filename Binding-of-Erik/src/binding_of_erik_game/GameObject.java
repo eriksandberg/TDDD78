@@ -21,8 +21,10 @@ public class GameObject {
 
 	// Constructor
 	// Let the inheriting objects set position and size as they are not 100% required
-	public GameObject(TileType[][] shape) {
+	public GameObject(TileType[][] shape, int x, int y) {
 		this.shape = shape;
+		xCoord = x;
+		yCoord = y;
 	}
 
 	// Objects that's not simply "falling" down the screen will implement their own movement

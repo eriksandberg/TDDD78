@@ -23,7 +23,8 @@ public class Room {
 
 	private Player player = null;
 	protected Score score = null;
-	private boolean gameIsOver = false;
+
+	private boolean roomOver = false;
 
 	private static final int MAX_LEVEL = 10;
 
@@ -91,16 +92,15 @@ public class Room {
 	public void newRoom() {
 		clearRoom();   // Remove all shots (and enemies) left in an old room
 		//noinspection MagicNumber, let the player spawn in the middle of the room (at the bottom)
-		spawnPlayer(100, 180);
+		spawnPlayer(player.xCoord, 190);
 		spawnEnemies();
 		// Should probably pause for a couple of seconds, don't want to confuse the player
 	}
 
-	// Remove everything in the room but the player
+	// Remove everything in the room but the player and background graphics
 	private void clearRoom() {
 		enemiesInRoom.clear();
 		shotsInRoom.clear();
-		miscInRoom.clear();
 	}
 
 	// Basically a restart, public for the same reason as newRoom is
@@ -203,14 +203,14 @@ public class Room {
 	}
 
 	// Return true if a position (y-axis) is free from enemies, we don't use this currently.
-	private boolean spaceYFree(int pos) {
+	/*private boolean spaceYFree(int pos) {
 		for (Enemy enemy : enemiesInRoom) {
 			if ((pos + 10) > enemy.yCoord && pos < (enemy.yCoord + enemy.size)) {
 				return false;
 			}
 		}
 		return true;
-	}
+	}*/
 
 	// Spawns background candy at a random position. Can be either star or galaxy
 	private void spawnBackgroundGraphics() {
@@ -284,6 +284,7 @@ public class Room {
 		notifyListeners();
 	}
 
+	@SuppressWarnings("NestedAssignment") // 2 lines is better than 4
 	private Shot createEnemyShotAt(int x, int y) {
 		Shot newShot = GraphicsFactory.getInstance().getLightShot();
 		newShot.xCoordFloat = newShot.xCoord = x;
@@ -332,100 +333,121 @@ public class Room {
 
 	// Move the player and notify listeners
 	// Public because it's called from EventHandler
-	public void movePlayer(Direction direction) {
+	public boolean movePlayer(Direction direction) {
 		if (direction == Direction.OTHER) {
 			player.move(direction); //actually does not move
 		}
 		player.rotate(direction, player.getDirection());
-		player.move(direction);
+		boolean moved = player.move(direction);
+		System.out.println(moved);
 		notifyListeners();
+		return moved;
 	}
 
 
 	// Public because it's called by GameFrame
+	// Called by the clock, handles enemies, shots and some game mechanics
 	public void tick() {
-		// Always called by the clock, handles enemies, shots and some game mechanics
-		if (player.isDead()) {
-			gameOver();
-		} else if (player.getSkill() == MAX_LEVEL + 1) {
-			if (!gameIsOver) {
-				System.out.println("Congratulations, you won!");
-				gameOver();
-				gameIsOver = true;
-			}
-		} else if (!enemiesInRoom.isEmpty()) {
-			// Handle enemies (if there are enemies, otherwise spawn a new room)
-			Iterator<Enemy> e = enemiesInRoom.iterator();
-			while (e.hasNext()) {
-				Enemy enemy = e.next();
-				if (enemy.isDead()) {   // Killing an enemy
-					score.addToCurrentScore(enemy.getWorth());  // Increase score
-					e.remove();
-				} else {
-					enemy.move();
-					// touching enemies hurt the player
-					if (enemy.collision(player)) {
-						spawnSparks(player, enemy);
-						player.hp--;
-					}
-					if (enemy.readyToShoot()) {
-						spawnShot(enemy);
-					}
-					//last minute fix for the second boss in the game, this is not modular at all.
-					if (enemy instanceof SecondBoss && enemy.specialShotCooldown <= 75) {
-						spawnShot(enemy);
-					}
-				}
-			}
-			// Handle shots
-			Iterator<Shot> s = shotsInRoom.iterator();
-			while (s.hasNext()) {
-				Shot shot = s.next();
-				// move() return true if the shot is moving out of the map
-				if (shot.move()) {
-					s.remove();
-				}
-				// Remove enemy shots that hit the player
-				if (shot.isEnemy()) {
-					if (shot.collision(player)) {
-						spawnSparks(player, shot);
-						s.remove();
-						player.hp--;
-						score.subFromCurrentScore(100); // Getting hit is baaaaaad
-					}
-				} else {
-					// Remove player shots that hit an enemy
-					e = enemiesInRoom.iterator();
-					while (e.hasNext()) {
-						Enemy enemy = e.next();
-						if (shot.collision(enemy)) {
-							enemy.hp--;
-							s.remove();
-							spawnSparks(enemy, shot);
-							score.addToCurrentScore(10);    // Some few points for hitting
-						}
-					}
-				}
-			}
-			// Handle graphical stuff
-			Iterator<GameObject> misc = miscInRoom.iterator();
-			while (misc.hasNext()) {
-				GameObject gfx = misc.next();
-				if (gfx.move()) {
-					misc.remove();
-				}
-			}
-			// Perhaps spawn a star
-			spawnBackgroundGraphics();
+		if (roomOver) {     // First part
+			moveToTop();
 		} else {
-			// Room is empty, increment player skill and spawn a new room
+			if (player.isDead()) {
+				gameOver();
+			} else if (!enemiesInRoom.isEmpty()) {  // If no enemies, spawn new room
+				handleEnemies();
+				handleShots();
+				handleGFK();
+			} else {  // Room is empty, increment player skill and spawn a new room
+				player.incSkill(); // Increase player level
+				if (player.getSkill() == MAX_LEVEL + 1) {
+					System.out.println("Congratulations, you won!");
+					gameOver();
+				}
+				roomOver = true;
+				clearRoom();
+			}
+			notifyListeners();
+		}
+	}
 
-			player.incSkill(); //increases level
-			if (player.getSkill() != MAX_LEVEL + 1) {
+	private void handleEnemies() {
+		Iterator<Enemy> e = enemiesInRoom.iterator();
+		while (e.hasNext()) {
+			Enemy enemy = e.next();
+			if (enemy.isDead()) {   // Killing an enemy
+				score.addToCurrentScore(enemy.getWorth());  // Increase score
+				e.remove();
+			} else {
+				enemy.move();
+				// touching enemies hurt the player
+				if (enemy.collision(player)) {
+					spawnSparks(player, enemy);
+					player.hp--;
+				}
+				if (enemy.readyToShoot()) {
+					spawnShot(enemy);
+				}
+				//last minute fix for the second boss in the game, this is not modular at all.
+				if (enemy instanceof SecondBoss && enemy.specialShotCooldown <= 75) {
+					spawnShot(enemy);
+				}
+			}
+		}
+	}
+
+	// tick() help method for spawning and moving stars and galaxies
+	private void handleGFK() {
+		Iterator<GameObject> misc = miscInRoom.iterator();
+		while (misc.hasNext()) {
+			GameObject gfx = misc.next();
+			if (gfx.move()) {
+				misc.remove();
+			}
+		}
+		// Perhaps spawn a star
+		spawnBackgroundGraphics();
+	}
+
+	// tick() help method that move the player "forward" and spawn a new room once we reach the edge
+	private void moveToTop() {
+		handleGFK();
+		for (int r = 3; r > 0; --r) {
+			if (!movePlayer(Direction.NORTH)) {
+				roomOver = false;
 				newRoom();
 			}
 		}
-		notifyListeners();
+	}
+
+	// tick() help method taking care of moving all shots and identifying hits
+	private  void handleShots() {
+		Iterator<Shot> s = shotsInRoom.iterator();
+		while (s.hasNext()) {
+			Shot shot = s.next();
+			// move() return true if the shot is moving out of the map
+			if (shot.move()) {
+				s.remove();
+			}
+			// Remove enemy shots that hit the player
+			if (shot.isEnemy()) {
+				if (shot.collision(player)) {
+					spawnSparks(player, shot);
+					s.remove();
+					player.hp--;
+					score.subFromCurrentScore(100); // Getting hit is baaaaaad
+				}
+			} else {
+				// Remove player shots that hit an enemy
+				for (Enemy enemy : enemiesInRoom) {
+					if (shot.collision(enemy)) {
+						enemy.hp--;
+						s.remove();
+						spawnSparks(enemy, shot);
+						score.addToCurrentScore(10);    // Some few points for hitting
+					}
+				}
+			}
+		}
 	}
 
 	private void gameOver() {
