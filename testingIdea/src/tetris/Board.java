@@ -22,8 +22,7 @@ public class Board {
     private int tetrisPieceX;
     private int tetrisPieceY;
     private int currentScore = 0;
-    private Highscore highscore;
-    private CollisionHandler collisionHandler;
+	private CollisionHandler collisionHandler;
 
     private final SquareType[][] squareArray;
 
@@ -51,9 +50,9 @@ public class Board {
 	if (name == null) {
 	    name = "";
 	}
-	this.highscore = new Highscore(name, currentScore);
+	    Highscore highscore = new Highscore(name, currentScore);
 	HighscoreList currentHighscores = HighscoreList.getInstance();
-	currentHighscores.addScore(this.highscore);
+	currentHighscores.addScore(highscore);
 	System.out.println(currentHighscores.getHighscoreList());
 	gameOver = false;
 	makeEmptyBoard();
