@@ -251,13 +251,12 @@ public class Room {
 	    	//this goes against using polymorphism, but this is a last fix specifically for the bosses.
 		//could be made modular if we had enough time. SHOULD be made modular if a game has many bosses.
 		if (enemy instanceof FirstBoss) {
-		    System.out.println(enemy.specialShotCooldown);
 		    shotsInRoom.add(createEnemyShotAt(enemy.xCoord, enemy.yCoord)); //bottom right of boss
 		    shotsInRoom.add(createEnemyShotAt(enemy.xCoord - enemy.getSize(), enemy.yCoord)); //bottom left of boss
 		} else if (enemy instanceof SecondBoss) {
 		    //would need a whole new method, we can't create different kinds of shots with just one method.
 		    //therefore just bunched the whole code in here because it's a separate case for the second boss only.
-		    //System.out.println("Cooldown at: " + enemy.specialShotCooldown); debug
+		    System.out.println("Cooldown at: " + enemy.specialShotCooldown); //debug, and can be used for fun.
 		    if (enemy.specialShotCooldown <= 75) {
 			Shot lazer = GraphicsFactory.getInstance().getLazer();
 			lazer.xCoordFloat = lazer.xCoord = enemy.xCoord - enemy.getSize()/2;
