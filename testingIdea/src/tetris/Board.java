@@ -20,8 +20,8 @@ public class Board {
     private int tetrisPieceX;
     private int tetrisPieceY;
     private int currentScore = 0;
-    private Highscore highscore;
-    private CollisionHandler collisionHandler;
+
+	private CollisionHandler collisionHandler;
     private static final int FALLTHROUGH_CHANCE = 50;
     private static final int HEAVY_CHANCE = 20;
 
@@ -46,9 +46,9 @@ public class Board {
 	if (name == null) {
 	    name = "";
 	}
-	this.highscore = new Highscore(name, currentScore);
+	    Highscore highscore = new Highscore(name, currentScore);
 	HighscoreList currentHighscores = HighscoreList.getInstance();
-	currentHighscores.addScore(this.highscore);
+	currentHighscores.addScore(highscore);
 	System.out.println(currentHighscores.getHighscoreList());
 	gameOver = false;
 	makeEmptyBoard();
