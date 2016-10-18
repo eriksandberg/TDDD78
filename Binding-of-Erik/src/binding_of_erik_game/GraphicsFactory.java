@@ -76,7 +76,8 @@ public final class GraphicsFactory
 				    case 2:
 					    return new SecondBoss(deathStar);
 				    //add more bosses here
-				    default: break;
+				    default:
+					    return new Enemy(nullEnemy);
 			    }
 		    default:
 		    return new Enemy(nullEnemy);
@@ -146,7 +147,7 @@ public final class GraphicsFactory
 		{{ Y }};
 
     public Spark getSpark() {return new Spark(spark);}
-	
+
     //eye candy
     private final TileType[][] star =
 	    {{ W, W} };
