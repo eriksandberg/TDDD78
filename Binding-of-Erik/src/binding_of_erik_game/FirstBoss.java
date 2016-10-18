@@ -9,7 +9,6 @@ public class FirstBoss extends Enemy
 		super(shape);
 	    	this.size = 18;
 		this.isEnemy = true;	// Born evil.
-		this.yCoord = 0;        // All enemies spawn at the top of the room
 	    	this.hp = HP;
 	    	this.worth = WORTH;
 	    	this.specialShotCooldown = 50;

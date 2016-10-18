@@ -12,13 +12,11 @@ import javax.swing.JFrame;
 
 public class GameFrame extends JFrame { //this class does all the actual frame updating work. Will be instanced as an object for GameWindow.
 
-	private final Room room;
 	private static boolean paused = false;
 
 	public GameFrame(final Room room, String myWindowTitle) {
 		super(myWindowTitle);
 
-		this.room = room;
 		EventHandler paintArea = new EventHandler(room);
 		this.setLayout(new BorderLayout());
 		this.add(paintArea, BorderLayout.CENTER);

@@ -57,7 +57,7 @@ public final class GraphicsFactory
 		 { T, T, W, G, G, G, G, G, T, T },
 		 { T, T, T, G, G, T, T, T, T, T }};
 
-    public Player getPlayer() {return new Player(player);}
+    public Player getPlayer() {return new Player(player, 100, 10);}
 
     // What kind (kind) of enemy is decided by game logic in Room
     public Enemy getEnemy(int kind) {

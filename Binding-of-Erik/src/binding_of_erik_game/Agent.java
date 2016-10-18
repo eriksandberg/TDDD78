@@ -12,15 +12,15 @@ public class Agent extends GameObject {
 
     protected int shotCooldown;
     protected int currentShotCooldown = 10;   // Everyone will wait 10 ticks before firing their first shot
-    protected int specialShotCooldown = 30; //used by bosses alternatively special enemies.
+    protected int specialShotCooldown =  30; //used by bosses alternatively special enemies.
     protected int hp = 1;
 
-    public Agent(TileType[][] shape) {
-	    super(shape);
+    public Agent(TileType[][] shape, int x, int y) {
+	    super(shape, x, y);
     }
 
     // Move the object, if the object touch a border it will bounce back 1 unit
-    public void move(Direction direction) {
+    public boolean move(Direction direction) {
 	    switch (direction){
 		    case NORTH:
 			    yCoord -= 1;
@@ -49,6 +49,7 @@ public class Agent extends GameObject {
 		    default:
 			    break;
 	    }
+	    return false;
     }
 
     public boolean readyToShoot() {
