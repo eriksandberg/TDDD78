@@ -20,27 +20,27 @@ public class Agent extends GameObject {
     }
 
     // Move the object, if the object touch a border it will bounce back 1 unit
-    public void move(char direction) {
+    public void move(Direction direction) {
 	    switch (direction){
-		    case 'N':
+		    case NORTH:
 			    yCoord -= 1;
 			    if (outOfBounds()) {
 				    yCoord += 1;
 			    }
 			    break;
-		    case 'S':
+		    case SOUTH:
 			    yCoord += 1;
 			    if (outOfBounds()) {
 				    yCoord -= 1;
 			    }
 			    break;
-		    case 'E':
+		    case EAST:
 			    xCoord += 1;
 			    if (outOfBounds()) {
 				    yCoord -= 1;
 			    }
 			    break;
-		    case 'W':
+		    case WEST:
 			    yCoord -= 1;
 			    if (outOfBounds()) {
 				    yCoord += 1;

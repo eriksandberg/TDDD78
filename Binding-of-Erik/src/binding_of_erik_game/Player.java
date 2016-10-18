@@ -7,7 +7,7 @@ package binding_of_erik_game;
 public class Player extends Agent {
 
 	private int skill;    // Used to determine how hard a new room will be
-	private char direction = 'N';   // To be used when fireing shots and to display the correct graphics
+	private Direction direction = Direction.NORTH;   // To be used when fireing shots and to display the correct graphics
 
 	public Player(TileType[][] shape) {
 		super(shape);
@@ -17,73 +17,58 @@ public class Player extends Agent {
 	}
 
 	@Override
-	public void move(char direction) {
+	public void move(Direction direction) {
 		if (isDead()) {    // Can't move if we're dead
 			return;
 		}
 		switch (direction) {
-			case 'X': //don't move, everybody don't move, it's a don't move dance!
+			case OTHER: //don't move, everybody don't move, it's a don't move dance!
 				//don't move!
 				break;
-			case 'N': //go north
+			case NORTH: //go north
 				yCoord -= 2;
 				if (outOfBounds()) {
 					yCoord += 2;
 				} else {
-					this.direction = 'N';
+					this.direction = Direction.NORTH;
 				}
 				break;
-			case 'S': //go south
+			case SOUTH: //go south
 				yCoord += 2;
 				if (outOfBounds()) {
 					yCoord -= 2;
 				} else {
-					this.direction = 'S';
+					this.direction = Direction.SOUTH;
 				}
 				break;
-			case 'E': //go east
+			case EAST: //go east
 				xCoord += 2;
 				if (outOfBounds()) {
 					xCoord -= 2;
 				} else {
-					this.direction = 'E';
+					this.direction = Direction.EAST;
 				}
 				break;
-			case 'R': // Go right/Strafe east
-				xCoord += 2;
-				if (outOfBounds()) {
-					xCoord -= 2;
-				}
-				break;
-			case 'W': //go west
+			case WEST: //go west
 				xCoord -= 2;
 				if (outOfBounds()) {
 					xCoord += 2;
 				} else {
-					this.direction = 'W';
+					this.direction = Direction.WEST;
 				}
 				break;
-			case 'L': // Go left/Strafe west
-				xCoord -= 2;
-				if (outOfBounds()) {
-					xCoord += 2;
-				}
+			default:
 				break;
-			default:break;
 		}
 	}
 
 
-	public void setDirection(char d) {
-		if ((d == 'N' || d == 'S' || d == 'E' || d == 'W' || d == 'X')) {
-			direction = d;
-		} else {
-			System.out.println("Error: Player direction set to invalid char!"); // In case we screw up
-		}
+	public void setDirection(Direction direction) {
+		this.direction = direction;
 	}
 
 	// Return a char indicating what direction the player is facing
-	public char getDirection() {
+	public Direction getDirection() {
 		return direction;
 	}
 
@@ -95,7 +80,7 @@ public class Player extends Agent {
 		return skill;
 	}
 
-    	//never used.
+	//never used.
 	public void resetSkill() {
 		this.skill = 1;
 	}

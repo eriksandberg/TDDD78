@@ -11,28 +11,27 @@ package binding_of_erik_game;
 
 public class Enemy extends Agent {
 
-    protected int worth = 1;    // Score/xp you get from killing an enemy
+	protected int worth = 1;    // Score/xp you get from killing an enemy
 
-    public Enemy(TileType[][] shape) {
-	    super(shape);
-	    this.isEnemy = true;	// Born evil.
-	    this.yCoord = 0;        // All enemies spawn at the top of the room
-	    this.hp = 1;
-	    this.size = 10;
-    }
+	public Enemy(TileType[][] shape) {
+		super(shape);
+		this.isEnemy = true;    // Born evil.
+		this.hp = 1;
+		this.size = 10;
+	}
 
 
-    public int getWorth() {
-	    return worth;
-    }
+	public int getWorth() {
+		return worth;
+	}
 
-    public void setWorth(int worth) {
-	    this.worth = worth;
-    }
+	public void setWorth(int worth) {
+		this.worth = worth;
+	}
 
-    // The standard enemy does not move
-    @Override
-    public boolean move() {
-	    return outOfBounds();
-    }
+	// The standard enemy does not move
+	@Override
+	public boolean move() {
+		return outOfBounds();
+	}
 }

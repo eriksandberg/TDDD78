@@ -62,8 +62,7 @@ public final class Score {
 				if (currentScore > scoreList[i]) {
 					scoreList[i] = scoreList[i - 1];
 				} else {
-					System.out.println(i);
-					scoreList[i] = currentScore;
+					scoreList[i + 1] = currentScore;
 					break;
 				}
 			}
@@ -80,6 +79,8 @@ public final class Score {
 	}
 
 	public void subFromCurrentScore(int score) {
-		this.currentScore -= score;
+		if (!(currentScore - score < 0)) {
+			this.currentScore -= score;
+		}
 	}
 }
