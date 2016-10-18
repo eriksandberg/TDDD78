@@ -90,30 +90,6 @@ public class Board {
 	notifyListeners();
     }
 
-   /* public boolean hasCollision(Poly poly){ //our old collision detection
-        if (poly == null){
-            return false;
-        }
-
-        //Don't have to check for X, only for Y. X only hinders side-movement, Y is the final determinator if we can place the block or not.
-        for (int i = 0; i < poly.getWidth(); i++){      // Loop over width of a poly
-            for (int j = 0; j < poly.getHeight(); j++){     // Loop over height
-                if ((poly.getShape()[i][j] != SquareType.EMPTY) &&  // Our current j + i combo is not empty space
-
-		                (tetrisPieceX+i >= getColumns() ||     // Vi är inom
-		                 tetrisPieceY+j >= getRows() ||
-			             tetrisPieceX+i < 0 ||
-		                 tetrisPieceY+j < 0))
-                    return true;
-                else if (poly.getShape()[i][j] != SquareType.EMPTY &&
-			 squareArray[(i+tetrisPieceX)][(j+tetrisPieceY)] != SquareType.EMPTY){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-*/
     public void insertPoly(Poly poly){
         //Store the piece in the actual board
         for (int i = 0; i < poly.getWidth(); i++){
