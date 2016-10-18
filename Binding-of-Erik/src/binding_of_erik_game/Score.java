@@ -22,7 +22,7 @@ public final class Score {
 	private int[] scoreList = new int[10];
 	private int scoreListIndexLen = scoreList.length - 1;
 
-	private int currentScore;
+	private int currentScore = 11;
 
 	private Path filePath = Paths.get("", "scoreList.txt");
 
@@ -52,6 +52,8 @@ public final class Score {
 				writer.newLine();
 			}
 			writer.flush();
+			System.out.println("Current:" + currentScore);
+			System.out.println("Highscore written: " + scoreList[0]);
 		} catch (IOException ignored) {}
 	}
 
@@ -62,8 +64,7 @@ public final class Score {
 				if (currentScore > scoreList[i]) {
 					scoreList[i] = scoreList[i - 1];
 				} else {
-					System.out.println(i);
-					scoreList[i] = currentScore;
+					scoreList[i + 1] = currentScore;
 					break;
 				}
 			}
@@ -80,6 +81,8 @@ public final class Score {
 	}
 
 	public void subFromCurrentScore(int score) {
-		this.currentScore -= score;
+		if (!(currentScore - score < 0)) {
+			this.currentScore -= score;
+		}
 	}
 }
