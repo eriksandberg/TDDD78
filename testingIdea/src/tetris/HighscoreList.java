@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * Created by wassing on 2016-10-18.
+ *
  */
 public class HighscoreList {
     // Only create once, when class is loaded.

@@ -90,7 +90,7 @@ public class Board {
 	notifyListeners();
     }
 
-    public void insertPoly(Poly poly){
+    private void insertPoly(Poly poly){
         //Store the piece in the actual board
         for (int i = 0; i < poly.getWidth(); i++){
             for (int j = 0; j < poly.getHeight(); j++){
@@ -107,7 +107,10 @@ public class Board {
         tetrisPiece = null;
     }
 
-    public void randomizeBoard()
+	/**
+	 *  Never used
+	 */
+    /*public void randomizeBoard()
         //Was used in earlier tasks
     {
         Random generator = new Random();
@@ -129,9 +132,9 @@ public class Board {
                 squareArray[j][i] = variations[generator.nextInt(9)];
             }
         }
-    }
+    }*/
 
-    public void spawnTetromino(){
+    private void spawnTetromino(){
         Random rand = new Random();
         TetrominoMaker newTetro = new TetrominoMaker();
         this.tetrisPiece = newTetro.getPoly(rand.nextInt(7));
@@ -151,10 +154,6 @@ public class Board {
 	}
         notifyListeners();
     }
-
-	public SquareType[][] getSquareArray() {
-		return squareArray;
-	}
 
 	public SquareType getSquareType(int x, int y) {
 		return squareArray[(x + tetrisPieceX)][(y + tetrisPieceY)];
@@ -260,7 +259,7 @@ public class Board {
         }
     }
 
-    public void removeRows(){
+    private void removeRows(){
 	int rowsRemovedThisTick = 0;
         boolean remove = true;
         for(int y = 0; y < this.height; y++){
@@ -296,7 +295,7 @@ public class Board {
 	return currentScore;
     }
 
-    public void removeRow(int row){
+    private void removeRow(int row){
         for(int y = row; y >= 0; y--){
             for(int x = 0; x < this.width; x++){
                 if(y != 0){

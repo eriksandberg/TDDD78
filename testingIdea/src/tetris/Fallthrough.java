@@ -2,6 +2,7 @@ package tetris;
 
 /**
  * Created by wassing on 2016-10-18.
+ * A kind of block that fall through other blocks, deleting them as it lands.
  */
 public class Fallthrough implements CollisionHandler {
 	public boolean hasCollision(Board board) {

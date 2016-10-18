@@ -1,7 +1,8 @@
 package tetris;
 
 /**
- * Created by wassing on 2016-10-18.
+ * Created by wassing on 2016-10-18
+ * Comparator for highscores. Used by HighscoreList for sorting highscores.
  */
 import java.util.Comparator;
 

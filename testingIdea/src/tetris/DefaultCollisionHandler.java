@@ -2,6 +2,7 @@ package tetris;
 
 /**
  * Created by wassing on 2016-10-18.
+ * The default collision handler.
  */
 
 public class DefaultCollisionHandler implements CollisionHandler {
