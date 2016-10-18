@@ -1,6 +1,5 @@
 package binding_of_erik_game;
 
-//import javafx.scene.input.KeyEvent; //might be used later
 import java.awt.event.KeyEvent;
 
 import javax.swing.*;
@@ -317,11 +316,10 @@ public class EventHandler extends JComponent implements BoardListener {
 		if (square != TileType.TRANSPARENT) {
 		    g2.setColor(map.get(square));
 		} else {
-		    g2.setColor(Color.black); //need a general solution for this to look good. Use TEMP
+		    g2.setColor(Color.black);
 		}
 		g2.fillRect(i * room.getPixelWidthPerTile(), j * room.getPixelHeightPerTile(),
 		room.getPixelWidthPerTile(), room.getPixelHeightPerTile());
-		//may need to re-define this later.
 	    }
 	}
     }

@@ -12,6 +12,7 @@ public class FirstBoss extends Enemy
 		this.yCoord = 0;        // All enemies spawn at the top of the room
 	    	this.hp = HP;
 	    	this.worth = WORTH;
+	    	this.specialShotCooldown = 50;
 	}
 
     	public static final int WORTH = 5000;

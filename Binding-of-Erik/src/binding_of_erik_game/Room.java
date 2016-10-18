@@ -9,11 +9,6 @@ import java.util.*;
 
 public class Room {
 
-	//TODO: Fix shooting. Question remains on how to instanciate the shots. Probably spawn as new entities. DONE
-	//TODO: Fix trajectory of shots.
-	//TODO: Fix transparent squares(tiles).
-	//TODO: Fix some game logic. Life, different enemies, etc. What happens when it's gameover? Simple menu would be good.
-
 	// 800 pixels, room 200 squares wide
 	private static final int PIXELWIDTH_PER_TILE = 4;
 	private static final int PIXELHEIGHT_PER_TILE = 4;
@@ -165,7 +160,6 @@ public class Room {
 	private int enemySpawnPos(int kind, int size) {
 		Random rand = new Random();
 		int pos = 0;
-
 		switch(kind) {
 			case 1:
 				// add random spawn based on boundaries
@@ -182,7 +176,7 @@ public class Room {
 				}
 				return pos;
 		    	case 4:
-			    	pos = (100+size); //always spawn boss in the middle
+			    	pos = (100+size/2); //always spawn boss in the middle, divided by
 			    	return pos;
 			default:
 				return pos;
@@ -228,7 +222,7 @@ public class Room {
 	    	}
 	}
 
-	// Spawn a couple of sparks at orgin
+	// Spawn a couple of sparks at origin
 	@SuppressWarnings("NestedAssignment") // 2 lines is better than 4
 	private void spawnSparks(Agent origin, GameObject object) {
 		Random rand = new Random();
@@ -241,7 +235,7 @@ public class Room {
 			newSpark.xCoordFloat = newSpark.xCoord = origin.xCoord - origin.getSize()/2;
 			newSpark.yCoordFloat = newSpark.yCoord = origin.yCoord - origin.getSize()/2;
 
-			// Adding i to the coordinate give the sparks a nice spread
+			// Adding i to the coordinate to give the sparks a nice spread
 			newSpark.calcAngle(object.xCoord + i, object.yCoord + i);
 
 			miscInRoom.add(newSpark);
@@ -255,11 +249,12 @@ public class Room {
 	    	//this goes against using polymorphism, but this is a last fix specifically for the bosses.
 		//could be made modular if we had enough time. SHOULD be made modular if a game has many bosses.
 		if (enemy instanceof FirstBoss) {
+		    System.out.println(enemy.specialShotCooldown);
 		    shotsInRoom.add(createEnemyShotAt(enemy.xCoord, enemy.yCoord)); //bottom right of boss
 		    shotsInRoom.add(createEnemyShotAt(enemy.xCoord - enemy.getSize(), enemy.yCoord)); //bottom left of boss
 		} else if (enemy instanceof SecondBoss) {
 		    //would need a whole new method, we can't create different kinds of shots with just one method.
-		    //therefore just bunched the whole code in here because it's a separate case.
+		    //therefore just bunched the whole code in here because it's a separate case for the second boss only.
 		    System.out.println("Cooldown at: " + enemy.specialShotCooldown);
 		    if (enemy.specialShotCooldown <= 75) {
 			Shot lazer = GraphicsFactory.getInstance().getLazer();
@@ -269,14 +264,14 @@ public class Room {
 			lazer.setAlignment(true);
 			shotsInRoom.add(lazer);
 			if (enemy.specialShotCooldown == 0) {
-			    enemy.specialShotCooldown = 100;
+			    enemy.setSpecialShotCooldown(100);
 			}
 		    } else {
 			shotsInRoom.add(createEnemyShotAt(enemy.xCoord - enemy.getSize()/2, enemy.yCoord - enemy.getSize()/2));
 		    }
 		    enemy.specialShotCooldown--;
 		} else {
-		    shotsInRoom.add(createEnemyShotAt(enemy.xCoord - enemy.getSize() / 2, enemy.yCoord - enemy.getSize()/2));
+		    shotsInRoom.add(createEnemyShotAt(enemy.xCoord - enemy.getSize()/2, enemy.yCoord - enemy.getSize()/2));
 		}
 	    	notifyListeners();
 	}
@@ -289,9 +284,6 @@ public class Room {
 
 	    //true = enemy
 	    newShot.setAlignment(true);
-
-	    //Add the shot to the room
-	    //shotsInRoom.add(newShot);
 	    return newShot;
 	}
 
@@ -313,10 +305,10 @@ public class Room {
 				}
 				break;
 		    	case ("Big bad bomb"):
+			    //unused at the moment.
 				break;
 			default: break;
 		}
-
 		notifyListeners();
 	}
 
@@ -412,16 +404,14 @@ public class Room {
 			spawnBackgroundGraphics();
 		} else {
 			// Room is empty, increment player skill and spawn a new room
-
 			player.incSkill();
-		    	//System.out.println(player.getSkill());
+		    	//System.out.println(player.getSkill()); //is a debugger.
 			newRoom();
 		}
 		notifyListeners();
 	}
 
 	private void gameOver() {
-		//player = null; // Remove player?
 		enemiesInRoom.clear();
 		shotsInRoom.clear();
 

@@ -27,8 +27,7 @@ public enum TileType {
 		map.put(TileType.RED, Color.red);
 		map.put(TileType.GRAY, Color.gray);
 		map.put(TileType.WHITE, Color.white);
-		map.put(TileType.TRANSPARENT, C_TRANSPARENT); //instead of using C_TRANSPARENT we should use a getter or similar
-		//using a getter helps us not overwrite what currently exists on the specified pixel.
+		map.put(TileType.TRANSPARENT, C_TRANSPARENT); //useful as temp, if needed.
 		return map;
     }
 }
