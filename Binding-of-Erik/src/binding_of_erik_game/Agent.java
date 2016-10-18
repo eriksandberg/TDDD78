@@ -10,56 +10,54 @@ package binding_of_erik_game;
 
 public class Agent extends GameObject {
 
-	protected int shotCooldown;
+    protected int shotCooldown;
     protected int currentShotCooldown = 10;   // Everyone will wait 10 ticks before firing their first shot
     protected int hp = 1;
 
     public Agent(TileType[][] shape) {
-		super(shape);
-		//noinspection AssignmentToSuperclassField
-		this.size = 10;		// Standard size for all characters
+	    super(shape);
     }
 
-	// Move the object, if the object touch a border it will bounce back 1 unit
-	public void move(char direction) {
-		switch (direction){
-			case 'N':
-				yCoord -= 1;
-				if (outOfBounds()) {
-					yCoord += 1;
-				}
-				break;
-			case 'S':
-				yCoord += 1;
-				if (outOfBounds()) {
-					yCoord -= 1;
-				}
-				break;
-			case 'E':
-				xCoord += 1;
-				if (outOfBounds()) {
-					yCoord -= 1;
-				}
-				break;
-			case 'W':
-				yCoord -= 1;
-				if (outOfBounds()) {
-					yCoord += 1;
-				}
-				break;
-			default:
-				break;
-		}
-	}
+    // Move the object, if the object touch a border it will bounce back 1 unit
+    public void move(char direction) {
+	    switch (direction){
+		    case 'N':
+			    yCoord -= 1;
+			    if (outOfBounds()) {
+				    yCoord += 1;
+			    }
+			    break;
+		    case 'S':
+			    yCoord += 1;
+			    if (outOfBounds()) {
+				    yCoord -= 1;
+			    }
+			    break;
+		    case 'E':
+			    xCoord += 1;
+			    if (outOfBounds()) {
+				    yCoord -= 1;
+			    }
+			    break;
+		    case 'W':
+			    yCoord -= 1;
+			    if (outOfBounds()) {
+				    yCoord += 1;
+			    }
+			    break;
+		    default:
+			    break;
+	    }
+    }
 
     public boolean readyToShoot() {
-		if (currentShotCooldown == 0) {
-			currentShotCooldown = shotCooldown;
-			return true;
-		} else {
-			currentShotCooldown--;
-			return false;
-		}
+	    if (currentShotCooldown == 0) {
+		    currentShotCooldown = shotCooldown;
+		    return true;
+	    } else {
+		    currentShotCooldown--;
+		    return false;
+	    }
     }
 
 	public void setShotCooldown(int shotCooldown) {

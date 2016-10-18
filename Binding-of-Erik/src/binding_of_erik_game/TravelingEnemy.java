@@ -10,11 +10,14 @@ public class TravelingEnemy extends Enemy {
 	/**
 	 * These enemies have a standard worth
 	 */
-	public static final int WORTH = 400;
+	private static final int WORTH = 400;
+    	private static final int HP = 2;
 
 	public TravelingEnemy(TileType[][] shape) {
 		super(shape);
 		this.worth = WORTH;
+	    	this.hp = HP;
+	    	this.size = 10;
 	}
 
 	// Simply move down the screen until we reach the bottom
