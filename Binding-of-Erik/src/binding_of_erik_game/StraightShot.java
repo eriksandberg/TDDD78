@@ -9,7 +9,8 @@ public class StraightShot extends Shot {
     private char direction = ' ';
 
     public StraightShot(TileType[][] shape) {
-	    super(shape);
+	super(shape);
+    	this.size = 2;
     }
 
     @Override

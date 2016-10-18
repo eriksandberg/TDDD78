@@ -95,6 +95,7 @@ public class Player extends Agent {
 		return skill;
 	}
 
+    	//never used.
 	public void resetSkill() {
 		this.skill = 1;
 	}

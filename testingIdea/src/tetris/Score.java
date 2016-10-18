@@ -1,4 +1,4 @@
-package binding_of_erik_game;
+package tetris;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -24,18 +24,18 @@ public class GameFrame extends JFrame{ //this class does all the actual frame up
 	this.add(paintArea, BorderLayout.CENTER);
 	//this.createMenu(); extra for later, options for file etc.
 
+	final Action doOneStep = new AbstractAction()
+	{
+	    public void actionPerformed(ActionEvent e) {
+		if (!paused) {  // Since player movement is currently done outside of tick() this is not really a true pause
+		    room.tick();
+		}
+	    }
+	};
 	Timer clockTimer = new Timer(100, doOneStep); //10 ticks per second atm, will increase framerate to about 30 later on.
 	clockTimer.setCoalesce(true);
 	clockTimer.start();
     }
-
-    private final Action doOneStep = new AbstractAction(){
-	public void actionPerformed(ActionEvent e) {
-	    if (!paused) {  // Since player movement is currently done outside of tick() this is not really a true pause
-		room.tick();
-	    }
-	}
-    };
 
     // Pause the game
     public static void togglePaused() {

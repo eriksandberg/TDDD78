@@ -9,11 +9,6 @@ import java.util.*;
 
 public class Room {
 
-	//TODO: Fix shooting. Question remains on how to instanciate the shots. Probably spawn as new entities. DONE
-	//TODO: Fix trajectory of shots.
-	//TODO: Fix transparent squares(tiles).
-	//TODO: Fix some game logic. Life, different enemies, etc. What happens when it's gameover? Simple menu would be good.
-
 	// 800 pixels, room 200 squares wide
 	private static final int PIXELWIDTH_PER_TILE = 4;
 	private static final int PIXELHEIGHT_PER_TILE = 4;
@@ -26,6 +21,8 @@ public class Room {
 
 	private Player player = null;
 	protected Score score = null;
+    	private boolean gameIsOver = false;
+    	private static final int MAX_LEVEL = 10;
 
 	private Collection<GameObject> miscInRoom = new ArrayList<>();
 	private Collection<Enemy> enemiesInRoom = new ArrayList<>();
@@ -114,7 +111,7 @@ public class Room {
 	public void spawnPlayer(int x, int y) {
 		this.player.xCoord = x;
 		this.player.yCoord = y;
-		player.setDirection(player.getDirection()); //TODO: Change this later, atm fix to not fuck up heading on room reset
+		player.setDirection(player.getDirection()); //fix to not fuck up rotation
 		notifyListeners();
 	}
 
@@ -123,15 +120,18 @@ public class Room {
 		Random rand = new Random();
 		int i = player.getSkill();
 
-		// Spawn 2 falling enemies if the player have reached skill lvl 4
-	    if (i >= 4) {
-		    enemiesInRoom.add(spawnEnemy(2, 1));   // These only have 1 power level
-		    enemiesInRoom.add(spawnEnemy(2, 1));
-			i -= 4;
-	    }
+		// Spawn a boss every 5th level
+		if (i % 5 == 0){
+			enemiesInRoom.add(spawnEnemy(4, 8)); //the big bad baus, has increased power.
+		} else if (i >= 4) {
+		//spawn 2 falling enemies if the player has reached skill lvl 4
+			enemiesInRoom.add(spawnEnemy(2, 1)); // These only have 1 power level
+			enemiesInRoom.add(spawnEnemy(2, 1));
+		    	//i -= 4; looping for testing purposes.
+		}
 
-		// Spawn normal enemies
-		while (i > 0) {
+		// Spawn normal enemies as long as no boss is in the room.
+		while (i > 0 && (i % 5 != 0)) {
 			int e = rand.nextInt(i) + 1;
 			enemiesInRoom.add(spawnEnemy(1, e));
 			i -= e;
@@ -143,22 +143,25 @@ public class Room {
 	@SuppressWarnings("MagicNumber")    // 40 (in steps of 4) is the max power lvl of an enemy
 	private Enemy spawnEnemy(int kind, int power) {
 		Enemy newEnemy = GraphicsFactory.getInstance().getEnemy(kind);
-
-		newEnemy.xCoord = enemySpawnPos(kind);
+		newEnemy.xCoord = enemySpawnPos(kind, newEnemy.getSize());
+	    	if (kind == 4){
+		    //we have a boss
+		    newEnemy.yCoord = newEnemy.getSize();
+		}
 
 		// Set enemys power
 		if (power >  10) {power = 10;}
 		newEnemy.setShotCooldown(40 - power * 4 - 1);   // We don't want enemies with cooldown = 0
-		newEnemy.setWorth(newEnemy.getWorth() + (power * 40));
+		//newEnemy.setWorth(newEnemy.getWorth() + (power * 40)); //using a hardcoded worth right now.
 
+	    	newEnemy.rotateThisMany(1);
 		return newEnemy;
 	}
 
 	@SuppressWarnings("ReuseOfLocalVariable")   // I want them all named pos
-	private int enemySpawnPos(int kind) {
+	private int enemySpawnPos(int kind, int size) {
 		Random rand = new Random();
 		int pos = 0;
-
 		switch(kind) {
 			case 1:
 				// add random spawn based on boundaries
@@ -169,11 +172,14 @@ public class Room {
 				}
 				return pos;
 			case 2:
-				pos = 10;   // Place first one at left edge
+				pos = 0;   // Place first one at left edge
 				if (!spaceXFree(pos)) {
 					pos = 190;  // Second one at right edge
 				}
 				return pos;
+		    	case 4:
+			    	pos = (100+size/2); //always spawn boss in the middle, divided by
+			    	return pos;
 			default:
 				return pos;
 		}
@@ -189,7 +195,7 @@ public class Room {
 		return true;
 	}
 
-	// Return true if a position (y-axis) is free from enemies
+	// Return true if a position (y-axis) is free from enemies, we don't use this currently.
 	private boolean spaceYFree(int pos) {
 		for (Enemy enemy : enemiesInRoom) {
 			if ((pos + 10) > enemy.yCoord && pos < (enemy.yCoord + enemy.size)) {
@@ -218,7 +224,7 @@ public class Room {
 	    	}
 	}
 
-	// Spawn a couple of sparks at orgin
+	// Spawn a couple of sparks at origin
 	@SuppressWarnings("NestedAssignment") // 2 lines is better than 4
 	private void spawnSparks(Agent origin, GameObject object) {
 		Random rand = new Random();
@@ -228,10 +234,10 @@ public class Room {
 		for (int i = 0; i < m; i++) {
 			final Spark newSpark = GraphicsFactory.getInstance().getSpark();
 
-			newSpark.xCoordFloat = newSpark.xCoord = origin.xCoord - 4;    // supressed warning
-			newSpark.yCoordFloat = newSpark.yCoord = origin.yCoord - 4;    // supressed warning
+			newSpark.xCoordFloat = newSpark.xCoord = origin.xCoord - origin.getSize()/2;
+			newSpark.yCoordFloat = newSpark.yCoord = origin.yCoord - origin.getSize()/2;
 
-			// Adding i to the coordinate give the sparks a nice spread
+			// Adding i to the coordinate to give the sparks a nice spread
 			newSpark.calcAngle(object.xCoord + i, object.yCoord + i);
 
 			miscInRoom.add(newSpark);
@@ -242,19 +248,44 @@ public class Room {
 	// Spawn a shot from enemy aimed at the player
 	@SuppressWarnings("NestedAssignment") // 2 lines is better than 4
 	private void spawnShot(Enemy enemy) {
-		Shot newShot = GraphicsFactory.getInstance().getLightShot();
-		newShot.xCoordFloat = newShot.xCoord = enemy.xCoord - 4;    // supressed warning
-		newShot.yCoordFloat = newShot.yCoord = enemy.yCoord - 4;    // supressed warning
+	    	//this goes against using polymorphism, but this is a last fix specifically for the bosses.
+		//could be made modular if we had enough time. SHOULD be made modular if a game has many bosses.
+		if (enemy instanceof FirstBoss) {
+		    shotsInRoom.add(createEnemyShotAt(enemy.xCoord, enemy.yCoord)); //bottom right of boss
+		    shotsInRoom.add(createEnemyShotAt(enemy.xCoord - enemy.getSize(), enemy.yCoord)); //bottom left of boss
+		} else if (enemy instanceof SecondBoss) {
+		    //would need a whole new method, we can't create different kinds of shots with just one method.
+		    //therefore just bunched the whole code in here because it's a separate case for the second boss only.
+		    System.out.println("Cooldown at: " + enemy.specialShotCooldown); //debug, and can be used for fun.
+		    if (enemy.specialShotCooldown <= 75) {
+			Shot lazer = GraphicsFactory.getInstance().getLazer();
+			lazer.xCoordFloat = lazer.xCoord = enemy.xCoord - enemy.getSize()/2;
+			lazer.yCoordFloat = lazer.yCoord = enemy.yCoord - enemy.getSize()/2;
+			lazer.calcAngle(player.xCoord, player.yCoord);
+			lazer.setAlignment(true);
+			shotsInRoom.add(lazer);
+			if (enemy.specialShotCooldown == 0) {
+			    enemy.setSpecialShotCooldown(100);
+			}
+		    } else {
+			shotsInRoom.add(createEnemyShotAt(enemy.xCoord - enemy.getSize()/2, enemy.yCoord - enemy.getSize()/2));
+		    }
+		    enemy.specialShotCooldown--;
+		} else {
+		    shotsInRoom.add(createEnemyShotAt(enemy.xCoord - enemy.getSize()/2, enemy.yCoord - enemy.getSize()/2));
+		}
+	    	notifyListeners();
+	}
 
-		// Calculate the trajectory of the shot
-		newShot.calcAngle(player.xCoord, player.yCoord);
+    	private Shot createEnemyShotAt(int x, int y){
+	    Shot newShot = GraphicsFactory.getInstance().getLightShot();
+	    newShot.xCoordFloat = newShot.xCoord = x;
+	    newShot.yCoordFloat = newShot.yCoord = y;
+	    newShot.calcAngle(player.xCoord, player.yCoord);
 
-		// true = enemy
-		newShot.setAlignment(true);
-
-		// Add the shot to the room
-		shotsInRoom.add(newShot);
-		notifyListeners();
+	    //true = enemy
+	    newShot.setAlignment(true);
+	    return newShot;
 	}
 
 	// Spawn a shot at the players position, traveling in the players direction
@@ -275,10 +306,10 @@ public class Room {
 				}
 				break;
 		    	case ("Big bad bomb"):
+			    //unused at the moment.
 				break;
 			default: break;
 		}
-
 		notifyListeners();
 	}
 
@@ -303,11 +334,17 @@ public class Room {
 	}
 
 
-	// Public because it's called GameFrame
+	// Public because it's called by GameFrame
 	public void tick() {
 		// Always called by the clock, handles enemies, shots and some game mechanics
 		if (player.isDead()) {
+		    gameOver();
+		}else if (player.getSkill() == MAX_LEVEL + 1){
+		    if (!gameIsOver) {
+			System.out.println("Congratulations, you won!");
 			gameOver();
+			gameIsOver = true;
+		    }
 		} else if (!enemiesInRoom.isEmpty()) {
 			// Handle enemies (if there are enemies, otherwise spawn a new room)
 			Iterator<Enemy> e = enemiesInRoom.iterator();
@@ -324,6 +361,10 @@ public class Room {
 						player.hp--;
 					}
 					if (enemy.readyToShoot()) {
+						spawnShot(enemy);
+					}
+				    	//last minute fix for the second boss in the game, this is not modular at all.
+				    	if (enemy instanceof SecondBoss && enemy.specialShotCooldown <= 75){
 						spawnShot(enemy);
 					}
 				}
@@ -350,9 +391,9 @@ public class Room {
 					while (e.hasNext()) {
 						Enemy enemy = e.next();
 						if (shot.collision(enemy)) {
-							spawnSparks(enemy, shot);
-							s.remove();
 							enemy.hp--;
+							s.remove();
+						    	spawnSparks(enemy, shot);
 							score.addToCurrentScore(10);    // Some few points for hitting
 						}
 					}
@@ -370,14 +411,16 @@ public class Room {
 			spawnBackgroundGraphics();
 		} else {
 			// Room is empty, increment player skill and spawn a new room
-			player.incSkill();
-			newRoom();
+
+			player.incSkill(); //increases level
+			if (player.getSkill() != MAX_LEVEL + 1){
+			    newRoom();
+			}
 		}
 		notifyListeners();
 	}
 
 	private void gameOver() {
-		//player = null; // Remove player?
 		enemiesInRoom.clear();
 		shotsInRoom.clear();
 

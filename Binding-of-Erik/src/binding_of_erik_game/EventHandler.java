@@ -1,6 +1,5 @@
 package binding_of_erik_game;
 
-//import javafx.scene.input.KeyEvent; //might be used later
 import java.awt.event.KeyEvent;
 
 import javax.swing.*;
@@ -99,41 +98,6 @@ public class EventHandler extends JComponent implements BoardListener {
 		    System.out.println("Room reset.");
 		    EventHandler.this.room.resetRoom();
 		}
-	    }
-	});
-	KeyStroke fKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_F, 0, false);
-	getInputMap().put(fKeyPressed, "F pressed");
-	getActionMap().put("F pressed", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		EventHandler.this.room.movePlayer('R');
-	    }
-	});
-
-	KeyStroke fKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_F, 0, true);
-	getInputMap().put(fKeyReleased, "F released");
-	getActionMap().put("F released", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		EventHandler.this.room.movePlayer('X');
-	    }
-	});
-
-	KeyStroke aKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, false);
-	getInputMap().put(aKeyPressed, "A pressed");
-	getActionMap().put("A pressed", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		EventHandler.this.room.movePlayer('L');
-	    }
-	});
-
-	KeyStroke aKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true);
-	getInputMap().put(aKeyReleased, "A released");
-	getActionMap().put("A released", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		EventHandler.this.room.movePlayer('X');
 	    }
 	});
 
@@ -317,11 +281,10 @@ public class EventHandler extends JComponent implements BoardListener {
 		if (square != TileType.TRANSPARENT) {
 		    g2.setColor(map.get(square));
 		} else {
-		    g2.setColor(Color.black); //need a general solution for this to look good. Use TEMP
+		    g2.setColor(Color.black);
 		}
 		g2.fillRect(i * room.getPixelWidthPerTile(), j * room.getPixelHeightPerTile(),
 		room.getPixelWidthPerTile(), room.getPixelHeightPerTile());
-		//may need to re-define this later.
 	    }
 	}
     }

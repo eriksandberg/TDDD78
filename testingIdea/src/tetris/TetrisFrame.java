@@ -1,4 +1,4 @@
-package fuckyou;
+package tetris;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +22,7 @@ public class TetrisFrame extends JFrame {
 
         this.board = board;
         //textArea = new JTextArea(board.getRows(), board.getColumns());
-        //textArea.setText(fuckyou.TetrisTextView.convertToText(board));
+        //textArea.setText(tetris.TetrisTextView.convertToText(board));
         TetrisComponent paintArea = new TetrisComponent(board);
         this.setLayout(new BorderLayout());
         this.add(paintArea, BorderLayout.CENTER);
@@ -40,7 +40,7 @@ public class TetrisFrame extends JFrame {
             //repaint();
             //board.randomizeBoard();
             //TetrisComponent paintArea = new TetrisComponent(board);
-            //textArea.setText(fuckyou.TetrisTextView.convertToText(board));
+            //textArea.setText(tetris.TetrisTextView.convertToText(board));
         }
 
     };

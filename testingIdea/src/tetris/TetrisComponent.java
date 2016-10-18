@@ -1,4 +1,4 @@
-package fuckyou;
+package tetris;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,11 +1,9 @@
-package fuckyou;//package Labb2;
+package tetris;//package Labb2;
 
 /**
  * User: Daniel
  * Date: 28/09/13
  */
-
-import java.util.Random;
 
 public class TetrisTextView {
     // {I, J, L, O, S, T, Z, EMPTY, OUTSIDE}

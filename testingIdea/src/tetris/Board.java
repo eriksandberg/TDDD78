@@ -1,11 +1,10 @@
-package fuckyou;
+package tetris;
 
 /**
  * User: Daniel
  * Date: 28/09/13
  */
 
-import javax.swing.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,6 +20,7 @@ public class Board {
     private Poly tetrisPiece = null;
     private int tetrisPieceX;
     private int tetrisPieceY;
+    private int score;
 
     private final SquareType[][] squareArray;
 
@@ -224,6 +224,7 @@ public class Board {
     }
 
     public void removeRows(){
+	int rowsRemovedThisTick = 0;
         boolean remove = true;
         for(int y = 0; y < this.height; y++){
             for(int x = 0; x < this.width; x++){
@@ -232,10 +233,26 @@ public class Board {
                 }
             }
             if(remove){
+                rowsRemovedThisTick += 1;
                 removeRow(y);
             }
             remove = true;
         }
+	switch(rowsRemovedThisTick){
+	    case 1:
+		score += 100;
+		break;
+	    case 2:
+		score += 300;
+		break;
+	    case 3:
+		score += 500;
+		break;
+	    case 4:
+		score += 800;
+		break;
+	    default: break;
+	}
     }
 
     public void removeRow(int row){

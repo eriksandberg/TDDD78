@@ -28,24 +28,23 @@ public class GameObject {
 	// Objects that's not simply "falling" down the screen will implement their own movement
 	public boolean move() {
 		yCoord += 5;
-		return outOfBounds();  // Might be problematic for long items
+		return outOfBounds();
 	}
 
 	// Check if another object collide with this.
 	// An object could move fast enough to "jump" over another object,
 	// avoid by not having them move to many pixels each tick
-	//TODO: Implement better collision detection, right now has an offset because it aims for player bottom right pixel
 	public boolean collision(GameObject other) {
 	    	//this one checks shots only. Shots are maximum "4" big.
-		if ((this.size < 5) && (other.xCoord >= this.xCoord) && (this.xCoord >= other.xCoord - 10) && (other.yCoord >= this.yCoord) &&
-		    (this.yCoord >= other.yCoord - 10)) {
+		if ((this.size < 5) && (other.xCoord >= this.xCoord) && (this.xCoord >= other.xCoord - other.getSize()) && (other.yCoord >= this.yCoord) &&
+		    (this.yCoord >= other.yCoord - other.getSize())) {
 		    //the above if statement could be refined if we had a function call to getOffset depending on size
 		    //but its secondary right now, could be completed later.
-		    System.out.println("Collision!");
+		    //System.out.println("Collision!");
 		    return true;
 		} else if ((this.size > 5) && (Math.abs(other.xCoord - this.xCoord) * 2) < (other.size + this.size) &&
 		    (Math.abs(other.yCoord - this.yCoord) * 2) < (other.size + this.size)){
-		    System.out.println("BodyCollision!");
+		    //System.out.println("BodyCollision!");
 		    //For both these if-cases we could have a simple "return (statement)", but then we can't print.
 		    //We print for debuging purposes at the moment. Easily changed later.
 		    //Might have to refactor this particular code.
@@ -57,11 +56,8 @@ public class GameObject {
 	// Return true if the object have left the room
 	protected boolean outOfBounds() {
 		//if statement can be simplified to a simple return (logical operation), but this is more readable.
-		if ((xCoord - size < Room.getAdjEdge()) || (yCoord - size < Room.getAdjEdge()) ||
-			(xCoord + 2 * size > Room.getFarEdge()) || (yCoord + 2 * size > Room.getFarEdge())) {
-			return true;
-		}
-		return false;
+		return ((xCoord - size < Room.getAdjEdge()) || (yCoord - size < Room.getAdjEdge()) ||
+			(xCoord + 2 * size > Room.getFarEdge()) || (yCoord + 2 * size > Room.getFarEdge()));
 	}
 
 	public void rotate(char newDirection, char oldDirection) {
@@ -174,6 +170,8 @@ public class GameObject {
 	public boolean isEnemy() {
 		return isEnemy;
 	}
+
+    	public int getSize() {return size; } //returns size of an actual game object, specified in every sub class.
 
 	// Return the shape for the paint component to draw
 	public TileType getTile(int x, int y) {
