@@ -125,7 +125,7 @@ public class Room {
 
 		// Spawn a boss every 5th level
 		if (i % 5 == 0){
-			enemiesInRoom.add(spawnEnemy(4, 8)); //the big bad baus
+			enemiesInRoom.add(spawnEnemy(4, 8)); //the big bad baus, has increased power.
 		} else if (i >= 4) {
 		//spawn 2 falling enemies if the player has reached skill lvl 4
 			enemiesInRoom.add(spawnEnemy(2, 1)); // These only have 1 power level
@@ -133,8 +133,8 @@ public class Room {
 		    	//i -= 4; looping for testing purposes.
 		}
 
-		// Spawn normal enemies
-		while (i > 0) {
+		// Spawn normal enemies as long as no boss is in the room.
+		while (i > 0 && (i % 5 != 0)) {
 			int e = rand.nextInt(i) + 1;
 			enemiesInRoom.add(spawnEnemy(1, e));
 			i -= e;
@@ -252,14 +252,31 @@ public class Room {
 	// Spawn a shot from enemy aimed at the player
 	@SuppressWarnings("NestedAssignment") // 2 lines is better than 4
 	private void spawnShot(Enemy enemy) {
-		//Shot newShot = GraphicsFactory.getInstance().getLightShot();
-	    	if (enemy instanceof FirstBoss){
-		    //this goes against using polymorphism, but this is a the last fix just specifically for the boss.
-		    //could be made modular if I had enough time. SHOULD be made modular if a game has several bosses.
+	    	//this goes against using polymorphism, but this is a last fix specifically for the bosses.
+		//could be made modular if we had enough time. SHOULD be made modular if a game has many bosses.
+		if (enemy instanceof FirstBoss) {
 		    shotsInRoom.add(createEnemyShotAt(enemy.xCoord, enemy.yCoord)); //bottom right of boss
 		    shotsInRoom.add(createEnemyShotAt(enemy.xCoord - enemy.getSize(), enemy.yCoord)); //bottom left of boss
+		} else if (enemy instanceof SecondBoss) {
+		    //would need a whole new method, we can't create different kinds of shots with just one method.
+		    //therefore just bunched the whole code in here because it's a separate case.
+		    System.out.println("Cooldown at: " + enemy.specialShotCooldown);
+		    if (enemy.specialShotCooldown <= 75) {
+			Shot lazer = GraphicsFactory.getInstance().getLazer();
+			lazer.xCoordFloat = lazer.xCoord = enemy.xCoord - enemy.getSize()/2;
+			lazer.yCoordFloat = lazer.yCoord = enemy.yCoord - enemy.getSize()/2;
+			lazer.calcAngle(player.xCoord, player.yCoord);
+			lazer.setAlignment(true);
+			shotsInRoom.add(lazer);
+			if (enemy.specialShotCooldown == 0) {
+			    enemy.specialShotCooldown = 100;
+			}
+		    } else {
+			shotsInRoom.add(createEnemyShotAt(enemy.xCoord - enemy.getSize()/2, enemy.yCoord - enemy.getSize()/2));
+		    }
+		    enemy.specialShotCooldown--;
 		} else {
-		    shotsInRoom.add(createEnemyShotAt(enemy.xCoord - enemy.getSize()/2, enemy.yCoord - enemy.getSize()/2));
+		    shotsInRoom.add(createEnemyShotAt(enemy.xCoord - enemy.getSize() / 2, enemy.yCoord - enemy.getSize()/2));
 		}
 	    	notifyListeners();
 	}
@@ -345,6 +362,10 @@ public class Room {
 						player.hp--;
 					}
 					if (enemy.readyToShoot()) {
+						spawnShot(enemy);
+					}
+				    	//last minute fix for the second boss in the game, this is not modular at all.
+				    	if (enemy instanceof SecondBoss && enemy.specialShotCooldown <= 75){
 						spawnShot(enemy);
 					}
 				}

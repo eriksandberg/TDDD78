@@ -12,6 +12,7 @@ public class Agent extends GameObject {
 
     protected int shotCooldown;
     protected int currentShotCooldown = 10;   // Everyone will wait 10 ticks before firing their first shot
+    protected int specialShotCooldown = 30; //used by bosses alternatively special enemies.
     protected int hp = 1;
 
     public Agent(TileType[][] shape) {

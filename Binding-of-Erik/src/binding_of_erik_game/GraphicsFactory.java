@@ -16,6 +16,7 @@ public final class GraphicsFactory
     private static final TileType O = TileType.ORANGE; //Orange
     private static final TileType G = TileType.GRAY; //Gray
     private static final TileType W = TileType.WHITE; //White
+    private static final TileType Gr = TileType.GREEN; //Green
     // More available if wanted, see TileType
     private int bossNumber = 0;
 
@@ -58,30 +59,33 @@ public final class GraphicsFactory
 
     public Player getPlayer() {return new Player(player);}
 
-	// What kind (kind) of enemy is decided by game logic in Room
-	public Enemy getEnemy(int kind) {
-		switch (kind) {
-			case 1:
-				return new Enemy(normalEnemy);
-			case 2:
-				return new TravelingEnemy(travelingEnemy);
-		    	case 3:
-			    	return new InvaderEnemy(invaderEnemy);
-		    	case 4:
-			    	bossNumber++;
-			    	switch (bossNumber){
-				    	case 1:
-						return new FirstBoss(firstBoss);
-					//add more bosses here
-				    	default: break;
-				}
-			default:
-			return new Enemy(nullEnemy);
-		}
-	}
+    // What kind (kind) of enemy is decided by game logic in Room
+    public Enemy getEnemy(int kind) {
+	    switch (kind) {
+		    case 1:
+			    return new Enemy(normalEnemy);
+		    case 2:
+			    return new TravelingEnemy(travelingEnemy);
+		    case 3:
+			    return new InvaderEnemy(invaderEnemy);
+		    case 4:
+			    bossNumber++;
+			    switch (bossNumber){
+				    case 1:
+					    return new FirstBoss(starDestroyer);
+				    case 2:
+					    return new SecondBoss(deathStar);
+				    //add more bosses here
+				    default: break;
+			    }
+		    default:
+		    return new Enemy(nullEnemy);
+	    }
+    }
 
-	private final TileType[][] nullEnemy = {};
+    private final TileType[][] nullEnemy = {};
 
+    //your normal average joe.
     private final TileType[][] normalEnemy =
 	    {{ T, T, T, R, R, R, R, T, T, T },
 		 { T, T, R, T, T, T, T, R, T, T },
@@ -94,6 +98,7 @@ public final class GraphicsFactory
 		 { T, T, R, T, T, T, T, R, T, T },
 		 { R, R, R, R, R, R, R, R, R, R }};
 
+    //travels at the sides, has a short lifespan.
     private final TileType[][] travelingEnemy =
 	    {{ T, T, T, R, R, R, R, T, T, T },
 	     { T, T, R, T, T, T, T, R, T, T },
@@ -106,7 +111,7 @@ public final class GraphicsFactory
 	     { T, T, R, T, T, T, T, R, T, T },
 	     { T, T, T, R, R, R, R, T, T, T }};
 
-    // Looks like a space invader but spawn sideways, lmao
+    // prototype space invader from the classic arcade game
     private final TileType[][] invaderEnemy =
 	    {{ T, T, T, T, T, T, T, T, T, T },
 	     { T, T, R, T, T, T, T, R, T, T },
@@ -138,6 +143,12 @@ public final class GraphicsFactory
 
     public Shot getLightShot() {return new Shot(lightShot);}
 
+    private final TileType[][] lazer =
+	    {{ Gr, Gr},
+	     { Gr, Gr}};
+
+    public Shot getLazer() {return new Shot(lazer);}
+
     private final TileType[][] playerShot =
 		{{ Y, Y},
 		 { Y, Y}};
@@ -156,7 +167,7 @@ public final class GraphicsFactory
     public Star getStar() {return new Star(star);}
 
     //eye candy
-    public final TileType[][] galaxy =
+    private final TileType[][] galaxy =
 	    {{ T, T, T, T, T, T, T, T, T, T },
 	    { T, T, T, T, T, Y, T, T, T, T },
 	    { T, T, T, T, T, T, Y, T, T, T },
@@ -170,7 +181,7 @@ public final class GraphicsFactory
 
     public Galaxy getGalaxy() {return new Galaxy(galaxy);}
 
-    public final TileType[][] firstBoss =
+    private final TileType[][] starDestroyer = //star destroyer, 20x20 array but only 18x18 is being used, therefore size = 20.
 	    {{ T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T },
 	    { T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T },
 	    { T, T, T, T, T, T, T, T, T, B, B, T, T, T, T, T, T, T, T, T },
@@ -192,5 +203,26 @@ public final class GraphicsFactory
 	    { T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T },
 	    { T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T },};
 
+    private final TileType[][] deathStar =
+	    {{ T, T, T, T, T, T, T, G, G, G, G, G, G, T, T, T, T, T, T, T },
+	    { T, T, T, T, T, G, G, G, G, G, G, G, G, G, G, T, T, T, T, T },
+	    { T, T, T, T, G, G, G, G, G, G, G, G, G, G, G, G, T, T, T, T },
+	    { T, T, T, G, G, G, G, G, G, G, G, G, G, G, G, G, G, T, T, T },
+	    { T, T, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, T, T },
+	    { T, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, T },
+	    { T, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, T },
+	    { G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G },
+	    { G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G },
+	    { G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G },
+	    { G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G },
+	    { G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G },
+	    { G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G },
+	    { T, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, T },
+	    { T, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, T },
+	    { T, T, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, T, T },
+	    { T, T, T, G, G, G, G, G, G, G, G, G, G, G, G, G, G, T, T, T },
+	    { T, T, T, T, G, G, G, G, G, G, G, G, G, G, G, G, T, T, T, T },
+	    { T, T, T, T, T, G, G, G, G, G, G, G, G, G, G, T, T, T, T, T },
+	    { T, T, T, T, T, T, T, G, G, G, G, G, G, T, T, T, T, T, T, T },};
     //add more graphic "blocks" here.
 }
