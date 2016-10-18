@@ -370,7 +370,6 @@ public class Room {
 			spawnBackgroundGraphics();
 		} else {
 			// Room is empty, increment player skill and spawn a new room
-
 			player.incSkill();
 			newRoom();
 		}
