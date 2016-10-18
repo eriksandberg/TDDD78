@@ -13,7 +13,6 @@ import java.nio.file.Paths;
  * User: Erik
  * Date: 2016-10-16
  * This class handles the players score, and reads/writes scoreList to file.
- * We write to file on game over and when we manually close the application, even if we're in the middle of a game
  */
 
 public final class Score {
