@@ -1,4 +1,4 @@
-package fuckyou;
+package tetris;
 
 /**
  * Created with IntelliJ IDEA.

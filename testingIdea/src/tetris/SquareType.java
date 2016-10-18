@@ -1,4 +1,4 @@
-package fuckyou;
+package tetris;
 
 import java.util.EnumMap;
 import java.awt.Color;
