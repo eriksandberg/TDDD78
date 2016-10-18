@@ -125,7 +125,7 @@ public class Room {
 
 		// Spawn a boss every 5th level
 		if (i % 5 == 0){
-			enemiesInRoom.add(spawnEnemy(4, 1)); //the big bad baus
+			enemiesInRoom.add(spawnEnemy(4, 8)); //the big bad baus
 		} else if (i >= 4) {
 		//spawn 2 falling enemies if the player has reached skill lvl 4
 			enemiesInRoom.add(spawnEnemy(2, 1)); // These only have 1 power level
@@ -238,8 +238,8 @@ public class Room {
 		for (int i = 0; i < m; i++) {
 			final Spark newSpark = GraphicsFactory.getInstance().getSpark();
 
-			newSpark.xCoordFloat = newSpark.xCoord = origin.xCoord - 4;    // supressed warning
-			newSpark.yCoordFloat = newSpark.yCoord = origin.yCoord - 4;    // supressed warning
+			newSpark.xCoordFloat = newSpark.xCoord = origin.xCoord - origin.getSize()/2;
+			newSpark.yCoordFloat = newSpark.yCoord = origin.yCoord - origin.getSize()/2;
 
 			// Adding i to the coordinate give the sparks a nice spread
 			newSpark.calcAngle(object.xCoord + i, object.yCoord + i);
@@ -252,19 +252,30 @@ public class Room {
 	// Spawn a shot from enemy aimed at the player
 	@SuppressWarnings("NestedAssignment") // 2 lines is better than 4
 	private void spawnShot(Enemy enemy) {
-		Shot newShot = GraphicsFactory.getInstance().getLightShot();
-		newShot.xCoordFloat = newShot.xCoord = enemy.xCoord - enemy.getSize()/2; //spawn shot in middle of enemy
-		newShot.yCoordFloat = newShot.yCoord = enemy.yCoord - enemy.getSize()/2;
+		//Shot newShot = GraphicsFactory.getInstance().getLightShot();
+	    	if (enemy instanceof FirstBoss){
+		    //this goes against using polymorphism, but this is a the last fix just specifically for the boss.
+		    //could be made modular if I had enough time. SHOULD be made modular if a game has several bosses.
+		    shotsInRoom.add(createEnemyShotAt(enemy.xCoord, enemy.yCoord)); //bottom right of boss
+		    shotsInRoom.add(createEnemyShotAt(enemy.xCoord - enemy.getSize(), enemy.yCoord)); //bottom left of boss
+		} else {
+		    shotsInRoom.add(createEnemyShotAt(enemy.xCoord - enemy.getSize()/2, enemy.yCoord - enemy.getSize()/2));
+		}
+	    	notifyListeners();
+	}
 
-		// Calculate the trajectory of the shot
-		newShot.calcAngle(player.xCoord, player.yCoord);
+    	private Shot createEnemyShotAt(int x, int y){
+	    Shot newShot = GraphicsFactory.getInstance().getLightShot();
+	    newShot.xCoordFloat = newShot.xCoord = x;
+	    newShot.yCoordFloat = newShot.yCoord = y;
+	    newShot.calcAngle(player.xCoord, player.yCoord);
 
-		// true = enemy
-		newShot.setAlignment(true);
+	    //true = enemy
+	    newShot.setAlignment(true);
 
-		// Add the shot to the room
-		shotsInRoom.add(newShot);
-		notifyListeners();
+	    //Add the shot to the room
+	    //shotsInRoom.add(newShot);
+	    return newShot;
 	}
 
 	// Spawn a shot at the players position, traveling in the players direction

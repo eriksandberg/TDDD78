@@ -66,7 +66,7 @@ public final class GraphicsFactory
 			case 2:
 				return new TravelingEnemy(travelingEnemy);
 		    	case 3:
-			    	//return new InvaderEnemy(invaderEnemy);
+			    	return new InvaderEnemy(invaderEnemy);
 		    	case 4:
 			    	bossNumber++;
 			    	switch (bossNumber){
@@ -175,18 +175,18 @@ public final class GraphicsFactory
 	    { T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T },
 	    { T, T, T, T, T, T, T, T, T, B, B, T, T, T, T, T, T, T, T, T },
 	    { T, T, T, T, T, T, G, G, G, G, G, G, G, G, T, T, T, T, T, T },
-	    { T, T, T, G, G, G, T, T, T, T, T, T, T, T, G, G, G, T, T, T },
-	    { T, T, T, G, T, T, T, T, T, T, T, T, T, T, T, T, G, T, T, T },
-	    { T, T, T, T, G, T, T, T, T, T, T, T, T, T, T, G, T, T, T, T },
-	    { T, T, T, T, G, T, T, T, T, T, T, T, T, T, T, G, T, T, T, T },
-	    { T, T, T, T, T, G, T, T, T, T, T, T, T, T, G, T, T, T, T, T },
-	    { T, T, T, T, T, G, T, T, T, T, T, T, T, T, G, T, T, T, T, T },
-	    { T, T, T, T, T, T, G, T, T, T, T, T, T, G, T, T, T, T, T, T },
-	    { T, T, T, T, T, T, G, T, T, T, T, T, T, G, T, T, T, T, T, T },
-	    { T, T, T, T, T, T, T, G, T, T, T, T, G, T, T, T, T, T, T, T },
-	    { T, T, T, T, T, T, T, G, T, T, T, T, G, T, T, T, T, T, T, T },
-	    { T, T, T, T, T, T, T, T, G, T, T, G, T, T, T, T, T, T, T, T },
-	    { T, T, T, T, T, T, T, T, G, T, T, G, T, T, T, T, T, T, T, T },
+	    { T, T, T, G, G, G, G, G, G, T, T, G, G, G, G, G, G, T, T, T },
+	    { T, T, T, G, G, G, G, G, T, T, T, T, G, G, G, G, G, T, T, T },
+	    { T, T, T, T, G, G, G, W, G, G, G, G, W, G, G, G, T, T, T, T },
+	    { T, T, T, T, G, G, G, W, G, G, G, G, W, G, G, G, T, T, T, T },
+	    { T, T, T, T, T, G, G, W, W, G, G, W, W, G, G, T, T, T, T, T },
+	    { T, T, T, T, T, G, G, G, W, G, G, W, G, G, G, T, T, T, T, T },
+	    { T, T, T, T, T, T, G, G, W, W, W, W, G, G, T, T, T, T, T, T },
+	    { T, T, T, T, T, T, G, G, W, W, W, W, G, G, T, T, T, T, T, T },
+	    { T, T, T, T, T, T, T, G, G, W, W, G, G, T, T, T, T, T, T, T },
+	    { T, T, T, T, T, T, T, G, G, W, W, G, G, T, T, T, T, T, T, T },
+	    { T, T, T, T, T, T, T, T, G, W, W, G, T, T, T, T, T, T, T, T },
+	    { T, T, T, T, T, T, T, T, G, G, G, G, T, T, T, T, T, T, T, T },
 	    { T, T, T, T, T, T, T, T, T, G, G, T, T, T, T, T, T, T, T, T },
 	    { T, T, T, T, T, T, T, T, T, G, G, T, T, T, T, T, T, T, T, T },
 	    { T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T },
