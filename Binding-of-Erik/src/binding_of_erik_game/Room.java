@@ -255,7 +255,7 @@ public class Room {
 		} else if (enemy instanceof SecondBoss) {
 		    //would need a whole new method, we can't create different kinds of shots with just one method.
 		    //therefore just bunched the whole code in here because it's a separate case for the second boss only.
-		    System.out.println("Cooldown at: " + enemy.specialShotCooldown);
+		    //System.out.println("Cooldown at: " + enemy.specialShotCooldown); debug
 		    if (enemy.specialShotCooldown <= 75) {
 			Shot lazer = GraphicsFactory.getInstance().getLazer();
 			lazer.xCoordFloat = lazer.xCoord = enemy.xCoord - enemy.getSize()/2;
