@@ -68,7 +68,6 @@ public class Agent extends GameObject {
     public void setSpecialShotCooldown( int shotCooldown) {this.specialShotCooldown = shotCooldown;}
 
     public boolean isDead() {
-		if (this.hp < 1) return true;
-		return false;
+		return (this.hp < 1);
     }
 }
