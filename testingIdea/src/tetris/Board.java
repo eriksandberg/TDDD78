@@ -22,8 +22,8 @@ public class Board {
     private int currentScore = 0;
 
 	private CollisionHandler collisionHandler;
-    private static final int FALLTHROUGH_CHANCE = 50;
-    private static final int HEAVY_CHANCE = 20;
+    private static final int FALLTHROUGH_CHANCE = 25;
+    private static final int HEAVY_CHANCE = 50;
 
     private final SquareType[][] squareArray;
 
@@ -161,10 +161,14 @@ public class Board {
         this.tetrisPiece = newTetro.getPoly(rand.nextInt(7));
         this.tetrisPieceX = (width/2)-1;
         this.tetrisPieceY = 0;
+	int randomPowerUpNumber = rand.nextInt(100);
 	//check if we get any power up when we spawn a block.
-	if (rand.nextInt(100) < FALLTHROUGH_CHANCE) {
+	if (randomPowerUpNumber < FALLTHROUGH_CHANCE) {
 	    collisionHandler = new Fallthrough();
 	    System.out.println("Fallthrough block spawned.");
+	} else if (randomPowerUpNumber < HEAVY_CHANCE) {
+	    collisionHandler = new Heavy();
+	    System.out.println("Heavy block spawned.");
 	} else{
 	    collisionHandler = new DefaultCollisionHandler();
 	    System.out.println("Normal block spawned.");
