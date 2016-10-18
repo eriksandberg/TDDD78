@@ -6,38 +6,37 @@ package binding_of_erik_game;
  */
 public class StraightShot extends Shot {
 
-    private char direction = ' ';
+	private Direction direction = Direction.OTHER;
 
-    public StraightShot(TileType[][] shape) {
-	super(shape);
-    	this.size = 2;
-    }
-
-    @Override
-    public boolean move() {
-	switch(direction) {
-	    case 'N':
-		yCoord -= shotspeed;
-		break;
-	    case 'S':
-		yCoord += shotspeed;
-		break;
-	    case 'E':
-		xCoord += shotspeed;
-		break;
-	    case 'W':
-		xCoord -= shotspeed;
-		break;
-	    default: break;
+	public StraightShot(TileType[][] shape) {
+		super(shape);
+		this.size = 2;
 	}
-	return outOfBounds();
-    }
 
-    public void setDirection(char d) {
-	if ((d == 'N' || d == 'S' || d == 'E' || d == 'W')) {
-	    direction = d;
-	} else {
-	    System.out.println("Error: Shot direction set to invalid char!"); // In case we screw up
+	@Override
+	public boolean move() {
+		switch (direction) {
+			case NORTH:
+				yCoord -= shotspeed;
+				break;
+			case SOUTH:
+				yCoord += shotspeed;
+				break;
+			case EAST:
+				xCoord += shotspeed;
+				break;
+			case WEST:
+				xCoord -= shotspeed;
+				break;
+			case OTHER:
+				break;
+			default:
+				break;
+		}
+		return outOfBounds();
 	}
-    }
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
 }
