@@ -124,19 +124,6 @@ public final class GraphicsFactory
 	     { T, T, T, R, T, T, R, T, T, T },
 	     { T, T, T, T, T, T, T, T, T, T }};
 
-    //clusterEnemy is a cross of red pixels. Will be shooting 3 projectiles at a time. See logic in <Class>
-    private final TileType[][] clusterEnemy =
-		{{ R, T, T, T, T, T, T, T, T, R },
-		 { T, R, T, T, T, T, T, T, R, T },
-		 { T, T, R, T, T, T, T, R, T, T },
-		 { T, T, T, R, T, T, R, T, T, T },
-		 { T, T, T, T, R, R, T, T, T, T },
-		 { T, T, T, T, R, R, T, T, T, T },
-		 { T, T, T, R, T, T, R, T, T, T },
-		 { T, T, R, T, T, T, T, R, T, T },
-		 { T, R, T, T, T, T, T, T, R, T },
-		 { R, T, T, T, T, T, T, T, T, R }};
-
     private final TileType[][] lightShot =
 		{{ P, P},
 		 { P, P}};
