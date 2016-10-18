@@ -100,41 +100,6 @@ public class EventHandler extends JComponent implements BoardListener {
 		}
 	    }
 	});
-	KeyStroke fKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_F, 0, false);
-	getInputMap().put(fKeyPressed, "F pressed");
-	getActionMap().put("F pressed", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		EventHandler.this.room.movePlayer('R');
-	    }
-	});
-
-	KeyStroke fKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_F, 0, true);
-	getInputMap().put(fKeyReleased, "F released");
-	getActionMap().put("F released", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		EventHandler.this.room.movePlayer('X');
-	    }
-	});
-
-	KeyStroke aKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, false);
-	getInputMap().put(aKeyPressed, "A pressed");
-	getActionMap().put("A pressed", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		EventHandler.this.room.movePlayer('L');
-	    }
-	});
-
-	KeyStroke aKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true);
-	getInputMap().put(aKeyReleased, "A released");
-	getActionMap().put("A released", new AbstractAction() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		EventHandler.this.room.movePlayer('X');
-	    }
-	});
 
 	KeyStroke upKeyPressed = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false);
 	KeyStroke upKeyReleased = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true);
