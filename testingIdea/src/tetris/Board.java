@@ -173,6 +173,10 @@ public class Board {
 		return squareArray;
 	}
 
+	public SquareType getSquareType(int x, int y) {
+		return squareArray[(x + tetrisPieceX)][(y + tetrisPieceY)];
+	}
+
 	public Poly getPoly() {
 		return tetrisPiece;
 	}
