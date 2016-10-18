@@ -13,8 +13,6 @@ import java.util.Random;
 
 public class Board {
 
-    //private static final int default_width = 10;
-    //private static final int default_height = 22;
     private int width = 0;
     private int height = 0;
 
@@ -22,18 +20,16 @@ public class Board {
     private int tetrisPieceX;
     private int tetrisPieceY;
     private int currentScore = 0;
+
 	private CollisionHandler collisionHandler;
+    private static final int FALLTHROUGH_CHANCE = 50;
+    private static final int HEAVY_CHANCE = 20;
 
     private final SquareType[][] squareArray;
 
     private final List<BoardListener> boardListenerArray = new ArrayList<BoardListener>();
 
     protected boolean gameOver = false;
-
-    // Default constructor
-    /*public Board(){
-        this(default_width, default_height);
-    }*/
 
     // Constructor for custom board
     public Board(int width, int height){
@@ -94,7 +90,7 @@ public class Board {
 	notifyListeners();
     }
 
-   /* public boolean hasCollision(Poly poly){
+   /* public boolean hasCollision(Poly poly){ //our old collision detection
         if (poly == null){
             return false;
         }
@@ -165,6 +161,14 @@ public class Board {
         this.tetrisPiece = newTetro.getPoly(rand.nextInt(7));
         this.tetrisPieceX = (width/2)-1;
         this.tetrisPieceY = 0;
+	//check if we get any power up when we spawn a block.
+	if (rand.nextInt(100) < FALLTHROUGH_CHANCE) {
+	    collisionHandler = new Fallthrough();
+	    System.out.println("Fallthrough block spawned.");
+	} else{
+	    collisionHandler = new DefaultCollisionHandler();
+	    System.out.println("Normal block spawned.");
+	}
         notifyListeners();
     }
 
@@ -209,6 +213,10 @@ public class Board {
         return squareArray;
     }*/
 
+    public void removeSquareAt(int x, int y){
+	squareArray[x][y] = SquareType.EMPTY;
+	notifyListeners();
+    }
     public SquareType getSquare(int x, int y){
 
         SquareType square;
