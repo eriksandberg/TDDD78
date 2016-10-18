@@ -32,6 +32,10 @@ public class Poly {
         return shape;
     }
 
+    public SquareType getPolyTypeAt(int x, int y) {
+            return shape[y][x];
+        }
+
     public void rotateRight(){
         if(height == 4 || width == 4){
             SquareType rotatedShape[][] = {

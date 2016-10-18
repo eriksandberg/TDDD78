@@ -5,6 +5,7 @@ package tetris;
  * Date: 28/09/13
  */
 
+import javax.swing.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,13 +21,15 @@ public class Board {
     private Poly tetrisPiece = null;
     private int tetrisPieceX;
     private int tetrisPieceY;
-    private int score;
+    private int currentScore = 0;
+    private Highscore highscore;
+    private CollisionHandler collisionHandler;
 
     private final SquareType[][] squareArray;
 
     private final List<BoardListener> boardListenerArray = new ArrayList<BoardListener>();
 
-    private boolean gameOver = false;
+    protected boolean gameOver = false;
 
     // Default constructor
     /*public Board(){
@@ -39,15 +42,35 @@ public class Board {
         this.width = width;
 
         squareArray = new SquareType[width][height];
-        for (int i = 0; i < height; i++){
-            for (int j = 0; j < width; j++){
-                squareArray[j][i] = SquareType.EMPTY;
-            }
-        }
+	this.collisionHandler = new DefaultCollisionHandler();
+	makeEmptyBoard();
+    }
+
+    public void resetBoard(){
+	String name = JOptionPane.showInputDialog("What's your name?");
+	if (name == null) {
+	    name = "";
+	}
+	this.highscore = new Highscore(name, currentScore);
+	HighscoreList currentHighscores = HighscoreList.getInstance();
+	currentHighscores.addScore(this.highscore);
+	System.out.println(currentHighscores.getHighscoreList());
+	gameOver = false;
+	makeEmptyBoard();
+	currentScore = 0;
+    }
+
+    private void makeEmptyBoard() {
+	for (int i = 0; i < height; i++) {
+	    for (int j = 0; j < width; j++) {
+		squareArray[j][i] = SquareType.EMPTY; //fill-er up!
+	    }
+	}
     }
 
     public void tick(){
         if (gameOver){
+            //resetBoard(this);
             return;
         }
 
@@ -57,20 +80,23 @@ public class Board {
             if (!(gameOver)){
                 spawnTetromino();
             }
-            if (blockChecker(tetrisPiece)){
+            //if (hasCollision(tetrisPiece)){
+	    if (collisionHandler.hasCollision(this)){
                 gameOver = true;
                 tetrisPiece = null;
             }
         }
-        else if(blockChecker(tetrisPiece)){
+        //else if(hasCollision(tetrisPiece)){
+	else if(collisionHandler.hasCollision(this)){
             tetrisPieceY -= 1;
             insertPoly(tetrisPiece);
         }
         removeRows();
-        notifyListeners();
+	System.out.println("made it to here");
+	notifyListeners();
     }
 
-    public boolean blockChecker(Poly poly){
+    /*public boolean hasCollision(Poly poly){
         if (poly == null){
             return false;
         }
@@ -78,15 +104,17 @@ public class Board {
         //Don't have to check for X, only for Y. X only hinders side-movement, Y is the final determinator if we can place the block or not.
         for (int i = 0; i < poly.getWidth(); i++){
             for (int j = 0; j < poly.getHeight(); j++){
-                if (poly.getShape()[i][j] != SquareType.EMPTY && (tetrisPieceX+i >= getColumns() || tetrisPieceY+j >= getRows() || tetrisPieceX+i < 0 || tetrisPieceY+j < 0))
+                if (poly.getShape()[i][j] != SquareType.EMPTY &&
+		    (tetrisPieceX+i >= getColumns() || tetrisPieceY+j >= getRows() || tetrisPieceX+i < 0 || tetrisPieceY+j < 0))
                     return true;
-                else if (poly.getShape()[i][j] != SquareType.EMPTY && squareArray[(i+tetrisPieceX)][(j+tetrisPieceY)] != SquareType.EMPTY){
+                else if (poly.getShape()[i][j] != SquareType.EMPTY &&
+			 squareArray[(i+tetrisPieceX)][(j+tetrisPieceY)] != SquareType.EMPTY){
                     return true;
                 }
             }
         }
         return false;
-    }
+    }*/
 
     public void insertPoly(Poly poly){
         //Store the piece in the actual board
@@ -158,6 +186,11 @@ public class Board {
         return tetrisPieceY;
     }
 
+    public int getTetrisPieceSize() {
+	//all pieces are cubic, so width (or height) is accurate, yet the variable is obviously misleading
+	return tetrisPiece.getWidth();
+    }
+
     /*public SquareType[][] getSquareArray(){
         return squareArray;
     }*/
@@ -197,12 +230,13 @@ public class Board {
         }
         if (left){
             tetrisPieceX -= 1;
-            if (blockChecker(tetrisPiece)){
+            //if (hasCollision(tetrisPiece)){
+            if (collisionHandler.hasCollision(this)){
                 tetrisPieceX += 1;
             }
         }else{
             tetrisPieceX += 1;
-            if (blockChecker(tetrisPiece)){
+            if (collisionHandler.hasCollision(this)){
                 tetrisPieceX -= 1;
             }
         }
@@ -216,7 +250,8 @@ public class Board {
         }
         if(tetrisPiece != null){
             tetrisPiece.rotate(b);
-            if(blockChecker(tetrisPiece)){
+            //if(hasCollision(tetrisPiece)){
+	    if (collisionHandler.hasCollision(this)){
                 tetrisPiece.rotate(!b);
             }
             notifyListeners();
@@ -240,19 +275,23 @@ public class Board {
         }
 	switch(rowsRemovedThisTick){
 	    case 1:
-		score += 100;
+		currentScore += 100;
 		break;
 	    case 2:
-		score += 300;
+		currentScore += 300;
 		break;
 	    case 3:
-		score += 500;
+		currentScore += 500;
 		break;
 	    case 4:
-		score += 800;
+		currentScore += 800;
 		break;
 	    default: break;
 	}
+    }
+
+    public int getScore(){ //used by paintcomponent
+	return currentScore;
     }
 
     public void removeRow(int row){
