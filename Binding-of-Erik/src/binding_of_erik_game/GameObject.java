@@ -34,7 +34,6 @@ public class GameObject {
 	// Check if another object collide with this.
 	// An object could move fast enough to "jump" over another object,
 	// avoid by not having them move to many pixels each tick
-	//TODO: Implement better collision detection, right now has an offset because it aims for player bottom right pixel
 	public boolean collision(GameObject other) {
 	    	//this one checks shots only. Shots are maximum "4" big.
 		if ((this.size < 5) && (other.xCoord >= this.xCoord) && (this.xCoord >= other.xCoord - other.getSize()) && (other.yCoord >= this.yCoord) &&
