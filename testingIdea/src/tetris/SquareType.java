@@ -15,7 +15,7 @@ public enum SquareType {
     private static Color transparent = new Color(0,0,0,0);
 
     static EnumMap eMap(){
-        EnumMap<SquareType, Color> map = new EnumMap<SquareType, Color>(SquareType.class);
+        EnumMap<SquareType, Color> map = new EnumMap<>(SquareType.class);
             map.put(SquareType.EMPTY, Color.white);
             map.put(SquareType.I, Color.cyan);
             map.put(SquareType.J, Color.blue);

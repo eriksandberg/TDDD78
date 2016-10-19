@@ -10,8 +10,7 @@ package tetris;
 
 public class TetrominoMaker {
 
-    private final int blockTypes = 7;
-    private final int PolyHeight[] = {4,3,3,2,3,3,3};
+	private final int PolyHeight[] = {4,3,3,2,3,3,3};
     private final int PolyWidth[] = {4,3,3,2,3,3,3};
 
     private final SquareType PolyTypes[][][] = {{{SquareType.EMPTY, SquareType.EMPTY, SquareType.EMPTY, SquareType.EMPTY}, {SquareType.I, SquareType.I, SquareType.I, SquareType.I},
@@ -38,6 +37,7 @@ public class TetrominoMaker {
     public int getNumberOfTypes(){
 
         //Could be deleted, but could be good to have for randomize function if one ever were to use that.
-        return blockTypes;
+	    int blockTypes = 7;
+	    return blockTypes;
     }
 }
