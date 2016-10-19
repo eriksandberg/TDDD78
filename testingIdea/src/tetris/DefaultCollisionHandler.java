@@ -20,7 +20,7 @@ public class DefaultCollisionHandler implements CollisionHandler {
 					(board.getTetrisPieceX() + i >= board.getColumns() ||     // Utanför höger kant
 					 board.getTetrisPieceY() + j >= board.getRows() ||         // Över taket
 					 board.getTetrisPieceX() + i < 0 ||                        // Är vi utanför vänster kant
-					 board.getTetrisPieceY() + j < 0))                         // Under golvet
+					 board.getTetrisPieceY() + j < 0))                       // Under golvet
 					return true;
 				else if (poly.getShape()[i][j] != SquareType.EMPTY &&
 					board.getSquareType(i, j) != SquareType.EMPTY) {     // i and j get added to
