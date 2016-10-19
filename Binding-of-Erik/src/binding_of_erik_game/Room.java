@@ -55,12 +55,10 @@ public class Room {
 		return height;
 	}
 
-	@SuppressWarnings("SuspiciousGetterSetter")
 	public static int getFarEdge() {
 		return FAR_EDGE;
 	}
 
-	@SuppressWarnings("SuspiciousGetterSetter")
 	public static int getAdjEdge() {
 		return ADJ_EDGE;
 	}

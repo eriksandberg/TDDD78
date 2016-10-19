@@ -14,7 +14,7 @@ public class Shot extends GameObject {
 	protected float yAngle = 0;
 
 	public Shot(TileType[][] shape) {
-		super(shape, 0 ,0);
+		super(shape, false, 0 ,0);
 		this.size = 2;
 	}
 

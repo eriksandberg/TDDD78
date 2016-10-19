@@ -6,6 +6,6 @@ package binding_of_erik_game;
 public class Galaxy extends GameObject{
 
 	public Galaxy(TileType[][] shape) {
-		super(shape, 0, 0);
+		super(shape, false, 0, 0);
 	}
 }
