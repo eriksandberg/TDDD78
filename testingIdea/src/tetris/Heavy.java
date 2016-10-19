@@ -13,21 +13,20 @@ public class Heavy implements CollisionHandler {
 		if (poly == null) {
 			return false;
 		}
-		//Don't have to check for X, only for Y. X only hinders side-movement, Y is the final determinator if we can place the block or not.
-		for (int i = 0; i < poly.getWidth(); i++) {      // Loop over width of a poly
+	    	for (int i = 0; i < poly.getWidth(); i++) {      // Loop over width of a poly
 			for (int j = 0; j < poly.getHeight(); j++) {     // Loop over height
 				if ((poly.getShape()[i][j] != SquareType.EMPTY) &&  // Our current j + i combo is not empty space
 					(board.getTetrisPieceX() + i >= board.getColumns() ||     // Utanför höger kant
 					 board.getTetrisPieceY() + j >= board.getRows() ||         // Över taket
 					 board.getTetrisPieceX() + i < 0 ||                        // Är vi utanför vänster kant
 					 board.getTetrisPieceY() + j < 0)) {                         // Under golvet
-					for (int temp = j; temp < j + poly.getHeight(); j++) { //does this even work
-					    board.collapseCol(i, j);
-					}
-					return true;
+				    return true;
+				} else if (poly.getShape()[i][j] != SquareType.EMPTY &&
+					board.getSquareType(i, j) != SquareType.EMPTY) {     // i and j get added to
+				    return true;
 				}
 			}
 		}
-		return defaultHandler.hasCollision(board);
+		return false;
 	}
 }
