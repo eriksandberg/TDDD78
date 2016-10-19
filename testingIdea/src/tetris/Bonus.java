@@ -6,7 +6,6 @@ package tetris;
  */
 public class Bonus implements CollisionHandler {
 
-    	private CollisionHandler defaultHandler = new DefaultCollisionHandler();
 	public boolean hasCollision(Board board) {
 
 		Poly poly = board.getPoly();
