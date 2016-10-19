@@ -22,12 +22,9 @@ public class Bonus implements CollisionHandler {
 								 board.getTetrisPieceY() + j >= board.getRows() ||         // Över taket
 								 board.getTetrisPieceX() + i < 0)) {                       // Är vi utanför vänster kant
 					return true;
-				} else if (board.getTetrisPieceY() + j < 0) {
+				} else if (board.getTetrisPieceY() + j < 0 || poly.getShape()[i][j] != SquareType.EMPTY &&
+									      board.getSquareType(i, j) != SquareType.EMPTY) {
 					board.awardPoints();
-					return true;
-				} else if (poly.getShape()[i][j] != SquareType.EMPTY &&
-							board.getSquareType(i, j) != SquareType.EMPTY) {
-					board.awardPoints();    // We hit something
 					return true;
 				}
 			}

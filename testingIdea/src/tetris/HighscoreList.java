@@ -8,7 +8,7 @@ import java.util.List;
  * Created by wassing on 2016-10-18.
  *
  */
-public class HighscoreList {
+public final class HighscoreList {
     // Only create once, when class is loaded.
     private static final HighscoreList INSTANCE = new HighscoreList();
     private List<Highscore> highscoreList;

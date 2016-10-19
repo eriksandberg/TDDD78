@@ -3,7 +3,7 @@ package tetris;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.EnumMap;
+import java.util.AbstractMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,8 +16,12 @@ public class TetrisComponent extends JComponent implements BoardListener {
 
     private static final int SQUARE_WIDTH = 300; //300
     private static final int SQUARE_HEIGHT = 660; //660
+    private final static int FONT_SIZE = 20;
+    private final static int RECT_SIDE_LENGTH = 30;
+
+
     private final Board board;
-    private final EnumMap<SquareType, Color> map = SquareType.eMap();
+    private final AbstractMap<SquareType, Color> map = SquareType.eMap();
 
     public TetrisComponent(Board myBoard) {
 
@@ -85,20 +89,19 @@ public class TetrisComponent extends JComponent implements BoardListener {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         final Graphics2D g2 = (Graphics2D) g;
-        SquareType square;
-        for (int i = 0; i < board.getColumns(); i++){
+	for (int i = 0; i < board.getColumns(); i++){
             for (int j = 2; j < board.getRows(); j++){
-                square = board.getSquare(i, j);
-                g2.setColor(map.get(square));
-                g2.fillRect(i*30, j*30, 30, 30);
+		SquareType square = board.getSquare(i, j);
+		g2.setColor(map.get(square));
+                g2.fillRect(i * RECT_SIDE_LENGTH, j * RECT_SIDE_LENGTH, RECT_SIDE_LENGTH, RECT_SIDE_LENGTH);
             }
         }
 	g2.setColor(Color.RED);
-	g2.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-	g2.drawString("Current Score: " + Integer.toString(board.getScore()),board.getColumns(),board.getRows()+2);
+	g2.setFont(new Font("TimesRoman", Font.PLAIN, FONT_SIZE));
+	g2.drawString("Current Score: " + Integer.toString(board.getCurrentScore()), board.getColumns(), board.getRows() + 2);
     }
 
-    public void BoardChanged(){
+    public void boardChanged(){
         repaint();
     }
 }

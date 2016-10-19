@@ -10,10 +10,11 @@ package tetris;
 
 public class TetrominoMaker {
 
-	private final int PolyHeight[] = {4,3,3,2,3,3,3};
-    private final int PolyWidth[] = {4,3,3,2,3,3,3};
+    private final int[] polyHeight = { 4, 3, 3, 2, 3, 3, 3 };
+    private final int[] polyWidth = { 4, 3, 3, 2, 3, 3, 3 };
 
-    private final SquareType PolyTypes[][][] = {{{SquareType.EMPTY, SquareType.EMPTY, SquareType.EMPTY, SquareType.EMPTY}, {SquareType.I, SquareType.I, SquareType.I, SquareType.I},
+    private final SquareType[][][]
+	    polyTypes = {{{SquareType.EMPTY, SquareType.EMPTY, SquareType.EMPTY, SquareType.EMPTY}, {SquareType.I, SquareType.I, SquareType.I, SquareType.I},
             {SquareType.EMPTY, SquareType.EMPTY, SquareType.EMPTY, SquareType.EMPTY}, {SquareType.EMPTY, SquareType.EMPTY, SquareType.EMPTY, SquareType.EMPTY}},
             {{SquareType.EMPTY,SquareType.EMPTY, SquareType.J},{SquareType.J, SquareType.J, SquareType.J},
             {SquareType.EMPTY, SquareType.EMPTY, SquareType.EMPTY}},
@@ -24,20 +25,7 @@ public class TetrominoMaker {
             {{SquareType.EMPTY, SquareType.EMPTY, SquareType.T},{SquareType.EMPTY, SquareType.T, SquareType.T}, {SquareType.EMPTY, SquareType.EMPTY, SquareType.T}},
             {{SquareType.EMPTY, SquareType.Z, SquareType.EMPTY},{SquareType.EMPTY, SquareType.Z, SquareType.Z}, {SquareType.EMPTY, SquareType.EMPTY, SquareType.Z}}};
 
-    /*private SquareType PolyTypes[][][] = {{{SquareType.I, SquareType.I, SquareType.I, SquareType.I}},{{SquareType.EMPTY,SquareType.EMPTY, SquareType.J},{SquareType.J, SquareType.J, SquareType.J}},
-            {{SquareType.L, SquareType.L, SquareType.L}, {SquareType.EMPTY, SquareType.EMPTY, SquareType.L}},{{SquareType.O, SquareType.O},{SquareType.O, SquareType.O}},
-            {{SquareType.EMPTY, SquareType.S},{SquareType.S, SquareType.S}, {SquareType.S, SquareType.EMPTY}},
-            {{SquareType.EMPTY, SquareType.T},{SquareType.T, SquareType.T}, {SquareType.EMPTY, SquareType.T}},
-            {{SquareType.Z, SquareType.EMPTY},{SquareType.Z, SquareType.Z}, {SquareType.EMPTY, SquareType.Z}}};*/
-
     public Poly getPoly(int n){
-        return new Poly(PolyTypes[n], PolyWidth[n], PolyHeight[n]);
-    }
-
-    public int getNumberOfTypes(){
-
-        //Could be deleted, but could be good to have for randomize function if one ever were to use that.
-	    int blockTypes = 7;
-	    return blockTypes;
+        return new Poly(polyTypes[n], polyWidth[n], polyHeight[n]);
     }
 }

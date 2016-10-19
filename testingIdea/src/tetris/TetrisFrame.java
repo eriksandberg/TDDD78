@@ -13,55 +13,32 @@ import java.awt.event.ActionEvent;
  */
 public class TetrisFrame extends JFrame {
 
+    private final static int DELAY = 250;
+
     private final Board board;
-    JTextArea textArea;  //Was used in earlier assignment
 
     public TetrisFrame(Board board, String myWindowTitle){
 
         super(myWindowTitle);
 
 	this.board = board;
-        //textArea.setText(tetris.TetrisTextView.convertToText(board));
         TetrisComponent paintArea = new TetrisComponent(board);
         this.setLayout(new BorderLayout());
         this.add(paintArea, BorderLayout.CENTER);
-        //this.createMenu(); //currently not being used.
 
-        Timer clockTimer = new Timer(250, doOneStep);
+        Timer clockTimer = new Timer(DELAY, doOneStep);
         clockTimer.setCoalesce(true);
         clockTimer.start();
 
     }
 
+    @SuppressWarnings("FieldCanBeLocal")    // Converting to local breaks the code
     private final Action doOneStep = new AbstractAction(){
         public void actionPerformed(ActionEvent e){
 	    if (!board.gameOver) {
 		board.tick();
 	    }
-            //repaint();
-            //board.randomizeBoard();
-            //TetrisComponent paintArea = new TetrisComponent(board);
-            //textArea.setText(tetris.TetrisTextView.convertToText(board));
         }
 
     };
-
-    private final Action clickMe = new AbstractAction(){
-        public void actionPerformed(ActionEvent e){
-            System.exit(0);
-        }
-
-    };
-
-    private void createMenu(){
-
-        JMenuItem exit = new JMenuItem("Exit", 'E');
-        final JMenu file = new JMenu("File");
-        file.add(exit);
-
-        final JMenuBar bar = new JMenuBar();
-        bar.add(file);
-        exit.addActionListener(clickMe);
-        this.setJMenuBar(bar);
-    }
 }
