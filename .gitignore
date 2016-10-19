@@ -7,4 +7,5 @@ testingIdea/src/tetris/.idea/*
 Lab4/*
 *.iml
 *.jar
+*.zip
 #*.class
