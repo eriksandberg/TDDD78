@@ -3,6 +3,9 @@ Binding-of-Erik/.idea/*
 Binding-of-Erik/scoreList.txt
 testingIdea/out/*
 testingIdea/.idea/*
+testingIdea/src/tetris/.idea/*
 Lab4/*
 *.iml
+*.jar
+*.zip
 #*.class

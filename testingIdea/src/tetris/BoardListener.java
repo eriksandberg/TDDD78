@@ -8,7 +8,7 @@ package tetris;
  * To change this template use File | Settings | File Templates.
  */
 public interface BoardListener {
-    void BoardChanged();
+    void boardChanged();
 
 }
 

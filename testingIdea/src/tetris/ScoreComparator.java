@@ -1,10 +1,11 @@
 package tetris;
 
+import java.util.Comparator;
+
 /**
  * Created by wassing on 2016-10-18
  * Comparator for highscores. Used by HighscoreList for sorting highscores.
  */
-import java.util.Comparator;
 
 public class ScoreComparator implements Comparator<Highscore> {
     public int compare(Highscore score1, Highscore score2) {

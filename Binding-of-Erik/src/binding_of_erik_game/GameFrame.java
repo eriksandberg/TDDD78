@@ -1,14 +1,12 @@
 package binding_of_erik_game;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
 /**
  * Created by wassing on 2016-04-06.
  */
-
-import javax.swing.*;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import javax.swing.JFrame;
 
 public class GameFrame extends JFrame { //this class does all the actual frame updating work. Will be instanced as an object for GameWindow.
 

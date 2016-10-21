@@ -14,7 +14,6 @@ public class Poly {
     private final int height;
 
     public Poly(SquareType[][] shape, int width, int height) {
-        super();
         this.shape = shape;
         this.width = width;
         this.height = height;
@@ -32,31 +31,28 @@ public class Poly {
         return shape;
     }
 
-    public SquareType getPowerupPolyTypeAt(int x, int y) {
+    /*public SquareType getPolyTypeAt(int x, int y) {
+>>>>>>> bb8dd34b00d940168b7c0870aba69165883de39a
             return shape[y][x];
-        }
+        }*/
 
     public void rotateRight(){
         if(height == 4 || width == 4){
-            SquareType rotatedShape[][] = {
-                    {this.shape[0][3], this.shape[1][3], this.shape[2][3], this.shape[3][3]},
-                    {this.shape[0][2], this.shape[1][2], this.shape[2][2], this.shape[3][2]},
-                    {this.shape[0][1], this.shape[1][1], this.shape[2][1], this.shape[3][1]},
-                    {this.shape[0][0], this.shape[1][0], this.shape[2][0], this.shape[3][0]}};
-            this.shape = rotatedShape;
+            this.shape = new SquareType[][] { { this.shape[0][3], this.shape[1][3], this.shape[2][3], this.shape[3][3] },
+                    { this.shape[0][2], this.shape[1][2], this.shape[2][2], this.shape[3][2] },
+                    { this.shape[0][1], this.shape[1][1], this.shape[2][1], this.shape[3][1] },
+                    { this.shape[0][0], this.shape[1][0], this.shape[2][0], this.shape[3][0] } };
         }else if(height == 3 || width == 3){
-            SquareType rotatedShape[][] = {
-                    {this.shape[0][2], this.shape[1][2], this.shape[2][2]},
-                    {this.shape[0][1], this.shape[1][1], this.shape[2][1]},
-                    {this.shape[0][0], this.shape[1][0], this.shape[2][0]}};
-            this.shape = rotatedShape;
+            this.shape = new SquareType[][] { { this.shape[0][2], this.shape[1][2], this.shape[2][2] },
+                    { this.shape[0][1], this.shape[1][1], this.shape[2][1] },
+                    { this.shape[0][0], this.shape[1][0], this.shape[2][0] } };
         }
     }
 
-    public void rotate(Boolean B){
-        if(B){
+    public void rotate(boolean right){
+        if(right){
             rotateRight();
-        }else{
+        }else{  // left
             rotateRight();
             rotateRight();
             rotateRight();

@@ -7,13 +7,13 @@ package binding_of_erik_game;
 public class Player extends Agent {
 
 	private int skill;    // Used to determine how hard a new room will be
+
 	private Direction direction = Direction.NORTH;   // To be used when fireing shots and to display the correct graphics
 
 	public Player(TileType[][] shape, int x, int y) {
-		super(shape, x, y);
+		super(shape, false, 10, x, y);
 		this.size = 10;
 		this.skill = 1;
-		this.hp = 1000;  // For testing purposes we don't want to die
 	}
 
 	@Override   // Return false if we could not move for some reason

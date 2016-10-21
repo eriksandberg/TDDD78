@@ -15,8 +15,9 @@ public class Agent extends GameObject {
     protected int specialShotCooldown =  30; //used by bosses alternatively special enemies.
     protected int hp = 1;
 
-    public Agent(TileType[][] shape, int x, int y) {
-	    super(shape, x, y);
+    public Agent(TileType[][] shape, boolean enemy, int hp, int x, int y) {
+	    super(shape, enemy, x, y);
+	    this.hp = hp;
     }
 
     // Move the object, if the object touch a border it will bounce back 1 unit

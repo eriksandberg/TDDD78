@@ -5,14 +5,13 @@ package binding_of_erik_game;
  */
 
 public class InvaderEnemy extends Enemy {
-	public InvaderEnemy(TileType[][] shape) {
-		super(shape);
-		this.size = 10;
-		this.isEnemy = true;    // Born evil.
-		this.hp = HP;
-		this.worth = WORTH;
-	}
 
 	private static final int WORTH = 50;
-	private static final int HP = 3;
+	private static final int HEALTH = 3;
+
+	public InvaderEnemy(TileType[][] shape) {
+		super(shape, HEALTH);
+		this.size = 10;
+		this.worth = WORTH;
+	}
 }
