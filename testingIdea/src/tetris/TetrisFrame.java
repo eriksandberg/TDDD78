@@ -21,7 +21,7 @@ public class TetrisFrame extends JFrame {
         super(myWindowTitle);
 
 	this.board = board;
-        //textArea.setText(tetris.TetrisTextView.convertToText(board));
+        //textArea.setText(TetrisTextView.convertToText(board));
         TetrisComponent paintArea = new TetrisComponent(board);
         this.setLayout(new BorderLayout());
         this.add(paintArea, BorderLayout.CENTER);
@@ -41,7 +41,7 @@ public class TetrisFrame extends JFrame {
             //repaint();
             //board.randomizeBoard();
             //TetrisComponent paintArea = new TetrisComponent(board);
-            //textArea.setText(tetris.TetrisTextView.convertToText(board));
+            //textArea.setText(TetrisTextView.convertToText(board));
         }
 
     };
