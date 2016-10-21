@@ -32,7 +32,7 @@ public class Poly {
         return shape;
     }
 
-    public SquareType getPolyTypeAt(int x, int y) {
+    public SquareType getPowerupPolyTypeAt(int x, int y) {
             return shape[y][x];
         }
 
