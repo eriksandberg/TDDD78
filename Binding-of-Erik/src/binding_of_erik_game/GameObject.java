@@ -45,17 +45,12 @@ public class GameObject {
 				(this.yCoord >= other.yCoord - other.size)) {
 			//the above if statement could be refined if we had a function call to getOffset depending on size
 			return true;
-		} else if ((this.size > 5) && (Math.abs(other.xCoord - this.xCoord) * 2) < (other.size + this.size) &&
-				(Math.abs(other.yCoord - this.yCoord) * 2) < (other.size + this.size)) {
-			//For both these if-cases we could have a simple "return (statement)", but then we can't print.
-			//We print for debuging purposes at the moment. Easily changed later.
-			//Might have to refactor this particular code.
-			return true;
-		}
-		return false;
+		} else return ((this.size > 5) && (Math.abs(other.xCoord - this.xCoord) * 2) < (other.size + this.size) &&
+				(Math.abs(other.yCoord - this.yCoord) * 2) < (other.size + this.size));
+	    		//This one handles bodycollisions. If we have no shot or body collision false is returned.
 	}
 
-	// Return true if the object have left the room
+	// Return true if the object has left the room
 	protected boolean outOfBounds() {
 		//if statement can be simplified to a simple return (logical operation), but this is more readable.
 		return ((xCoord - size < Room.getAdjEdge()) || (yCoord - size < Room.getAdjEdge()) ||
@@ -63,8 +58,11 @@ public class GameObject {
 	}
 
 	@SuppressWarnings("EnumSwitchStatementWhichMissesCases")    // Direction OTHER is not used by this class
+	//This is by coding standards not a pretty solution, but it would require us to rework a large part of the project.
+	//It's however very easy to understand and modify. Can easily be used by player and enemies. ONLY does graphical work.
+	//The actual direction is set elsewhere.
 	public void rotate(Direction newDirection, Direction oldDirection) {
-		//two-layer nested switch, 4x4 = 16 possible outcomes.
+		//two-layer nested switch, 4x4 = 16 possible outcomes, 12 of those change the graphics.
 		//old is where we were facing before.
 		switch (oldDirection) {
 			case NORTH:
