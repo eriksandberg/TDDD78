@@ -11,21 +11,22 @@ package binding_of_erik_game;
 
 public class Enemy extends Agent {
 
-	protected int worth = 1;    // Score/xp you get from killing an enemy
+	protected int worth;    // Score/xp you get from killing an enemy
+	protected int specialShotCooldown;
 
-	public Enemy(TileType[][] shape, int hp) {
+	public Enemy(TileType[][] shape, int size, int hp, int worth, int specialShotCooldown) {
 		// We're evil, we have hp health and don't really care where we spawn
-		super(shape, true, hp, 0, 0);
-		this.size = 10;
+		super(shape, size, true, hp, 0, 0);
+		this.worth = worth;
+		this.specialShotCooldown = specialShotCooldown;
 	}
 
+	public void setSpecialShotCooldown(int shotCooldown) {
+		this.specialShotCooldown = shotCooldown;
+	}
 
 	public int getWorth() {
 		return worth;
-	}
-
-	public void setWorth(int worth) {
-		this.worth = worth;
 	}
 
 	// The standard enemy does not move

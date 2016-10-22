@@ -8,10 +8,9 @@ public class InvaderEnemy extends Enemy {
 
 	private static final int WORTH = 50;
 	private static final int HEALTH = 3;
+	private static final int SIZE = 10;
 
 	public InvaderEnemy(TileType[][] shape) {
-		super(shape, HEALTH);
-		this.size = 10;
-		this.worth = WORTH;
+		super(shape, SIZE, HEALTH, WORTH, 0);
 	}
 }

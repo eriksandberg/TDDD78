@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 public class GameFrame extends JFrame { //this class does all the actual frame updating work. Will be instanced as an object for GameWindow.
 
 	private static boolean paused = false;
+	private static boolean gameOver = false;
 
 	public GameFrame(final Room room, String myWindowTitle) {
 		super(myWindowTitle);
@@ -22,7 +23,7 @@ public class GameFrame extends JFrame { //this class does all the actual frame u
 
 		final Action doOneStep = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				if (!paused) {  // Since player movement is currently done outside of tick() this is not really a true pause
+				if (!paused && !gameOver) {  // Since player movement is currently done outside of tick() this is not really a true pause
 					room.tick();
 				}
 			}
@@ -35,5 +36,9 @@ public class GameFrame extends JFrame { //this class does all the actual frame u
 	// Pause the game
 	public static void togglePaused() {
 		paused = !paused;
+	}
+
+	public static void gameOver() {
+		gameOver = true;
 	}
 }

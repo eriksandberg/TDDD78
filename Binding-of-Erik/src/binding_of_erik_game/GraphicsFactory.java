@@ -63,7 +63,7 @@ public final class GraphicsFactory
     public Enemy getEnemy(int kind) {
 	    switch (kind) {
 		    case 1:
-			    return new Enemy(normalEnemy, 1);
+			    return new Enemy(normalEnemy, 10, 1, 100, 0);
 		    case 2:
 			    return new TravelingEnemy(travelingEnemy);
 		    case 3:
@@ -77,10 +77,10 @@ public final class GraphicsFactory
 					    return new SecondBoss(deathStar);
 				    //add more bosses here
 				    default:
-					    return new Enemy(nullEnemy, 0);
+					    return new Enemy(nullEnemy, 0, 0, 0, 0);
 			    }
 		    default:
-		    return new Enemy(nullEnemy, 0);
+		    return new Enemy(nullEnemy, 0, 0, 0, 0);
 	    }
     }
 

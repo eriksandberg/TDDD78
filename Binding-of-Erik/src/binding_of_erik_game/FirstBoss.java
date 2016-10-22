@@ -5,13 +5,12 @@ package binding_of_erik_game;
  */
 public class FirstBoss extends Enemy {
 
-	public static final int WORTH = 5000;
+	private static final int WORTH = 5000;
 	private static final int HEALTH = 50;
+	private static final int SIZE = 18;
+	private static final int SPECIAL_SHOT_COOLDOWN = 30;
 
 	public FirstBoss(TileType[][] shape) {
-		super(shape, HEALTH);
-		this.size = 18;
-		this.worth = WORTH;
-		this.specialShotCooldown = 50;
+		super(shape, SIZE, HEALTH, WORTH, SPECIAL_SHOT_COOLDOWN);
 	}
 }

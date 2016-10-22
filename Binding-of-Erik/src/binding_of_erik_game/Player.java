@@ -7,16 +7,16 @@ package binding_of_erik_game;
 public class Player extends Agent {
 
 	private int skill;    // Used to determine how hard a new room will be
+	private static final int SIZE = 10;
 
 	private Direction direction = Direction.NORTH;   // To be used when fireing shots and to display the correct graphics
 
 	public Player(TileType[][] shape, int x, int y) {
-		super(shape, false, 10, x, y);
-		this.size = 10;
+		super(shape, SIZE, false, 10, x, y);
 		this.skill = 1;
 	}
 
-	@Override   // Return false if we could not move for some reason
+	// Return false if we could not move for some reason
 	public boolean move(Direction direction) {
 		if (isDead()) {    // Can't move if we're dead
 			return false;
@@ -67,11 +67,6 @@ public class Player extends Agent {
 		return true;
 	}
 
-
-	public void setDirection(Direction direction) {
-		this.direction = direction;
-	}
-
 	// Return a char indicating what direction the player is facing
 	public Direction getDirection() {
 		return direction;
@@ -85,7 +80,7 @@ public class Player extends Agent {
 		return skill;
 	}
 
-	//never used.
+	// Currently never used since GameOver does not restart game
 	public void resetSkill() {
 		this.skill = 1;
 	}

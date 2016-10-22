@@ -37,7 +37,7 @@ public final class Score {
 					break;  // Break if we read nothing
 				}
 				scoreList[i] = Integer.parseInt(line);    // First int we get from the file is put first in the array
-				// TODO: Do something if we get garbage
+
 			}
 		}
 	}
@@ -82,5 +82,9 @@ public final class Score {
 		if (!(currentScore - score < 0)) {
 			this.currentScore -= score;
 		}
+	}
+
+	public int getCurrentScore() {
+		return currentScore;
 	}
 }

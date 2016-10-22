@@ -1,5 +1,6 @@
 package binding_of_erik_game;
 
+import java.util.AbstractMap;
 import java.util.EnumMap;
 import java.awt.Color;
 
@@ -15,8 +16,8 @@ public enum TileType {
 
     private static final Color C_TRANSPARENT = new Color(0,0,0,0); // will probably be used as an identifier to ensure "smooth" graphics
 
-    static EnumMap<TileType, Color> eMap(){
-		EnumMap<TileType, Color> map = new EnumMap<>(TileType.class);
+    static AbstractMap<TileType, Color> eMap(){
+		AbstractMap<TileType, Color> map = new EnumMap<>(TileType.class);
 		map.put(TileType.CYAN, Color.cyan);
 		map.put(TileType.BLUE, Color.blue);
 		map.put(TileType.BLACK, Color.black);
