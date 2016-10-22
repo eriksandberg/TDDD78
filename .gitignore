@@ -1,11 +1,13 @@
 Binding-of-Erik/out/*
 Binding-of-Erik/.idea/*
 Binding-of-Erik/scoreList.txt
-testingIdea/out/*
-testingIdea/.idea/*
-testingIdea/src/tetris/.idea/*
+Tetris/out/*
+Tetris/.idea/*
+Tetris/src/tetris/.idea/*
 Lab4/*
 *.iml
+*.ipr
+*.iws
 *.jar
 *.zip
 #*.class
