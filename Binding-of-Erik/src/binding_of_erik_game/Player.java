@@ -16,7 +16,7 @@ public class Player extends Agent {
 		this.skill = 1;
 	}
 
-	@Override   // Return false if we could not move for some reason
+	// Return false if we could not move for some reason
 	public boolean move(Direction direction) {
 		if (isDead()) {    // Can't move if we're dead
 			return false;
@@ -67,11 +67,6 @@ public class Player extends Agent {
 		return true;
 	}
 
-
-	public void setDirection(Direction direction) {
-		this.direction = direction;
-	}
-
 	// Return a char indicating what direction the player is facing
 	public Direction getDirection() {
 		return direction;
@@ -85,7 +80,7 @@ public class Player extends Agent {
 		return skill;
 	}
 
-	//never used.
+	// Currently never used since GameOver does not restart game
 	public void resetSkill() {
 		this.skill = 1;
 	}

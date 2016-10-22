@@ -11,7 +11,6 @@ public class InvaderEnemy extends Enemy {
 	private static final int SIZE = 10;
 
 	public InvaderEnemy(TileType[][] shape) {
-		super(shape, SIZE, HEALTH);
-		this.worth = WORTH;
+		super(shape, SIZE, HEALTH, WORTH, 0);
 	}
 }

@@ -62,6 +62,7 @@ public class GameObject {
 				(xCoord + 2 * size > Room.getFarEdge()) || (yCoord + 2 * size > Room.getFarEdge()));
 	}
 
+	@SuppressWarnings("EnumSwitchStatementWhichMissesCases")    // Direction OTHER is not used by this class
 	public void rotate(Direction newDirection, Direction oldDirection) {
 		//two-layer nested switch, 4x4 = 16 possible outcomes.
 		//old is where we were facing before.
@@ -72,7 +73,7 @@ public class GameObject {
 						//do nothing
 						break;
 					case EAST:
-						if (xCoord == 190) {     //Room.getFarEdge() - size()?
+						if (xCoord == Room.getFarEdgeSpawn()) {     //Room.getFarEdge() - size()?
 							break;
 						}
 						rotateThisMany(3);
@@ -102,7 +103,7 @@ public class GameObject {
 						//do nothing
 						break;
 					case SOUTH:
-						if (yCoord == 190) {
+						if (yCoord == Room.getFarEdgeSpawn()) {
 							break;
 						}
 						rotateThisMany(3);
@@ -120,7 +121,7 @@ public class GameObject {
 						rotateThisMany(2);
 						break;
 					case EAST:
-						if (xCoord == 190) {
+						if (xCoord == Room.getFarEdgeSpawn()) {
 							break;
 						}
 						rotateThisMany(1);
@@ -150,7 +151,7 @@ public class GameObject {
 						rotateThisMany(2);
 						break;
 					case SOUTH:
-						if (yCoord == 190) {
+						if (yCoord == Room.getFarEdgeSpawn()) {
 							break;
 						}
 						rotateThisMany(1);

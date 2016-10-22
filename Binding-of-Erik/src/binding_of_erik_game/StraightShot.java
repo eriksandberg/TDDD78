@@ -10,7 +10,6 @@ public class StraightShot extends Shot {
 
 	public StraightShot(TileType[][] shape) {
 		super(shape);
-		this.size = 2;
 	}
 
 	@Override

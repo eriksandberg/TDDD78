@@ -27,7 +27,7 @@ public final class GameWindow {
 	// set default to close the application when the window is closed,
 	// center the frame on the screen and make the window visiable
 	GameFrame window = new GameFrame(startingRoom, "Binding of Erik");
-	//noinspection MagicConstant, IDEA recommend using EXIT_ON_CLOSE
+	//noinspection MagicConstant, IDEA recommend using EXIT_ON_CLOSE and no, the suppression is not redundant
 	window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	window.pack();
 	window.setResizable(false);

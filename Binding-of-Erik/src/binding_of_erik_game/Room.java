@@ -15,6 +15,7 @@ public class Room {
 	private static final int PIXELWIDTH_PER_TILE = 4;
 	private static final int PIXELHEIGHT_PER_TILE = 4;
 	private static final int FAR_EDGE = 210;
+	private static final int FAR_EDGE_SPAWN = 190;
 	private static final int ADJ_EDGE = -10;
 
 	private TileType[][] board;
@@ -26,6 +27,8 @@ public class Room {
 
 	private boolean roomOver = false;
 
+	private static final String DIED = "You died!";
+	private static final String WON = "You won!";
 	private static final int MAX_LEVEL = 10;
 
 	/**
@@ -38,10 +41,11 @@ public class Room {
 	private final Collection<BoardListener> boardListenerArray = new ArrayList<>();
 
 	/**
-	 *
+	 * Additional constants
 	 **/
 	private static final int SECOND_BOSS_SHOT_COOLDOWN = 70;
 	private static final int STAR_SPAWN_RATE = 24;
+	private static final int ENEMY_DEFAULT_COOLDOWN = 40;
 
 	@SuppressWarnings("SuspiciousGetterSetter")
 	public int getPixelWidthPerTile() {
@@ -63,6 +67,10 @@ public class Room {
 
 	public static int getFarEdge() {
 		return FAR_EDGE;
+	}
+
+	public static int getFarEdgeSpawn() {
+		return FAR_EDGE_SPAWN;
 	}
 
 	public static int getAdjEdge() {
@@ -95,8 +103,7 @@ public class Room {
 	// Public because EventHandler must be able to spawn a new room due to testing
 	public void newRoom() {
 		clearRoom();   // Remove all shots (and enemies) left in an old room
-		//noinspection MagicNumber, let the player spawn in the middle of the room (at the bottom)
-		spawnPlayer(player.xCoord, 190);
+		spawnPlayer(player.xCoord, FAR_EDGE_SPAWN);
 		spawnEnemies();
 		// Should probably pause for a couple of seconds, don't want to confuse the player
 	}
@@ -149,7 +156,6 @@ public class Room {
 	}
 
 	// Spawn an enemy of kind kind and power level power
-	@SuppressWarnings("MagicNumber")    // 40 (in steps of 4) is the max power lvl of an enemy
 	private Enemy spawnEnemy(int kind, int power) {
 		Enemy newEnemy = GraphicsFactory.getInstance().getEnemy(kind);
 		newEnemy.xCoord = enemySpawnPos(kind, newEnemy.getSize());
@@ -162,7 +168,7 @@ public class Room {
 		if (power > 10) {
 			power = 10;
 		}
-		newEnemy.setShotCooldown(40 - power * 4 - 1);   // We don't want enemies with cooldown = 0
+		newEnemy.setShotCooldown(ENEMY_DEFAULT_COOLDOWN - power * 4 - 1);   // We don't want enemies with cooldown = 0
 		//newEnemy.setWorth(newEnemy.getWorth() + (power * 40)); //using a hardcoded worth right now.
 
 		newEnemy.rotateThisMany(1);
@@ -176,16 +182,16 @@ public class Room {
 		switch (kind) {
 			case 1:
 				// add random spawn based on boundaries
-				pos = rand.nextInt(FAR_EDGE - 18);
+				pos = rand.nextInt(FAR_EDGE_SPAWN);
 				// Prevent enemies for spawning on top of each other
 				while (!spaceXFree(pos)) {
-					pos = rand.nextInt(FAR_EDGE - 18); //TODO: magic number n shit
+					pos = rand.nextInt(FAR_EDGE_SPAWN);
 				}
 				return pos;
 			case 2:
 				pos = 0;   // Place first one at left edge
 				if (!spaceXFree(pos)) {
-					pos = 190;  // Second one at right edge
+					pos = FAR_EDGE_SPAWN;  // Second one at right edge
 				}
 				return pos;
 			case 4:
@@ -224,12 +230,12 @@ public class Room {
 		int i = rand.nextInt(STAR_SPAWN_RATE);
 		if (i < 4) { //4 out of 24 possible scenarios spawn a star
 			final Star newStar = GraphicsFactory.getInstance().getStar();
-			newStar.xCoord = rand.nextInt(FAR_EDGE - 18);
+			newStar.xCoord = rand.nextInt(FAR_EDGE_SPAWN);
 			newStar.yCoord = 0;
 			miscInRoom.add(newStar);
 		} else if (i == 4) { //1 out of 24 possible scenarios spawn a galaxy
 			final Galaxy newGalaxy = GraphicsFactory.getInstance().getGalaxy();
-			newGalaxy.xCoord = rand.nextInt(FAR_EDGE - 18);
+			newGalaxy.xCoord = rand.nextInt(FAR_EDGE_SPAWN);
 			newGalaxy.yCoord = 0;
 			miscInRoom.add(newGalaxy);
 		}
@@ -349,11 +355,11 @@ public class Room {
 	// Public because it's called by GameFrame
 	// Called by the clock, handles enemies, shots and some game mechanics
 	public void tick() {
-		if (roomOver) {     // First part
+		if (roomOver) {
 			moveToTop();
 		} else {
 			if (player.isDead()) {
-				gameOver();
+				gameOver(DIED);
 			} else if (!enemiesInRoom.isEmpty()) {  // If no enemies, spawn new room
 				handleEnemies();
 				handleShots();
@@ -361,8 +367,8 @@ public class Room {
 			} else {  // Room is empty, increment player skill and spawn a new room
 				player.incSkill(); // Increase player level
 				if (player.getSkill() == MAX_LEVEL + 1) {
-					System.out.println("Congratulations, you won!");
-					gameOver();
+					System.out.println(MAX_LEVEL);
+					gameOver(WON);
 				}
 				roomOver = true;
 				clearRoom();
@@ -450,13 +456,16 @@ public class Room {
 		}
 	}
 
-	private void gameOver() {
+	private void gameOver(String reason) {
+		GameFrame.gameOver();
+
 		enemiesInRoom.clear();
 		shotsInRoom.clear();
 
 		score.saveScore();
 		score.writeHighscore();
-		System.out.println("binding_of_erik_game Over!");
+		System.out.println("Game Over: " + reason);
+		System.out.println("Score: " + score.getCurrentScore());
 	}
 
 	/**
