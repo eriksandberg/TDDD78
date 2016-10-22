@@ -7,6 +7,7 @@ package binding_of_erik_game;
 public class Shot extends GameObject {
 
 	protected int shotspeed = 5;  // When generating enemies in the future, generate this
+	private static final int SIZE = 2;
 
 	protected float xCoordFloat = 0;
 	protected float yCoordFloat = 0;
@@ -14,8 +15,7 @@ public class Shot extends GameObject {
 	protected float yAngle = 0;
 
 	public Shot(TileType[][] shape) {
-		super(shape, false, 0 ,0);
-		this.size = 2;
+		super(shape, SIZE, false, 0 ,0);
 	}
 
 	// Where x, y is the position the shot is traveling towards

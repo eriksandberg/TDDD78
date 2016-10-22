@@ -7,10 +7,10 @@ public class FirstBoss extends Enemy {
 
 	public static final int WORTH = 5000;
 	private static final int HEALTH = 50;
+	private static final int SIZE = 18;
 
 	public FirstBoss(TileType[][] shape) {
-		super(shape, HEALTH);
-		this.size = 18;
+		super(shape, SIZE, HEALTH);
 		this.worth = WORTH;
 		this.specialShotCooldown = 50;
 	}

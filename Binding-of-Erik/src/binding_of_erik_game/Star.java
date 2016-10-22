@@ -9,6 +9,6 @@ package binding_of_erik_game;
 public class Star extends GameObject{
 
 	public Star(TileType[][] shape) {
-		super(shape, false, 0, 0);
+		super(shape, 0, false, 0, 0);
 	}
 }

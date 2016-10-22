@@ -37,6 +37,12 @@ public class Room {
 
 	private final Collection<BoardListener> boardListenerArray = new ArrayList<>();
 
+	/**
+	 *
+	 **/
+	private static final int SECOND_BOSS_SHOT_COOLDOWN = 70;
+	private static final int STAR_SPAWN_RATE = 24;
+
 	@SuppressWarnings("SuspiciousGetterSetter")
 	public int getPixelWidthPerTile() {
 		return PIXELWIDTH_PER_TILE;
@@ -215,7 +221,7 @@ public class Room {
 		Random rand = new Random();
 
 		// We don't want to always spawn stars
-		int i = rand.nextInt(24);
+		int i = rand.nextInt(STAR_SPAWN_RATE);
 		if (i < 4) { //4 out of 24 possible scenarios spawn a star
 			final Star newStar = GraphicsFactory.getInstance().getStar();
 			newStar.xCoord = rand.nextInt(FAR_EDGE - 18);
@@ -261,8 +267,7 @@ public class Room {
 		} else if (enemy instanceof SecondBoss) {
 			//would need a whole new method, we can't create different kinds of shots with just one method.
 			//therefore just bunched the whole code in here because it's a separate case for the second boss only.
-			System.out.println("Cooldown at: " + enemy.specialShotCooldown); //debug, and can be used for fun.
-			if (enemy.specialShotCooldown <= 75) {
+			if (enemy.specialShotCooldown <= SECOND_BOSS_SHOT_COOLDOWN ) {
 				Shot lazer = GraphicsFactory.getInstance().getLazer();
 				lazer.xCoordFloat = lazer.xCoord = enemy.xCoord - enemy.getSize() / 2;
 				lazer.yCoordFloat = lazer.yCoord = enemy.yCoord - enemy.getSize() / 2;
@@ -337,11 +342,9 @@ public class Room {
 		}
 		player.rotate(direction, player.getDirection());
 		boolean moved = player.move(direction);
-		System.out.println(moved);
 		notifyListeners();
 		return moved;
 	}
-
 
 	// Public because it's called by GameFrame
 	// Called by the clock, handles enemies, shots and some game mechanics
@@ -367,7 +370,6 @@ public class Room {
 			notifyListeners();
 		}
 	}
-
 	private void handleEnemies() {
 		Iterator<Enemy> e = enemiesInRoom.iterator();
 		while (e.hasNext()) {
@@ -386,7 +388,7 @@ public class Room {
 					spawnShot(enemy);
 				}
 				//last minute fix for the second boss in the game, this is not modular at all.
-				if (enemy instanceof SecondBoss && enemy.specialShotCooldown <= 75) {
+				if (enemy instanceof SecondBoss && enemy.specialShotCooldown <= SECOND_BOSS_SHOT_COOLDOWN) {
 					spawnShot(enemy);
 				}
 			}

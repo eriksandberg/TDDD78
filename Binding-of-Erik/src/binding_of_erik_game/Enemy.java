@@ -13,10 +13,9 @@ public class Enemy extends Agent {
 
 	protected int worth = 1;    // Score/xp you get from killing an enemy
 
-	public Enemy(TileType[][] shape, int hp) {
+	public Enemy(TileType[][] shape, int size, int hp) {
 		// We're evil, we have hp health and don't really care where we spawn
-		super(shape, true, hp, 0, 0);
-		this.size = 10;
+		super(shape, size, true, hp, 0, 0);
 	}
 
 

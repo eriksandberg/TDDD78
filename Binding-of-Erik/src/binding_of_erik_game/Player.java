@@ -7,12 +7,12 @@ package binding_of_erik_game;
 public class Player extends Agent {
 
 	private int skill;    // Used to determine how hard a new room will be
+	private static final int SIZE = 10;
 
 	private Direction direction = Direction.NORTH;   // To be used when fireing shots and to display the correct graphics
 
 	public Player(TileType[][] shape, int x, int y) {
-		super(shape, false, 10, x, y);
-		this.size = 10;
+		super(shape, SIZE, false, 10, x, y);
 		this.skill = 1;
 	}
 

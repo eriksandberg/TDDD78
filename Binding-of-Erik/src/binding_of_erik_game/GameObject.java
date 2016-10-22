@@ -21,8 +21,9 @@ public class GameObject {
 
 	// Constructor
 	// Let the inheriting objects set position and size as they are not 100% required
-	public GameObject(TileType[][] shape, boolean enemy, int x, int y) {
+	public GameObject(TileType[][] shape, int size, boolean enemy, int x, int y) {
 		this.shape = shape;
+		this.size = size;
 		this.isEnemy = enemy;
 
 		xCoord = x;
