@@ -30,14 +30,14 @@ public final class Score {
 		try {   // Try to open the file scoreList in the current directory
 			filePath = Files.createFile(filePath);
 		} catch (FileAlreadyExistsException ignored) {  // The file already exist, read from it.
-			BufferedReader reader = Files.newBufferedReader(filePath, Charset.forName("US-ASCII"));
-			for (int i = 0; i < scoreList.length; ++i) {   // Read the 10 first existing scores
-				String line = reader.readLine();
-				if (line == null) {
-					break;  // Break if we read nothing
+			try (BufferedReader reader = Files.newBufferedReader(filePath, Charset.forName("US-ASCII"))) {
+				for (int i = 0; i < scoreList.length; ++i) {   // Read the 10 first existing scores
+					String line = reader.readLine();
+					if (line == null) {
+						break;  // Break if we read nothing
+					}
+					scoreList[i] = Integer.parseInt(line);    // First int we get from the file is put first in the array
 				}
-				scoreList[i] = Integer.parseInt(line);    // First int we get from the file is put first in the array
-
 			}
 		}
 	}
@@ -45,13 +45,14 @@ public final class Score {
 	// Write highscore to file.
 	public void writeHighscore() {
 		try {
-			BufferedWriter writer = Files.newBufferedWriter(filePath, Charset.forName("US-ASCII"));
-			for (int score : scoreList) {
-				String out = Integer.toString(score);
-				writer.write(out, 0, out.length());
-				writer.newLine();
+			try (BufferedWriter writer = Files.newBufferedWriter(filePath, Charset.forName("US-ASCII"))) {
+				for (int score : scoreList) {
+					String out = Integer.toString(score);
+					writer.write(out, 0, out.length());
+					writer.newLine();
+				}
+				writer.flush();
 			}
-			writer.flush();
 		} catch (IOException ignored) {}
 	}
 
