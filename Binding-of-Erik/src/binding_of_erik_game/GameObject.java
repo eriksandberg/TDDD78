@@ -47,7 +47,7 @@ public class GameObject {
 			return true;
 		} else return ((this.size > 5) && (Math.abs(other.xCoord - this.xCoord) * 2) < (other.size + this.size) &&
 				(Math.abs(other.yCoord - this.yCoord) * 2) < (other.size + this.size));
-	    		//This one handles bodycollisions. If we have no shot or body collision false is returned.
+		//This one handles bodycollisions. If we have no shot or body collision false is returned.
 	}
 
 	// Return true if the object has left the room
@@ -57,7 +57,6 @@ public class GameObject {
 				(xCoord + 2 * size > Room.getFarEdge()) || (yCoord + 2 * size > Room.getFarEdge()));
 	}
 
-	@SuppressWarnings("EnumSwitchStatementWhichMissesCases")    // Direction OTHER is not used by this class
 	//This is by coding standards not a pretty solution, but it would require us to rework a large part of the project.
 	//It's however very easy to understand and modify. Can easily be used by player and enemies. ONLY does graphical work.
 	//The actual direction is set elsewhere.
@@ -66,100 +65,126 @@ public class GameObject {
 		//old is where we were facing before.
 		switch (oldDirection) {
 			case NORTH:
-				switch (newDirection) {
-					case NORTH:
-						//do nothing
-						break;
-					case EAST:
-						if (xCoord == Room.getFarEdgeSpawn()) {     //Room.getFarEdge() - size()?
-							break;
-						}
-						rotateThisMany(3);
-						break;
-					case SOUTH:
-						rotateThisMany(2);
-						break;
-					case WEST:
-						if (xCoord == 0) {
-							break;
-						}
-						rotateThisMany(1);
-						break;
-					default:
-						break;
-				}
-				break;
-			case EAST:
-				switch (newDirection) {
-					case NORTH:
-						if (yCoord == 0) {
-							break;
-						}
-						rotateThisMany(1);
-						break;
-					case EAST:
-						//do nothing
-						break;
-					case SOUTH:
-						if (yCoord == Room.getFarEdgeSpawn()) {
-							break;
-						}
-						rotateThisMany(3);
-						break;
-					case WEST:
-						rotateThisMany(2);
-						break;
-					default:
-						break;
-				}
+				rotateNorth(newDirection);
 				break;
 			case SOUTH:
-				switch (newDirection) {
-					case NORTH:
-						rotateThisMany(2);
-						break;
-					case EAST:
-						if (xCoord == Room.getFarEdgeSpawn()) {
-							break;
-						}
-						rotateThisMany(1);
-						break;
-					case SOUTH:
-						//do nothing
-						break;
-					case WEST:
-						if (xCoord == 0) {
-							break;
-						}
-						rotateThisMany(3);
-						break;
-					default:
-						break;
-				}
+				rotateSouth(newDirection);
+				break;
+			case EAST:
+				rotateEast(newDirection);
 				break;
 			case WEST:
-				switch (newDirection) {
-					case NORTH:
-						if (yCoord == 0) {
-							break;
-						}
-						rotateThisMany(3);
-						break;
-					case EAST:
-						rotateThisMany(2);
-						break;
-					case SOUTH:
-						if (yCoord == Room.getFarEdgeSpawn()) {
-							break;
-						}
-						rotateThisMany(1);
-						break;
-					case WEST:
-						//do nothing
-						break;
-					default:
-						break;
+				rotateWest(newDirection);
+				break;
+			case OTHER:     // Not used by this class
+				break;
+			default:
+				break;
+		}
+	}
+
+	private void rotateNorth(Direction direction) {
+		switch (direction) {
+			case NORTH:
+				//do nothing
+				break;
+			case EAST:
+				if (xCoord == Room.getFarEdgeSpawn()) {
+					break;
 				}
+				rotateThisMany(3);
+				break;
+			case SOUTH:
+				rotateThisMany(2);
+				break;
+			case WEST:
+				if (xCoord == 0) {
+					break;
+				}
+				rotateThisMany(1);
+				break;
+			case OTHER:     // Not used by this class
+				break;
+			default:
+				break;
+		}
+	}
+
+	private void rotateSouth(Direction direction) {
+		switch (direction) {
+			case NORTH:
+				rotateThisMany(2);
+				break;
+			case EAST:
+				if (xCoord == Room.getFarEdgeSpawn()) {
+					break;
+				}
+				rotateThisMany(1);
+				break;
+			case SOUTH:
+				//do nothing
+				break;
+			case WEST:
+				if (xCoord == 0) {
+					break;
+				}
+				rotateThisMany(3);
+				break;
+			case OTHER:     // Not used by this class
+				break;
+			default:
+				break;
+		}
+	}
+
+	private void rotateEast(Direction direction) {
+		switch (direction) {
+			case NORTH:
+				if (yCoord == 0) {
+					break;
+				}
+				rotateThisMany(1);
+				break;
+			case EAST:
+				//do nothing
+				break;
+			case SOUTH:
+				if (yCoord == Room.getFarEdgeSpawn()) {
+					break;
+				}
+				rotateThisMany(3);
+				break;
+			case WEST:
+				rotateThisMany(2);
+				break;
+			case OTHER:     // Not used by this class
+				break;
+			default:
+				break;
+		}
+	}
+
+	private void rotateWest(Direction direction) {
+		switch (direction) {
+			case NORTH:
+				if (yCoord == 0) {
+					break;
+				}
+				rotateThisMany(3);
+				break;
+			case EAST:
+				rotateThisMany(2);
+				break;
+			case SOUTH:
+				if (yCoord == Room.getFarEdgeSpawn()) {
+					break;
+				}
+				rotateThisMany(1);
+				break;
+			case WEST:
+				//do nothing
+				break;
+			case OTHER:     // Not used by this class
 				break;
 			default:
 				break;
