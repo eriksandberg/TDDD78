@@ -1,5 +1,8 @@
 package binding_of_erik_game;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  * User: Erik
  * Date: 2016-04-04
@@ -29,6 +32,27 @@ public class Enemy extends Agent {
 
 	protected int getWorth() {
 		return worth;
+	}
+
+	protected Collection<Shot> shoot(Agent target) {
+		Collection<Shot> shots = new ArrayList<>();
+
+		shots.add(createShot(target, this.xCoord - this.getSize() / 2, this.yCoord - this.getSize() / 2));
+
+		return shots;
+	}
+
+	@SuppressWarnings("NestedAssignment")   // 2 lines is better than 4
+	protected Shot createShot(Agent target, int x, int y) {
+		Shot newShot = GraphicsFactory.getInstance().getLightShot();
+
+		newShot.xCoordFloat = newShot.xCoord = x;
+		newShot.yCoordFloat = newShot.yCoord = y;
+		newShot.calcAngle(target.xCoord, target.yCoord);
+
+		// True = enemy
+		newShot.setAlignment(true);
+		return newShot;
 	}
 
 	// The standard enemy does not move

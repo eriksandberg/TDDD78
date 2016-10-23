@@ -1,5 +1,8 @@
 package binding_of_erik_game;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  * Created by wassing on 2016-10-18.
  */
@@ -12,5 +15,15 @@ public class FirstBoss extends Enemy {
 
 	public FirstBoss(TileType[][] shape) {
 		super(shape, SIZE, HEALTH, WORTH, SPECIAL_SHOT_COOLDOWN);
+	}
+
+	protected Collection<Shot> shoot(Agent target) {
+		Collection<Shot> shots = new ArrayList<>();
+
+		// Spawn two shots, on at each side of the boss
+		shots.add(createShot(target, this.xCoord, this.yCoord));
+		shots.add(createShot(target, (this.xCoord - this.size), this.yCoord));
+
+		return shots;
 	}
 }

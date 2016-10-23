@@ -105,7 +105,6 @@ public class Room {
 		clearRoom();   // Remove all shots (and enemies) left in an old room
 		spawnPlayer(player.xCoord, FAR_EDGE_SPAWN);
 		spawnEnemies();
-		// Should probably pause for a couple of seconds, don't want to confuse the player
 	}
 
 	// Remove everything in the room but the player and background graphics
@@ -116,7 +115,6 @@ public class Room {
 
 	// Basically a restart, public for the same reason as newRoom is
 	public void resetRoom() {
-		//player.resetSkill();
 		player.resetHP();
 
 		clearRoom();
@@ -128,7 +126,6 @@ public class Room {
 	public void spawnPlayer(int x, int y) {
 		this.player.xCoord = x;
 		this.player.yCoord = y;
-		//player.setDirection(player.getDirection()); //fix to not fuck up rotation   // Seems redundant?
 		notifyListeners();
 	}
 
@@ -169,7 +166,7 @@ public class Room {
 			power = 10;
 		}
 		newEnemy.setShotCooldown(ENEMY_DEFAULT_COOLDOWN - power * 4 - 1);   // We don't want enemies with cooldown = 0
-		//newEnemy.setWorth(newEnemy.getWorth() + (power * 40)); //using a hardcoded worth right now.
+		//newEnemy.setWorth(newEnemy.getWorth() + (power * 40));
 
 		newEnemy.rotateThisMany(1);
 		return newEnemy;
@@ -262,48 +259,10 @@ public class Room {
 		notifyListeners();
 	}
 
-	// Spawn a shot from enemy aimed at the player
-	@SuppressWarnings("NestedAssignment") // 2 lines is better than 4
+	// Spawn one or several shots from enemy aimed at the player
 	private void spawnShot(Enemy enemy) {
-		//shotsInRoom.addAll(enemy.);
-		//this goes against using polymorphism, but this is a last fix specifically for the bosses.
-		//could be made modular if we had enough time. SHOULD be made modular if a game has many bosses.
-		if (enemy instanceof FirstBoss) {
-			shotsInRoom.add(createEnemyShotAt(enemy.xCoord, enemy.yCoord)); //bottom right of boss
-			shotsInRoom.add(createEnemyShotAt(enemy.xCoord - enemy.getSize(), enemy.yCoord)); //bottom left of boss
-		} else if (enemy instanceof SecondBoss) {
-			//would need a whole new method, we can't create different kinds of shots with just one method.
-			//therefore just bunched the whole code in here because it's a separate case for the second boss only.
-			if (enemy.specialShotCooldown <= SECOND_BOSS_SHOT_COOLDOWN ) {
-				Shot lazer = GraphicsFactory.getInstance().getLazer();
-				lazer.xCoordFloat = lazer.xCoord = enemy.xCoord - enemy.getSize() / 2;
-				lazer.yCoordFloat = lazer.yCoord = enemy.yCoord - enemy.getSize() / 2;
-				lazer.calcAngle(player.xCoord, player.yCoord);
-				lazer.setAlignment(true);
-				shotsInRoom.add(lazer);
-				if (enemy.specialShotCooldown == 0) {
-					enemy.setSpecialShotCooldown(100);
-				}
-			} else {
-				shotsInRoom.add(createEnemyShotAt(enemy.xCoord - enemy.getSize() / 2, enemy.yCoord - enemy.getSize() / 2));
-			}
-			enemy.specialShotCooldown--;
-		} else {
-			shotsInRoom.add(createEnemyShotAt(enemy.xCoord - enemy.getSize() / 2, enemy.yCoord - enemy.getSize() / 2));
-		}
+		shotsInRoom.addAll(enemy.shoot(player));
 		notifyListeners();
-	}
-
-	@SuppressWarnings("NestedAssignment") // 2 lines is better than 4
-	private Shot createEnemyShotAt(int x, int y) {
-		Shot newShot = GraphicsFactory.getInstance().getLightShot();
-		newShot.xCoordFloat = newShot.xCoord = x;
-		newShot.yCoordFloat = newShot.yCoord = y;
-		newShot.calcAngle(player.xCoord, player.yCoord);
-
-		//true = enemy
-		newShot.setAlignment(true);
-		return newShot;
 	}
 
 	// Spawn a shot at the players position, traveling in the players direction
@@ -322,9 +281,6 @@ public class Room {
 					shotsInRoom.add(spawnPlayerShot(Direction.NORTH));
 					shotsInRoom.add(spawnPlayerShot(Direction.SOUTH));
 				}
-				break;
-			case ("Big bad bomb"):
-				//unused at the moment.
 				break;
 			default:
 				break;
@@ -377,6 +333,7 @@ public class Room {
 			notifyListeners();
 		}
 	}
+
 	private void handleEnemies() {
 		Iterator<Enemy> e = enemiesInRoom.iterator();
 		while (e.hasNext()) {
@@ -427,7 +384,7 @@ public class Room {
 	}
 
 	// tick() help method taking care of moving all shots and identifying hits
-	private  void handleShots() {
+	private void handleShots() {
 		Iterator<Shot> s = shotsInRoom.iterator();
 		while (s.hasNext()) {
 			Shot shot = s.next();
