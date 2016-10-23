@@ -53,7 +53,8 @@ public final class Score {
 				}
 				writer.flush();
 			}
-		} catch (IOException ignored) {}
+		} catch (IOException ignored) {
+		}
 	}
 
 	// Save current score locally

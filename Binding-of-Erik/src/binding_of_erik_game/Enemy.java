@@ -8,7 +8,7 @@ import java.util.Collection;
  * Date: 2016-04-04
  *
  * A generic enemy inheriting from Agent.
- * Once we get to creating different kinds of enemies they should inherit from this class
+ * Different kind of enemies inherit from this class
  * if they require additional functionality
  */
 

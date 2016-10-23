@@ -5,11 +5,12 @@ import java.util.Collection;
 
 /**
  * Created by wassing on 2016-10-18.
+ * The first boss. Durable and firing two shots at the time.
  */
 public class FirstBoss extends Enemy {
 
 	private static final int WORTH = 5000;
-	private static final int HEALTH = 50;
+	private static final int HEALTH = 80;
 	private static final int SIZE = 18;
 	private static final int SPECIAL_SHOT_COOLDOWN = 30;
 

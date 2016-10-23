@@ -3,13 +3,11 @@ package binding_of_erik_game;
 /**
  * User: Erik
  * Date: 2016-10-14
+ * Special enemies traveling down the game board in every area once the player reach a certain level.
  */
 
 public class TravelingEnemy extends Enemy {
 
-	/**
-	 * These enemies have a standard worth
-	 */
 	private static final int WORTH = 400;
 	private static final int HEALTH = 2;
 	private static final int SIZE = 10;

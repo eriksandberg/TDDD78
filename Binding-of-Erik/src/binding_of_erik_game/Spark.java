@@ -28,13 +28,12 @@ public class Spark extends Shot {
 		return outOfBounds();
 	}
 
-
 	// Return true if the shot have left the board
 	// Also return true if the spark have lived it's intended time, this way it will be removed
 	@Override
 	protected boolean outOfBounds() {
 		return ((xCoord - size < Room.getAdjEdge()) || (yCoord - size < Room.getAdjEdge()) ||
-			(xCoord + 2 * size > Room.getFarEdge()) || (yCoord + 2 * size > Room.getFarEdge()) ||
-			(lifetime <= 0));
+				(xCoord + 2 * size > Room.getFarEdge()) || (yCoord + 2 * size > Room.getFarEdge()) ||
+				(lifetime <= 0));
 	}
 }

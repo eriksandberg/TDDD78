@@ -50,8 +50,8 @@ public final class GraphicsFactory
 		 { T, T, W, G, G, G, G, G, T, T },
 		 { T, T, W, T, T, T, T, T, T, T },
 		 { T, W, W, W, T, T, T, T, T, T },
-		 { O, O, G, G, W, W, W, W, W, W }, //north
-		 { O, O, G, G, W, W, W, W, W, W }, //north
+		 { O, O, G, G, W, W, W, W, W, W },
+		 { O, O, G, G, W, W, W, W, W, W },
 		 { T, W, W, W, T, T, T, T, T, T },
 		 { T, T, W, T, T, T, T, T, T, T },
 		 { T, T, W, G, G, G, G, G, T, T },
@@ -112,7 +112,7 @@ public final class GraphicsFactory
 	     { T, T, R, T, T, T, T, R, T, T },
 	     { T, T, T, R, R, R, R, T, T, T }};
 
-    // prototype space invader from the classic arcade game
+    // Space invader from the classic arcade game. Not used.
     private final TileType[][] invaderEnemy =
 	    {{ T, T, T, T, T, T, T, T, T, T },
 	     { T, T, R, T, T, T, T, R, T, T },
@@ -212,5 +212,4 @@ public final class GraphicsFactory
 	    { T, T, T, T, G, G, G, G, G, G, G, G, G, G, G, G, T, T, T, T },
 	    { T, T, T, T, T, G, G, G, G, G, G, G, G, G, G, T, T, T, T, T },
 	    { T, T, T, T, T, T, T, G, G, G, G, G, G, T, T, T, T, T, T, T },};
-    //add more graphic "blocks" here.
 }

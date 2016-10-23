@@ -10,6 +10,7 @@ import java.util.AbstractMap;
 
 /**
  * Created by wassing on 2016-04-06.
+ * Handling outside events such as key presses and drawing.
  */
 
 public class EventHandler extends JComponent implements BoardListener {

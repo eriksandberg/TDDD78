@@ -5,6 +5,8 @@ import java.util.*;
 
 /**
  * Created by wassing on 2016-04-04.
+ * Room keep track of everything currently happening on screen or in the currecnt "room".
+ * Also keep the Player, stats, game over etc.
  */
 
 public class Room {
@@ -25,8 +27,12 @@ public class Room {
 	private Player player = null;
 	protected Score score = null;
 
+	// Used when an area is cleared and the player/ship travel to the top
 	private boolean roomOver = false;
 
+	/**
+	 * Constants for game over
+	 */
 	private static final String DIED = "You died!";
 	private static final String WON = "You won!";
 	private static final int MAX_LEVEL = 10;
@@ -43,7 +49,6 @@ public class Room {
 	/**
 	 * Additional constants
 	 **/
-	private static final int SECOND_BOSS_SHOT_COOLDOWN = 70;
 	private static final int STAR_SPAWN_RATE = 24;
 	private static final int ENEMY_DEFAULT_COOLDOWN = 40;
 
@@ -55,7 +60,7 @@ public class Room {
 	@SuppressWarnings("SuspiciousGetterSetter")
 	public int getPixelHeightPerTile() {
 		return PIXELHEIGHT_PER_TILE;
-	}  //maybe change name instead of supressing warning
+	}
 
 	public int getWidth() {
 		return width;
@@ -166,7 +171,6 @@ public class Room {
 			power = 10;
 		}
 		newEnemy.setShotCooldown(ENEMY_DEFAULT_COOLDOWN - power * 4 - 1);   // We don't want enemies with cooldown = 0
-		//newEnemy.setWorth(newEnemy.getWorth() + (power * 40));
 
 		newEnemy.rotateThisMany(1);
 		return newEnemy;
@@ -351,10 +355,6 @@ public class Room {
 				if (enemy.readyToShoot()) {
 					spawnShot(enemy);
 				}
-				//last minute fix for the second boss in the game, this is not modular at all.
-				/*if (enemy instanceof SecondBoss && enemy.specialShotCooldown <= SECOND_BOSS_SHOT_COOLDOWN) {
-					spawnShot(enemy);
-				}*/
 			}
 		}
 	}

@@ -2,6 +2,7 @@ package binding_of_erik_game;
 
 /**
  * Created by wassing on 2016-04-04.
+ * The player character. Unique movement and shooting.
  */
 
 public class Player extends Agent {

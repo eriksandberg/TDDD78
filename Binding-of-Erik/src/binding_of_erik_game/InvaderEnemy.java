@@ -2,6 +2,7 @@ package binding_of_erik_game;
 
 /**
  * Created by wassing on 2016-10-18.
+ * Looks like a space invader. Not used.
  */
 
 public class InvaderEnemy extends Enemy {

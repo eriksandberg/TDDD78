@@ -3,6 +3,7 @@ package binding_of_erik_game;
 /**
  * User: Erik
  * Date: 2016-09-02
+ * Shot fired by most enemies. Fired aimed at a target and then keeps that trajectory.
  */
 public class Shot extends GameObject {
 
@@ -15,7 +16,7 @@ public class Shot extends GameObject {
 	protected float yAngle = 0;
 
 	public Shot(TileType[][] shape) {
-		super(shape, SIZE, false, 0 ,0);
+		super(shape, SIZE, false, 0, 0);
 	}
 
 	// Where x, y is the position the shot is traveling towards

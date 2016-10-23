@@ -6,9 +6,11 @@ import java.awt.event.ActionEvent;
 
 /**
  * Created by wassing on 2016-04-06.
+ * This class is instanced as an object for GameWindow.
+ * Handles updating the frame, calling tick() in Room.
  */
 
-public class GameFrame extends JFrame { //this class does all the actual frame updating work. Will be instanced as an object for GameWindow.
+public class GameFrame extends JFrame {
 
 	private static boolean paused = false;
 	private static boolean gameOver = false;
@@ -19,16 +21,17 @@ public class GameFrame extends JFrame { //this class does all the actual frame u
 		EventHandler paintArea = new EventHandler(room);
 		this.setLayout(new BorderLayout());
 		this.add(paintArea, BorderLayout.CENTER);
-		//this.createMenu(); extra for later, options for file etc.
 
 		final Action doOneStep = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				if (!paused && !gameOver) {  // Since player movement is currently done outside of tick() this is not really a true pause
+				// Since player movement is done outside of tick() this is not really a true pause nor game over
+				// Pause is for testing and nothing happen once the game is over so it does not matter
+				if (!paused && !gameOver) {
 					room.tick();
 				}
 			}
 		};
-		Timer clockTimer = new Timer(100, doOneStep); //10 ticks per second atm, will increase framerate to about 30 later on.
+		Timer clockTimer = new Timer(100, doOneStep);
 		clockTimer.setCoalesce(true);
 		clockTimer.start();
 	}

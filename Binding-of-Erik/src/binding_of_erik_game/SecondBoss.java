@@ -5,10 +5,11 @@ import java.util.Collection;
 
 /**
  * Created by wassing on 2016-10-18.
+ * Second boss. Very durable and firing a deadly laser beam in adition to the usual shots.
  */
 public class SecondBoss extends Enemy {
 	private static final int WORTH = 10000;
-	private static final int HEALTH = 100;
+	private static final int HEALTH = 140;
 	private static final int SIZE = 20;
 	private static final int SPECIAL_SHOT_DURATION = 50;    // Duration during which we fire lazer (number of shots)
 	private static final int SPECIAL_SHOT_COOLDOWN = 15;    // Number of normal shots fired before we once again fire the lazer

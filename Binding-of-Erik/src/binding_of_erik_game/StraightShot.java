@@ -3,6 +3,7 @@ package binding_of_erik_game;
 /**
  * User: Erik
  * Date: 2016-09-12
+ * A simple shot traveling at a straight line along either the x- or y-axis.
  */
 public class StraightShot extends Shot {
 

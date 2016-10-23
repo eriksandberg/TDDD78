@@ -6,17 +6,18 @@ import java.awt.Color;
 
 /**
  * Created by wassing on 2016-04-04.
- * EnumMap ontaining all colours in use, imported from awt.Color.
+ * Map ontaining all colours in use, imported from awt.Color.
  */
 
-@SuppressWarnings("JavaDoc") // To explain that CYAN means CYAN in addition to the info in the class JavaDoc feels redundant
+@SuppressWarnings("JavaDoc")
+// To explain that CYAN means CYAN in addition to the info in the class JavaDoc feels redundant
 public enum TileType {
 
 	CYAN, BLUE, BLACK, ORANGE, YELLOW, GREEN, MAGENTA, RED, GRAY, WHITE, TRANSPARENT;
 
-    private static final Color C_TRANSPARENT = new Color(0,0,0,0); // will probably be used as an identifier to ensure "smooth" graphics
+	private static final Color C_TRANSPARENT = new Color(0, 0, 0, 0); // will probably be used as an identifier to ensure "smooth" graphics
 
-    static AbstractMap<TileType, Color> eMap(){
+	static AbstractMap<TileType, Color> eMap() {
 		AbstractMap<TileType, Color> map = new EnumMap<>(TileType.class);
 		map.put(TileType.CYAN, Color.cyan);
 		map.put(TileType.BLUE, Color.blue);
@@ -30,5 +31,5 @@ public enum TileType {
 		map.put(TileType.WHITE, Color.white);
 		map.put(TileType.TRANSPARENT, C_TRANSPARENT); //useful as temp, if needed.
 		return map;
-    }
+	}
 }
