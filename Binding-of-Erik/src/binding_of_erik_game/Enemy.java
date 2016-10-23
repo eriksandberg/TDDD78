@@ -21,17 +21,19 @@ public class Enemy extends Agent {
 		this.specialShotCooldown = specialShotCooldown;
 	}
 
-	public void setSpecialShotCooldown(int shotCooldown) {
+	//protected void
+
+	protected void setSpecialShotCooldown(int shotCooldown) {
 		this.specialShotCooldown = shotCooldown;
 	}
 
-	public int getWorth() {
+	protected int getWorth() {
 		return worth;
 	}
 
 	// The standard enemy does not move
 	@Override
-	public boolean move() {
+	protected boolean move() {
 		return outOfBounds();
 	}
 }

@@ -31,7 +31,7 @@ public class GameObject {
 	}
 
 	// Objects that's not simply "falling" down the screen will implement their own movement
-	public boolean move() {
+	protected boolean move() {
 		yCoord += 5;
 		return outOfBounds();
 	}
@@ -39,7 +39,7 @@ public class GameObject {
 	// Check if another object collide with this.
 	// An object could move fast enough to "jump" over another object,
 	// avoid by not having them move to many pixels each tick
-	public boolean collision(GameObject other) {
+	protected boolean collision(GameObject other) {
 		//this one checks shots only. Shots are maximum "4" big.
 		if ((this.size < 5) && (other.xCoord >= this.xCoord) && (this.xCoord >= other.xCoord - other.size) && (other.yCoord >= this.yCoord) &&
 				(this.yCoord >= other.yCoord - other.size)) {
@@ -60,7 +60,7 @@ public class GameObject {
 	//This is by coding standards not a pretty solution, but it would require us to rework a large part of the project.
 	//It's however very easy to understand and modify. Can easily be used by player and enemies. ONLY does graphical work.
 	//The actual direction is set elsewhere.
-	public void rotate(Direction newDirection, Direction oldDirection) {
+	protected void rotate(Direction newDirection, Direction oldDirection) {
 		//two-layer nested switch, 4x4 = 16 possible outcomes, 12 of those change the graphics.
 		//old is where we were facing before.
 		switch (oldDirection) {
@@ -191,7 +191,7 @@ public class GameObject {
 		}
 	}
 
-	public void rotateThisMany(int times) {
+	protected void rotateThisMany(int times) {
 		for (int i = 0; i < times; i++) {
 			//right now we assume that all objects have square dimensions
 			final int m = this.size;
@@ -209,16 +209,16 @@ public class GameObject {
 	// True == enemy
 	@SuppressWarnings("SuspiciousGetterSetter")
 	// Warning because isEnemy is standard name for getter for both enemy and isEnemy
-	public boolean isEnemy() {
+	protected boolean isEnemy() {
 		return isEnemy;
 	}
 
-	public int getSize() {
+	protected int getSize() {
 		return size;
 	} //returns size of an actual game object, specified in every sub class.
 
 	// Return the shape for the paint component to draw
-	public TileType getTile(int x, int y) {
+	protected TileType getTile(int x, int y) {
 		try {
 			return shape[xCoord - x + 9][yCoord - y + 9];
 		} catch (RuntimeException ignored) {

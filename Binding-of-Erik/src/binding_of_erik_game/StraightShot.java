@@ -13,7 +13,7 @@ public class StraightShot extends Shot {
 	}
 
 	@Override
-	public boolean move() {
+	protected boolean move() {
 		switch (direction) {
 			case NORTH:
 				yCoord -= shotspeed;
@@ -35,7 +35,7 @@ public class StraightShot extends Shot {
 		return outOfBounds();
 	}
 
-	public void setDirection(Direction direction) {
+	protected void setDirection(Direction direction) {
 		this.direction = direction;
 	}
 }

@@ -265,6 +265,7 @@ public class Room {
 	// Spawn a shot from enemy aimed at the player
 	@SuppressWarnings("NestedAssignment") // 2 lines is better than 4
 	private void spawnShot(Enemy enemy) {
+		//shotsInRoom.addAll(enemy.);
 		//this goes against using polymorphism, but this is a last fix specifically for the bosses.
 		//could be made modular if we had enough time. SHOULD be made modular if a game has many bosses.
 		if (enemy instanceof FirstBoss) {

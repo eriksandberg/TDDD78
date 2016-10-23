@@ -20,7 +20,7 @@ public class TravelingEnemy extends Enemy {
 
 	// Simply move down the screen until we reach the bottom
 	@Override
-	public boolean move() {
+	protected boolean move() {
 		yCoord += 2;
 
 		// Fall until we reach the bottom of the board, then delete ourselves

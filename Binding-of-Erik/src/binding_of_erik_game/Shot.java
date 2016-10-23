@@ -6,7 +6,7 @@ package binding_of_erik_game;
  */
 public class Shot extends GameObject {
 
-	protected int shotspeed = 5;  // When generating enemies in the future, generate this
+	protected int shotspeed = 5;
 	private static final int SIZE = 2;
 
 	protected float xCoordFloat = 0;
@@ -19,7 +19,7 @@ public class Shot extends GameObject {
 	}
 
 	// Where x, y is the position the shot is traveling towards
-	public void calcAngle(int x, int y) {
+	protected void calcAngle(int x, int y) {
 		// The shots spawning position in relation to the room
 		// Magic number 4 is because of the size of the char fireing the shot
 		int deltaX = (x - 4 - xCoord);
@@ -33,7 +33,7 @@ public class Shot extends GameObject {
 
 	// Move the shot according to position, angle and speed, return false if the shot have left the board
 	@Override
-	public boolean move() {
+	protected boolean move() {
 		xCoordFloat += shotspeed * xAngle;
 		xCoord = Math.round(xCoordFloat);
 
@@ -44,7 +44,7 @@ public class Shot extends GameObject {
 	}
 
 	@SuppressWarnings("SuspiciousGetterSetter")
-	public void setAlignment(boolean alignment) {
+	protected void setAlignment(boolean alignment) {
 		this.isEnemy = alignment;
 	}
 }

@@ -16,7 +16,7 @@ public class Spark extends Shot {
 	}
 
 	@Override
-	public boolean move() {
+	protected boolean move() {
 		lifetime -= 1;
 
 		xCoordFloat += shotspeed * xAngle;
