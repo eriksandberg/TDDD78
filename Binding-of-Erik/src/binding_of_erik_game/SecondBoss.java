@@ -9,10 +9,10 @@ import java.util.Collection;
  */
 public class SecondBoss extends Enemy {
 	private static final int WORTH = 10000;
-	private static final int HEALTH = 140;
+	private static final int HEALTH = 250;
 	private static final int SIZE = 20;
 	private static final int SPECIAL_SHOT_DURATION = 50;    // Duration during which we fire lazer (number of shots)
-	private static final int SPECIAL_SHOT_COOLDOWN = 15;    // Number of normal shots fired before we once again fire the lazer
+	private static final int SPECIAL_SHOT_COOLDOWN = 10;    // Number of normal shots fired before we once again fire the lazer
 
 	public SecondBoss(TileType[][] shape) {
 		super(shape, SIZE, HEALTH, WORTH, SPECIAL_SHOT_DURATION);

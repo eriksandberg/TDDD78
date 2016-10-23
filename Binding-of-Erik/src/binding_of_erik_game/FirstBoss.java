@@ -10,7 +10,7 @@ import java.util.Collection;
 public class FirstBoss extends Enemy {
 
 	private static final int WORTH = 5000;
-	private static final int HEALTH = 80;
+	private static final int HEALTH = 140;
 	private static final int SIZE = 18;
 	private static final int SPECIAL_SHOT_COOLDOWN = 30;
 
