@@ -10,8 +10,8 @@ package binding_of_erik_game;
 
 public class Agent extends GameObject {
 
-    private int shotCooldown;
-    private int currentShotCooldown = 10;   // Everyone will wait 10 ticks before firing their first shot
+    protected int shotCooldown;
+    protected int currentShotCooldown = 10;   // Everyone will wait 10 ticks before firing their first shot
     protected int hp = 1;
 
     public Agent(TileType[][] shape, int size, boolean enemy, int hp, int x, int y) {

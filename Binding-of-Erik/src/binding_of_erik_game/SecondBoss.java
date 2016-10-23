@@ -10,19 +10,35 @@ public class SecondBoss extends Enemy {
 	private static final int WORTH = 10000;
 	private static final int HEALTH = 100;
 	private static final int SIZE = 20;
-	private static final int SPECIAL_SHOT_COOLDOWN = 50;
+	private static final int SPECIAL_SHOT_DURATION = 50;    // Duration during which we fire lazer (number of shots)
+	private static final int SPECIAL_SHOT_COOLDOWN = 15;    // Number of normal shots fired before we once again fire the lazer
 
 	public SecondBoss(TileType[][] shape) {
-		super(shape, SIZE, HEALTH, WORTH, SPECIAL_SHOT_COOLDOWN);
+		super(shape, SIZE, HEALTH, WORTH, SPECIAL_SHOT_DURATION);
+	}
+
+	protected boolean readyToShoot() {
+		if (currentShotCooldown == 0) {
+			currentShotCooldown = shotCooldown;
+			return true;
+		} else if (specialShotCooldown < SPECIAL_SHOT_DURATION) {
+			return true;
+		} else {
+			currentShotCooldown--;
+			return false;
+		}
 	}
 
 	protected Collection<Shot> shoot(Agent target) {
 		Collection<Shot> shots = new ArrayList<>();
-			if (this.specialShotCooldown <= SPECIAL_SHOT_COOLDOWN) {
-				shots.add(spawnLazer(target));
-			} else {
-				shots.add(createShot(target, this.xCoord - this.getSize() / 2, this.yCoord - this.getSize() / 2 ));
-			}
+		if (this.specialShotCooldown <= SPECIAL_SHOT_DURATION) {
+			shots.add(spawnLazer(target));
+		} else {
+			shots.add(createShot(target, this.xCoord - this.getSize() / 2, this.yCoord - this.getSize() / 2));
+		}
+		if (specialShotCooldown == 0) {
+			specialShotCooldown = SPECIAL_SHOT_DURATION + SPECIAL_SHOT_COOLDOWN;
+		}
 		specialShotCooldown--;
 		return shots;
 	}

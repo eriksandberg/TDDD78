@@ -352,9 +352,9 @@ public class Room {
 					spawnShot(enemy);
 				}
 				//last minute fix for the second boss in the game, this is not modular at all.
-				if (enemy instanceof SecondBoss && enemy.specialShotCooldown <= SECOND_BOSS_SHOT_COOLDOWN) {
+				/*if (enemy instanceof SecondBoss && enemy.specialShotCooldown <= SECOND_BOSS_SHOT_COOLDOWN) {
 					spawnShot(enemy);
-				}
+				}*/
 			}
 		}
 	}
