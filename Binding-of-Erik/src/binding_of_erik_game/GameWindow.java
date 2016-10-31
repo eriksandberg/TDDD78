@@ -18,6 +18,7 @@ public final class GameWindow {
 	}
 
 	public static void main(String[] args) {
+	    System.out.println("hej hej hallå!");
 		// Create player and the first room
 		Player player = GraphicsFactory.getInstance().getPlayer();
 		Room startingRoom = new Room(player, FRAMEWIDTH, FRAMEHEIGHT);
